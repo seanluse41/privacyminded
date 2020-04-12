@@ -1,20 +1,14 @@
-### svelte-example-museums
+### svelte template with i18n, ie11, and materialize css setup
 
-How to make a svelte app compatible with IE11.
+Made via these tutorials:
 
-Technologies used:
+i18n
+https://medium.com/i18n-and-l10n-resources-for-developers/how-to-localize-a-svelte-app-with-svelte-i18n-9e86cc9eb727
 
-- rollup
-- babel
-- core-js
+ie11
+https://blog.az.sg/posts/svelte-and-ie11/
 
-To see how it's done, read [this blogpost](https://blog.az.sg/posts/making-a-svelte-app-compatible-with-internet-explorer-11) and check the final [rollup config](https://github.com/angelozehr/svelte-example-museums/blob/master/rollup.config.js).
+materialize css
+https://materializecss.com/
 
-To se an alternate version using buble, [go back one commit](https://github.com/angelozehr/svelte-example-museums/blob/51677c6bd6d8ab24fab76097421db709883018d6/rollup.config.js).
-
-
-#### Original project
-
-This is a copy of the official [Svelte Template](https://github.com/sveltejs/template).
-
-PS: As you might see, I did not find an elegant way to share styles across multiple svelte components. If you know a way, let me know :)
+feel free to use.
