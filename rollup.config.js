@@ -6,7 +6,6 @@ import { terser } from 'rollup-plugin-terser'
 import css from 'rollup-plugin-css-only';
 
 
-
 // added by angelo
 import json from 'rollup-plugin-json'
 import babel from 'rollup-plugin-babel'
@@ -21,6 +20,23 @@ export default {
     name: 'app',
     file: 'public/bundle.js'
   },
+
+  moduleContext: (id) => {
+    // In order to match native module behaviour, Rollup sets `this`
+    // as `undefined` at the top level of modules. Rollup also outputs
+    // a warning if a module tries to access `this` at the top level.
+    // The following modules use `this` at the top level and expect it
+    // to be the global `window` object, so we tell Rollup to set
+    // `this = window` for these modules.
+    const thisAsWindowForModules = [
+      'node_modules/intl-messageformat/lib/core.js',
+      'node_modules/intl-messageformat/lib/compiler.js',
+    ];
+    if (thisAsWindowForModules.some(id_ => id.trimRight().endsWith(id_))) {
+      return 'window';
+    }
+  },
+
   plugins: [
     svelte({
       // enable run-time checks when not in production
@@ -53,7 +69,7 @@ export default {
     babel({
       extensions: ['.js', '.mjs', '.html', '.svelte'],
       runtimeHelpers: true,
-      exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
+      exclude: ['node_modules/@babel/**', 'node_modules/core-js/**', 'node_modules/intl-**'],
       presets: [
         [
           '@babel/preset-env',

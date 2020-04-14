@@ -1,11 +1,6 @@
 <script>
   import { Link } from "svelte-routing";
   import { _ } from "../services/i18n";
-  import { onMount } from "svelte";
-  function mobileNav() {
-    var elems = document.querySelectorAll(".sidenav");
-    var instances = M.Sidenav.init(elems);
-  }
 </script>
 
 <nav>
@@ -13,8 +8,7 @@
     <a
       href="#"
       data-target="mobile-demo"
-      class="sidenav-trigger"
-      on:click={mobileNav}>
+      class="sidenav-trigger">
       <i class="material-icons">menu</i>
     </a>
     <div class="container">
