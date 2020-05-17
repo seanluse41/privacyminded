@@ -3,6 +3,17 @@
   import { _ } from "../services/i18n";
 </script>
 
+<style>
+
+
+/* #e60012
+#2b303a
+#e0fbfc
+#eae8ff
+#d8d5db */
+
+</style>
+
 <nav>
   <div class="nav-wrapper">
     <a
