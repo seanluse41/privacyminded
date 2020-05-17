@@ -13,7 +13,7 @@
 </script>
 
 <button
-  class="btn-floating btn-large waves-effect waves-light teal"
+  class="btn-floating btn-large waves-effect waves-light custom-red"
   style="margin-left: 20px;"
   on:click={changeLanguage}>
   <i class="material-icons">language</i>

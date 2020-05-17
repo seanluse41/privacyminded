@@ -4011,6 +4011,14 @@ var app = (function () {
 	  } : unsub;
 	}
 
+	function get_store_value(store) {
+	  var value;
+	  subscribe(store, function (_) {
+	    return value = _;
+	  })();
+	  return value;
+	}
+
 	function component_subscribe(component, store, callback) {
 	  component.$$.on_destroy.push(subscribe(store, callback));
 	}
@@ -4071,6 +4079,12 @@ var app = (function () {
 
 	function detach(node) {
 	  node.parentNode.removeChild(node);
+	}
+
+	function destroy_each(iterations, detaching) {
+	  for (var i = 0; i < iterations.length; i += 1) {
+	    if (iterations[i]) iterations[i].d(detaching);
+	  }
 	}
 
 	function element(name) {
@@ -4548,6 +4562,18 @@ var app = (function () {
 	    data: data
 	  });
 	  text.data = data;
+	}
+
+	function validate_each_argument(arg) {
+	  if (typeof arg !== 'string' && !(arg && _typeof(arg) === 'object' && 'length' in arg)) {
+	    var msg = '{#each} only iterates over array-like objects.';
+
+	    if (typeof Symbol === 'function' && arg && Symbol.iterator in arg) {
+	      msg += ' You can use a spread to convert this iterable into an array.';
+	    }
+
+	    throw new Error(msg);
+	  }
 	}
 
 	function validate_slots(name, slot, keys) {
@@ -18608,8 +18634,8 @@ var app = (function () {
 	      i = element("i");
 	      i.textContent = "language";
 	      attr_dev(i, "class", "material-icons");
-	      add_location(i, file$1, 18, 2, 434);
-	      attr_dev(button, "class", "btn-floating btn-large waves-effect waves-light teal");
+	      add_location(i, file$1, 18, 2, 440);
+	      attr_dev(button, "class", "btn-floating btn-large waves-effect waves-light custom-red");
 	      set_style(button, "margin-left", "20px");
 	      add_location(button, file$1, 14, 0, 303);
 	    },
@@ -18726,13 +18752,484 @@ var app = (function () {
 	  return TranslateButton;
 	}(SvelteComponentDev);
 
+	var cart = writable({});
+
 	function _createSuper$5(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$5()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 	function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-	var file$2 = "src/pages/Home.svelte";
+
+	function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var file$2 = "src/components/ProductCard.svelte";
 
 	function create_fragment$4(ctx) {
+	  var div4;
+	  var div3;
+	  var div2;
+	  var div0;
+	  var img_1;
+	  var img_1_src_value;
+	  var t0;
+	  var a;
+	  var i;
+	  var t2;
+	  var div1;
+	  var h5;
+	  var t4;
+	  var p;
+	  var block = {
+	    c: function create() {
+	      div4 = element("div");
+	      div3 = element("div");
+	      div2 = element("div");
+	      div0 = element("div");
+	      img_1 = element("img");
+	      t0 = space();
+	      a = element("a");
+	      i = element("i");
+	      i.textContent = "add";
+	      t2 = space();
+	      div1 = element("div");
+	      h5 = element("h5");
+	      h5.textContent = "".concat(
+	      /*price*/
+	      ctx[2]);
+	      t4 = space();
+	      p = element("p");
+	      p.textContent = "".concat(
+	      /*name*/
+	      ctx[1]);
+	      if (img_1.src !== (img_1_src_value =
+	      /*img*/
+	      ctx[0])) attr_dev(img_1, "src", img_1_src_value);
+	      add_location(img_1, file$2, 24, 8, 526);
+	      attr_dev(i, "class", "material-icons");
+	      add_location(i, file$2, 26, 10, 628);
+	      attr_dev(a, "class", "btn-floating halfway-fab waves-effect waves-light red");
+	      add_location(a, file$2, 25, 8, 552);
+	      attr_dev(div0, "class", "card-image");
+	      add_location(div0, file$2, 23, 6, 493);
+	      add_location(h5, file$2, 30, 8, 729);
+	      add_location(p, file$2, 31, 8, 754);
+	      attr_dev(div1, "class", "card-content");
+	      add_location(div1, file$2, 29, 6, 694);
+	      attr_dev(div2, "class", "card");
+	      add_location(div2, file$2, 22, 4, 468);
+	      attr_dev(div3, "class", "row");
+	      add_location(div3, file$2, 21, 2, 446);
+	      attr_dev(div4, "class", "col s4");
+	      add_location(div4, file$2, 20, 0, 423);
+	    },
+	    l: function claim(nodes) {
+	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+	    },
+	    m: function mount(target, anchor) {
+	      insert_dev(target, div4, anchor);
+	      append_dev(div4, div3);
+	      append_dev(div3, div2);
+	      append_dev(div2, div0);
+	      append_dev(div0, img_1);
+	      append_dev(div0, t0);
+	      append_dev(div0, a);
+	      append_dev(a, i);
+	      append_dev(div2, t2);
+	      append_dev(div2, div1);
+	      append_dev(div1, h5);
+	      append_dev(div1, t4);
+	      append_dev(div1, p);
+	    },
+	    p: function update(ctx, _ref) {
+	      var _ref2 = _slicedToArray(_ref, 1),
+	          dirty = _ref2[0];
+
+	      if (dirty &
+	      /*img*/
+	      1 && img_1.src !== (img_1_src_value =
+	      /*img*/
+	      ctx[0])) {
+	        attr_dev(img_1, "src", img_1_src_value);
+	      }
+	    },
+	    i: noop,
+	    o: noop,
+	    d: function destroy(detaching) {
+	      if (detaching) detach_dev(div4);
+	    }
+	  };
+	  dispatch_dev("SvelteRegisterBlock", {
+	    block: block,
+	    id: create_fragment$4.name,
+	    type: "component",
+	    source: "",
+	    ctx: ctx
+	  });
+	  return block;
+	}
+
+	function instance$4($$self, $$props, $$invalidate) {
+	  var item = $$props.item;
+	  var _item = item,
+	      img = _item.img,
+	      name = _item.name,
+	      price = _item.price;
+	  img = "img/".concat(img);
+	  var cartItems = get_store_value(cart);
+	  var inCart = cartItems[name] ? cartItems[name].count : 0;
+
+	  function addToCart() {
+	    inCart++;
+	    cart.update(function (n) {
+	      return _objectSpread$1({}, n, _defineProperty({}, name, _objectSpread$1({}, item, {
+	        count: inCart
+	      })));
+	    });
+	  }
+
+	  var writable_props = ["item"];
+	  Object.keys($$props).forEach(function (key) {
+	    if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<ProductCard> was created with unknown prop '".concat(key, "'"));
+	  });
+	  var _$$props$$$slots = $$props.$$slots,
+	      $$slots = _$$props$$$slots === void 0 ? {} : _$$props$$$slots,
+	      $$scope = $$props.$$scope;
+	  validate_slots("ProductCard", $$slots, []);
+
+	  $$self.$set = function ($$props) {
+	    if ("item" in $$props) $$invalidate(3, item = $$props.item);
+	  };
+
+	  $$self.$capture_state = function () {
+	    return {
+	      get: get_store_value,
+	      cart: cart,
+	      item: item,
+	      img: img,
+	      name: name,
+	      price: price,
+	      cartItems: cartItems,
+	      inCart: inCart,
+	      addToCart: addToCart
+	    };
+	  };
+
+	  $$self.$inject_state = function ($$props) {
+	    if ("item" in $$props) $$invalidate(3, item = $$props.item);
+	    if ("img" in $$props) $$invalidate(0, img = $$props.img);
+	    if ("name" in $$props) $$invalidate(1, name = $$props.name);
+	    if ("price" in $$props) $$invalidate(2, price = $$props.price);
+	    if ("inCart" in $$props) inCart = $$props.inCart;
+	  };
+
+	  if ($$props && "$$inject" in $$props) {
+	    $$self.$inject_state($$props.$$inject);
+	  }
+
+	  return [img, name, price, item];
+	}
+
+	var ProductCard = /*#__PURE__*/function (_SvelteComponentDev) {
+	  _inherits(ProductCard, _SvelteComponentDev);
+
+	  var _super = _createSuper$5(ProductCard);
+
+	  function ProductCard(options) {
+	    var _this;
+
+	    _classCallCheck(this, ProductCard);
+
+	    _this = _super.call(this, options);
+	    init(_assertThisInitialized(_this), options, instance$4, create_fragment$4, safe_not_equal, {
+	      item: 3
+	    });
+	    dispatch_dev("SvelteRegisterComponent", {
+	      component: _assertThisInitialized(_this),
+	      tagName: "ProductCard",
+	      options: options,
+	      id: create_fragment$4.name
+	    });
+	    var ctx = _this.$$.ctx;
+	    var props = options.props || {};
+
+	    if (
+	    /*item*/
+	    ctx[3] === undefined && !("item" in props)) {
+	      console.warn("<ProductCard> was created without expected prop 'item'");
+	    }
+
+	    return _this;
+	  }
+
+	  _createClass(ProductCard, [{
+	    key: "item",
+	    get: function get() {
+	      throw new Error("<ProductCard>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	    },
+	    set: function set(value) {
+	      throw new Error("<ProductCard>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+	    }
+	  }]);
+
+	  return ProductCard;
+	}(SvelteComponentDev);
+
+	var items = [{
+	  name: 'Golden Bamboo Watch',
+	  price: '5,000,000',
+	  img: 'watch-bamboo.jpg'
+	}, {
+	  name: 'HomieBrew Coffee',
+	  price: '2,000',
+	  img: 'coffee.jpg'
+	}, {
+	  name: 'Fancy Turqoise Watch',
+	  price: '50,000',
+	  img: 'watch-turqoise.jpg'
+	}, {
+	  name: 'Gold Necklace',
+	  price: '5,000,000',
+	  img: 'dainty-gold-necklace.jpg'
+	}, {
+	  name: 'Floral Iphone Cases',
+	  price: '4,000',
+	  img: 'floral-iphone-cases.jpg'
+	}, {
+	  name: 'Mi Band',
+	  price: '12,000',
+	  img: 'mi-band.jpg'
+	}, {
+	  name: 'Dapper T Shirt Blue',
+	  price: '2,670',
+	  img: 't-shirt.jpg'
+	}, {
+	  name: 'Red Purse with Gold',
+	  price: '90,000',
+	  img: 'red-gold-purse.jpg'
+	}, {
+	  name: 'Sweet Backpack',
+	  price: '5,000',
+	  img: 'backpack.jpg'
+	}];
+
+	function _createSuper$6(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$6()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	var file$3 = "src/components/CardWrapper.svelte";
+
+	function get_each_context(ctx, list, i) {
+	  var child_ctx = ctx.slice();
+	  child_ctx[0] = list[i];
+	  return child_ctx;
+	} // (10:2) {#each items as item}
+
+
+	function create_each_block(ctx) {
+	  var current;
+	  var card = new ProductCard({
+	    props: {
+	      item:
+	      /*item*/
+	      ctx[0]
+	    },
+	    $$inline: true
+	  });
+	  var block = {
+	    c: function create() {
+	      create_component(card.$$.fragment);
+	    },
+	    m: function mount(target, anchor) {
+	      mount_component(card, target, anchor);
+	      current = true;
+	    },
+	    p: noop,
+	    i: function intro(local) {
+	      if (current) return;
+	      transition_in(card.$$.fragment, local);
+	      current = true;
+	    },
+	    o: function outro(local) {
+	      transition_out(card.$$.fragment, local);
+	      current = false;
+	    },
+	    d: function destroy(detaching) {
+	      destroy_component(card, detaching);
+	    }
+	  };
+	  dispatch_dev("SvelteRegisterBlock", {
+	    block: block,
+	    id: create_each_block.name,
+	    type: "each",
+	    source: "(10:2) {#each items as item}",
+	    ctx: ctx
+	  });
+	  return block;
+	}
+
+	function create_fragment$5(ctx) {
 	  var div;
+	  var current;
+	  var each_value = items;
+	  validate_each_argument(each_value);
+	  var each_blocks = [];
+
+	  for (var i = 0; i < each_value.length; i += 1) {
+	    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+	  }
+
+	  var out = function out(i) {
+	    return transition_out(each_blocks[i], 1, 1, function () {
+	      each_blocks[i] = null;
+	    });
+	  };
+
+	  var block = {
+	    c: function create() {
+	      div = element("div");
+
+	      for (var _i = 0; _i < each_blocks.length; _i += 1) {
+	        each_blocks[_i].c();
+	      }
+
+	      attr_dev(div, "class", "row");
+	      add_location(div, file$3, 8, 0, 128);
+	    },
+	    l: function claim(nodes) {
+	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+	    },
+	    m: function mount(target, anchor) {
+	      insert_dev(target, div, anchor);
+
+	      for (var _i2 = 0; _i2 < each_blocks.length; _i2 += 1) {
+	        each_blocks[_i2].m(div, null);
+	      }
+
+	      current = true;
+	    },
+	    p: function update(ctx, _ref) {
+	      var _ref2 = _slicedToArray(_ref, 1),
+	          dirty = _ref2[0];
+
+	      if (dirty &
+	      /*items*/
+	      0) {
+	        each_value = items;
+	        validate_each_argument(each_value);
+
+	        var _i3;
+
+	        for (_i3 = 0; _i3 < each_value.length; _i3 += 1) {
+	          var child_ctx = get_each_context(ctx, each_value, _i3);
+
+	          if (each_blocks[_i3]) {
+	            each_blocks[_i3].p(child_ctx, dirty);
+
+	            transition_in(each_blocks[_i3], 1);
+	          } else {
+	            each_blocks[_i3] = create_each_block(child_ctx);
+
+	            each_blocks[_i3].c();
+
+	            transition_in(each_blocks[_i3], 1);
+
+	            each_blocks[_i3].m(div, null);
+	          }
+	        }
+
+	        group_outros();
+
+	        for (_i3 = each_value.length; _i3 < each_blocks.length; _i3 += 1) {
+	          out(_i3);
+	        }
+
+	        check_outros();
+	      }
+	    },
+	    i: function intro(local) {
+	      if (current) return;
+
+	      for (var _i4 = 0; _i4 < each_value.length; _i4 += 1) {
+	        transition_in(each_blocks[_i4]);
+	      }
+
+	      current = true;
+	    },
+	    o: function outro(local) {
+	      each_blocks = each_blocks.filter(Boolean);
+
+	      for (var _i5 = 0; _i5 < each_blocks.length; _i5 += 1) {
+	        transition_out(each_blocks[_i5]);
+	      }
+
+	      current = false;
+	    },
+	    d: function destroy(detaching) {
+	      if (detaching) detach_dev(div);
+	      destroy_each(each_blocks, detaching);
+	    }
+	  };
+	  dispatch_dev("SvelteRegisterBlock", {
+	    block: block,
+	    id: create_fragment$5.name,
+	    type: "component",
+	    source: "",
+	    ctx: ctx
+	  });
+	  return block;
+	}
+
+	function instance$5($$self, $$props, $$invalidate) {
+	  var writable_props = [];
+	  Object.keys($$props).forEach(function (key) {
+	    if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn("<CardWrapper> was created with unknown prop '".concat(key, "'"));
+	  });
+	  var _$$props$$$slots = $$props.$$slots,
+	      $$slots = _$$props$$$slots === void 0 ? {} : _$$props$$$slots,
+	      $$scope = $$props.$$scope;
+	  validate_slots("CardWrapper", $$slots, []);
+
+	  $$self.$capture_state = function () {
+	    return {
+	      Card: ProductCard,
+	      items: items
+	    };
+	  };
+
+	  return [];
+	}
+
+	var CardWrapper = /*#__PURE__*/function (_SvelteComponentDev) {
+	  _inherits(CardWrapper, _SvelteComponentDev);
+
+	  var _super = _createSuper$6(CardWrapper);
+
+	  function CardWrapper(options) {
+	    var _this;
+
+	    _classCallCheck(this, CardWrapper);
+
+	    _this = _super.call(this, options);
+	    init(_assertThisInitialized(_this), options, instance$5, create_fragment$5, safe_not_equal, {});
+	    dispatch_dev("SvelteRegisterComponent", {
+	      component: _assertThisInitialized(_this),
+	      tagName: "CardWrapper",
+	      options: options,
+	      id: create_fragment$5.name
+	    });
+	    return _this;
+	  }
+
+	  return CardWrapper;
+	}(SvelteComponentDev);
+
+	function _createSuper$7(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$7()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	var file$4 = "src/pages/Home.svelte";
+
+	function create_fragment$6(ctx) {
+	  var div0;
+	  var t;
+	  var div1;
 	  var current;
 	  var translatebutton = new TranslateButton({
 	    props: {
@@ -18745,20 +19242,31 @@ var app = (function () {
 	  translatebutton.$on("locale-changed",
 	  /*locale_changed_handler*/
 	  ctx[1]);
+	  var cardwrapper = new CardWrapper({
+	    $$inline: true
+	  });
 	  var block = {
 	    c: function create() {
-	      div = element("div");
+	      div0 = element("div");
 	      create_component(translatebutton.$$.fragment);
-	      attr_dev(div, "class", "container right-align");
-	      set_style(div, "margin-top", "30px");
-	      add_location(div, file$2, 5, 0, 162);
+	      t = space();
+	      div1 = element("div");
+	      create_component(cardwrapper.$$.fragment);
+	      attr_dev(div0, "class", "container right-align");
+	      set_style(div0, "margin-top", "30px");
+	      add_location(div0, file$4, 7, 0, 286);
+	      attr_dev(div1, "class", "container");
+	      add_location(div1, file$4, 12, 0, 462);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 	    },
 	    m: function mount(target, anchor) {
-	      insert_dev(target, div, anchor);
-	      mount_component(translatebutton, div, null);
+	      insert_dev(target, div0, anchor);
+	      mount_component(translatebutton, div0, null);
+	      insert_dev(target, t, anchor);
+	      insert_dev(target, div1, anchor);
+	      mount_component(cardwrapper, div1, null);
 	      current = true;
 	    },
 	    p: function update(ctx, _ref) {
@@ -18776,20 +19284,25 @@ var app = (function () {
 	    i: function intro(local) {
 	      if (current) return;
 	      transition_in(translatebutton.$$.fragment, local);
+	      transition_in(cardwrapper.$$.fragment, local);
 	      current = true;
 	    },
 	    o: function outro(local) {
 	      transition_out(translatebutton.$$.fragment, local);
+	      transition_out(cardwrapper.$$.fragment, local);
 	      current = false;
 	    },
 	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(div);
+	      if (detaching) detach_dev(div0);
 	      destroy_component(translatebutton);
+	      if (detaching) detach_dev(t);
+	      if (detaching) detach_dev(div1);
+	      destroy_component(cardwrapper);
 	    }
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
-	    id: create_fragment$4.name,
+	    id: create_fragment$6.name,
 	    type: "component",
 	    source: "",
 	    ctx: ctx
@@ -18797,7 +19310,7 @@ var app = (function () {
 	  return block;
 	}
 
-	function instance$4($$self, $$props, $$invalidate) {
+	function instance$6($$self, $$props, $$invalidate) {
 	  var $locale;
 	  validate_store(j$2, "locale");
 	  component_subscribe($$self, j$2, function ($$value) {
@@ -18824,6 +19337,8 @@ var app = (function () {
 	      isLocaleLoaded: isLocaleLoaded,
 	      locale: j$2,
 	      TranslateButton: TranslateButton,
+	      ProductCard: ProductCard,
+	      CardWrapper: CardWrapper,
 	      $locale: $locale
 	    };
 	  };
@@ -18834,7 +19349,7 @@ var app = (function () {
 	var Home = /*#__PURE__*/function (_SvelteComponentDev) {
 	  _inherits(Home, _SvelteComponentDev);
 
-	  var _super = _createSuper$5(Home);
+	  var _super = _createSuper$7(Home);
 
 	  function Home(options) {
 	    var _this;
@@ -18842,12 +19357,12 @@ var app = (function () {
 	    _classCallCheck(this, Home);
 
 	    _this = _super.call(this, options);
-	    init(_assertThisInitialized(_this), options, instance$4, create_fragment$4, safe_not_equal, {});
+	    init(_assertThisInitialized(_this), options, instance$6, create_fragment$6, safe_not_equal, {});
 	    dispatch_dev("SvelteRegisterComponent", {
 	      component: _assertThisInitialized(_this),
 	      tagName: "Home",
 	      options: options,
-	      id: create_fragment$4.name
+	      id: create_fragment$6.name
 	    });
 	    return _this;
 	  }
@@ -18855,12 +19370,12 @@ var app = (function () {
 	  return Home;
 	}(SvelteComponentDev);
 
-	function _createSuper$6(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$6()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _createSuper$8(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$8()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-	function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-	var file$3 = "src/pages/About.svelte";
+	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	var file$5 = "src/pages/About.svelte";
 
-	function create_fragment$5(ctx) {
+	function create_fragment$7(ctx) {
 	  var div;
 	  var current;
 	  var translatebutton = new TranslateButton({
@@ -18880,7 +19395,7 @@ var app = (function () {
 	      create_component(translatebutton.$$.fragment);
 	      attr_dev(div, "class", "container right-align");
 	      set_style(div, "margin-top", "30px");
-	      add_location(div, file$3, 5, 0, 162);
+	      add_location(div, file$5, 5, 0, 162);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -18918,7 +19433,7 @@ var app = (function () {
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
-	    id: create_fragment$5.name,
+	    id: create_fragment$7.name,
 	    type: "component",
 	    source: "",
 	    ctx: ctx
@@ -18926,7 +19441,7 @@ var app = (function () {
 	  return block;
 	}
 
-	function instance$5($$self, $$props, $$invalidate) {
+	function instance$7($$self, $$props, $$invalidate) {
 	  var $locale;
 	  validate_store(j$2, "locale");
 	  component_subscribe($$self, j$2, function ($$value) {
@@ -18963,7 +19478,7 @@ var app = (function () {
 	var About = /*#__PURE__*/function (_SvelteComponentDev) {
 	  _inherits(About, _SvelteComponentDev);
 
-	  var _super = _createSuper$6(About);
+	  var _super = _createSuper$8(About);
 
 	  function About(options) {
 	    var _this;
@@ -18971,12 +19486,12 @@ var app = (function () {
 	    _classCallCheck(this, About);
 
 	    _this = _super.call(this, options);
-	    init(_assertThisInitialized(_this), options, instance$5, create_fragment$5, safe_not_equal, {});
+	    init(_assertThisInitialized(_this), options, instance$7, create_fragment$7, safe_not_equal, {});
 	    dispatch_dev("SvelteRegisterComponent", {
 	      component: _assertThisInitialized(_this),
 	      tagName: "About",
 	      options: options,
-	      id: create_fragment$5.name
+	      id: create_fragment$7.name
 	    });
 	    return _this;
 	  }
@@ -18984,19 +19499,19 @@ var app = (function () {
 	  return About;
 	}(SvelteComponentDev);
 
-	function _createSuper$7(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$7()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _createSuper$9(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$9()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-	function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-	var file$4 = "src/components/Navbar.svelte"; // (15:6) <Link to="/">
+	function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	var file$6 = "src/components/Navbar.svelte"; // (27:6) <Link to="/">
 
 	function create_default_slot_4(ctx) {
 	  var span;
 	  var block = {
 	    c: function create() {
 	      span = element("span");
-	      span.textContent = "Template";
+	      span.textContent = "Privacy Minded";
 	      attr_dev(span, "class", "brand-logo");
-	      add_location(span, file$4, 15, 8, 326);
+	      add_location(span, file$6, 27, 8, 406);
 	    },
 	    m: function mount(target, anchor) {
 	      insert_dev(target, span, anchor);
@@ -19009,11 +19524,11 @@ var app = (function () {
 	    block: block,
 	    id: create_default_slot_4.name,
 	    type: "slot",
-	    source: "(15:6) <Link to=\\\"/\\\">",
+	    source: "(27:6) <Link to=\\\"/\\\">",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (20:10) <Link to="/">
+	} // (32:10) <Link to="/">
 
 
 	function create_default_slot_3(ctx) {
@@ -19043,11 +19558,11 @@ var app = (function () {
 	    block: block,
 	    id: create_default_slot_3.name,
 	    type: "slot",
-	    source: "(20:10) <Link to=\\\"/\\\">",
+	    source: "(32:10) <Link to=\\\"/\\\">",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (23:10) <Link to="/about">
+	} // (35:10) <Link to="/about">
 
 
 	function create_default_slot_2(ctx) {
@@ -19077,11 +19592,11 @@ var app = (function () {
 	    block: block,
 	    id: create_default_slot_2.name,
 	    type: "slot",
-	    source: "(23:10) <Link to=\\\"/about\\\">",
+	    source: "(35:10) <Link to=\\\"/about\\\">",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (32:4) <Link to="/">
+	} // (44:4) <Link to="/">
 
 
 	function create_default_slot_1(ctx) {
@@ -19111,11 +19626,11 @@ var app = (function () {
 	    block: block,
 	    id: create_default_slot_1.name,
 	    type: "slot",
-	    source: "(32:4) <Link to=\\\"/\\\">",
+	    source: "(44:4) <Link to=\\\"/\\\">",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (35:4) <Link to="/about">
+	} // (47:4) <Link to="/about">
 
 
 	function create_default_slot(ctx) {
@@ -19145,13 +19660,13 @@ var app = (function () {
 	    block: block,
 	    id: create_default_slot.name,
 	    type: "slot",
-	    source: "(35:4) <Link to=\\\"/about\\\">",
+	    source: "(47:4) <Link to=\\\"/about\\\">",
 	    ctx: ctx
 	  });
 	  return block;
 	}
 
-	function create_fragment$6(ctx) {
+	function create_fragment$8(ctx) {
 	  var nav;
 	  var div1;
 	  var a0;
@@ -19261,29 +19776,29 @@ var app = (function () {
 	      a1 = element("a");
 	      a1.textContent = "www.seanbase.com";
 	      attr_dev(i, "class", "material-icons");
-	      add_location(i, file$4, 11, 6, 226);
+	      add_location(i, file$6, 23, 6, 306);
 	      attr_dev(a0, "href", "#");
 	      attr_dev(a0, "data-target", "mobile-demo");
 	      attr_dev(a0, "class", "sidenav-trigger");
-	      add_location(a0, file$4, 7, 4, 139);
-	      add_location(li0, file$4, 18, 8, 449);
-	      add_location(li1, file$4, 21, 8, 528);
+	      add_location(a0, file$6, 19, 4, 219);
+	      add_location(li0, file$6, 30, 8, 535);
+	      add_location(li1, file$6, 33, 8, 614);
 	      attr_dev(ul0, "id", "nav-mobile");
 	      attr_dev(ul0, "class", "right hide-on-small-only");
-	      add_location(ul0, file$4, 17, 6, 387);
+	      add_location(ul0, file$6, 29, 6, 473);
 	      attr_dev(div0, "class", "container");
-	      add_location(div0, file$4, 13, 4, 274);
-	      attr_dev(div1, "class", "nav-wrapper");
-	      add_location(div1, file$4, 6, 2, 109);
-	      add_location(nav, file$4, 5, 0, 101);
-	      add_location(li2, file$4, 30, 2, 685);
-	      add_location(li3, file$4, 33, 2, 746);
+	      add_location(div0, file$6, 25, 4, 354);
+	      attr_dev(div1, "class", "nav-wrapper custom-grey");
+	      add_location(div1, file$6, 18, 2, 177);
+	      add_location(nav, file$6, 17, 0, 169);
+	      add_location(li2, file$6, 42, 2, 771);
+	      add_location(li3, file$6, 45, 2, 832);
 	      attr_dev(a1, "href", "http://www.seanbase.com");
-	      add_location(a1, file$4, 37, 4, 822);
-	      add_location(li4, file$4, 36, 2, 813);
+	      add_location(a1, file$6, 49, 4, 908);
+	      add_location(li4, file$6, 48, 2, 899);
 	      attr_dev(ul1, "class", "sidenav");
 	      attr_dev(ul1, "id", "mobile-demo");
-	      add_location(ul1, file$4, 29, 0, 645);
+	      add_location(ul1, file$6, 41, 0, 731);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -19410,7 +19925,7 @@ var app = (function () {
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
-	    id: create_fragment$6.name,
+	    id: create_fragment$8.name,
 	    type: "component",
 	    source: "",
 	    ctx: ctx
@@ -19418,7 +19933,7 @@ var app = (function () {
 	  return block;
 	}
 
-	function instance$6($$self, $$props, $$invalidate) {
+	function instance$8($$self, $$props, $$invalidate) {
 	  var $_;
 	  validate_store(X, "_");
 	  component_subscribe($$self, X, function ($$value) {
@@ -19447,7 +19962,7 @@ var app = (function () {
 	var Navbar = /*#__PURE__*/function (_SvelteComponentDev) {
 	  _inherits(Navbar, _SvelteComponentDev);
 
-	  var _super = _createSuper$7(Navbar);
+	  var _super = _createSuper$9(Navbar);
 
 	  function Navbar(options) {
 	    var _this;
@@ -19455,12 +19970,12 @@ var app = (function () {
 	    _classCallCheck(this, Navbar);
 
 	    _this = _super.call(this, options);
-	    init(_assertThisInitialized(_this), options, instance$6, create_fragment$6, safe_not_equal, {});
+	    init(_assertThisInitialized(_this), options, instance$8, create_fragment$8, safe_not_equal, {});
 	    dispatch_dev("SvelteRegisterComponent", {
 	      component: _assertThisInitialized(_this),
 	      tagName: "Navbar",
 	      options: options,
-	      id: create_fragment$6.name
+	      id: create_fragment$8.name
 	    });
 	    return _this;
 	  }
@@ -19468,10 +19983,10 @@ var app = (function () {
 	  return Navbar;
 	}(SvelteComponentDev);
 
-	function _createSuper$8(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$8()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+	function _createSuper$a(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct$a()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-	function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-	var file$5 = "src/App.svelte"; // (23:0) {:else}
+	function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	var file$7 = "src/App.svelte"; // (23:0) {:else}
 
 	function create_else_block$1(ctx) {
 	  var p;
@@ -19479,7 +19994,7 @@ var app = (function () {
 	    c: function create() {
 	      p = element("p");
 	      p.textContent = "Loading...";
-	      add_location(p, file$5, 23, 2, 692);
+	      add_location(p, file$7, 23, 2, 692);
 	    },
 	    m: function mount(target, anchor) {
 	      insert_dev(target, p, anchor);
@@ -19630,7 +20145,7 @@ var app = (function () {
 	  return block;
 	}
 
-	function create_fragment$7(ctx) {
+	function create_fragment$9(ctx) {
 	  var current_block_type_index;
 	  var if_block;
 	  var if_block_anchor;
@@ -19702,7 +20217,7 @@ var app = (function () {
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
-	    id: create_fragment$7.name,
+	    id: create_fragment$9.name,
 	    type: "component",
 	    source: "",
 	    ctx: ctx
@@ -19710,7 +20225,7 @@ var app = (function () {
 	  return block;
 	}
 
-	function instance$7($$self, $$props, $$invalidate) {
+	function instance$9($$self, $$props, $$invalidate) {
 	  var $isLocaleLoaded;
 	  validate_store(isLocaleLoaded, "isLocaleLoaded");
 	  component_subscribe($$self, isLocaleLoaded, function ($$value) {
@@ -19758,7 +20273,7 @@ var app = (function () {
 	var App = /*#__PURE__*/function (_SvelteComponentDev) {
 	  _inherits(App, _SvelteComponentDev);
 
-	  var _super = _createSuper$8(App);
+	  var _super = _createSuper$a(App);
 
 	  function App(options) {
 	    var _this;
@@ -19766,12 +20281,12 @@ var app = (function () {
 	    _classCallCheck(this, App);
 
 	    _this = _super.call(this, options);
-	    init(_assertThisInitialized(_this), options, instance$7, create_fragment$7, safe_not_equal, {});
+	    init(_assertThisInitialized(_this), options, instance$9, create_fragment$9, safe_not_equal, {});
 	    dispatch_dev("SvelteRegisterComponent", {
 	      component: _assertThisInitialized(_this),
 	      tagName: "App",
 	      options: options,
-	      id: create_fragment$7.name
+	      id: create_fragment$9.name
 	    });
 	    return _this;
 	  }

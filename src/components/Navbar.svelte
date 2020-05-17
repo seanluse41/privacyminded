@@ -12,10 +12,11 @@
 #eae8ff
 #d8d5db */
 
+
 </style>
 
 <nav>
-  <div class="nav-wrapper">
+  <div class="nav-wrapper custom-grey">
     <a
       href="#"
       data-target="mobile-demo"
@@ -24,7 +25,7 @@
     </a>
     <div class="container">
       <Link to="/">
-        <span class="brand-logo">Template</span>
+        <span class="brand-logo">Privacy Minded</span>
       </Link>
       <ul id="nav-mobile" class="right hide-on-small-only">
         <li>
