@@ -18625,25 +18625,30 @@ var app = (function () {
 	var file$1 = "src/components/TranslateButton.svelte";
 
 	function create_fragment$3(ctx) {
+	  var div;
 	  var button;
 	  var i;
 	  var dispose;
 	  var block = {
 	    c: function create() {
+	      div = element("div");
 	      button = element("button");
 	      i = element("i");
-	      i.textContent = "language";
+	      i.textContent = "g_translate";
 	      attr_dev(i, "class", "material-icons");
-	      add_location(i, file$1, 18, 2, 440);
-	      attr_dev(button, "class", "btn-floating btn-large waves-effect waves-light custom-red");
+	      add_location(i, file$1, 18, 2, 463);
+	      attr_dev(button, "class", "btn-floating btn-large waves-effect waves-light red");
 	      set_style(button, "margin-left", "20px");
-	      add_location(button, file$1, 14, 0, 303);
+	      add_location(button, file$1, 14, 0, 333);
+	      attr_dev(div, "class", "fixed-action-btn");
+	      add_location(div, file$1, 13, 0, 302);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 	    },
 	    m: function mount(target, anchor, remount) {
-	      insert_dev(target, button, anchor);
+	      insert_dev(target, div, anchor);
+	      append_dev(div, button);
 	      append_dev(button, i);
 	      if (remount) dispose();
 	      dispose = listen_dev(button, "click",
@@ -18654,7 +18659,7 @@ var app = (function () {
 	    i: noop,
 	    o: noop,
 	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(button);
+	      if (detaching) detach_dev(div);
 	      dispose();
 	    }
 	  };
@@ -18788,7 +18793,7 @@ var app = (function () {
 	      t0 = space();
 	      a = element("a");
 	      i = element("i");
-	      i.textContent = "add";
+	      i.textContent = "add_shopping_cart";
 	      t2 = space();
 	      div1 = element("div");
 	      h5 = element("h5");
@@ -18803,18 +18808,18 @@ var app = (function () {
 	      if (img_1.src !== (img_1_src_value =
 	      /*img*/
 	      ctx[0])) attr_dev(img_1, "src", img_1_src_value);
-	      add_location(img_1, file$2, 24, 8, 526);
+	      add_location(img_1, file$2, 24, 8, 551);
 	      attr_dev(i, "class", "material-icons");
-	      add_location(i, file$2, 26, 10, 628);
+	      add_location(i, file$2, 26, 10, 653);
 	      attr_dev(a, "class", "btn-floating halfway-fab waves-effect waves-light red");
-	      add_location(a, file$2, 25, 8, 552);
-	      attr_dev(div0, "class", "card-image");
-	      add_location(div0, file$2, 23, 6, 493);
-	      add_location(h5, file$2, 30, 8, 729);
-	      add_location(p, file$2, 31, 8, 754);
+	      add_location(a, file$2, 25, 8, 577);
+	      attr_dev(div0, "class", "card-image img-responsive");
+	      add_location(div0, file$2, 23, 6, 503);
+	      add_location(h5, file$2, 30, 8, 768);
+	      add_location(p, file$2, 31, 8, 793);
 	      attr_dev(div1, "class", "card-content");
-	      add_location(div1, file$2, 29, 6, 694);
-	      attr_dev(div2, "class", "card");
+	      add_location(div1, file$2, 29, 6, 733);
+	      attr_dev(div2, "class", "card hoverable");
 	      add_location(div2, file$2, 22, 4, 468);
 	      attr_dev(div3, "class", "row");
 	      add_location(div3, file$2, 21, 2, 446);
@@ -19227,9 +19232,8 @@ var app = (function () {
 	var file$4 = "src/pages/Home.svelte";
 
 	function create_fragment$6(ctx) {
-	  var div0;
 	  var t;
-	  var div1;
+	  var div;
 	  var current;
 	  var translatebutton = new TranslateButton({
 	    props: {
@@ -19247,26 +19251,22 @@ var app = (function () {
 	  });
 	  var block = {
 	    c: function create() {
-	      div0 = element("div");
 	      create_component(translatebutton.$$.fragment);
 	      t = space();
-	      div1 = element("div");
+	      div = element("div");
 	      create_component(cardwrapper.$$.fragment);
-	      attr_dev(div0, "class", "container right-align");
-	      set_style(div0, "margin-top", "30px");
-	      add_location(div0, file$4, 7, 0, 286);
-	      attr_dev(div1, "class", "container");
-	      add_location(div1, file$4, 12, 0, 462);
+	      attr_dev(div, "class", "container");
+	      set_style(div, "margin-top", "10px");
+	      add_location(div, file$4, 10, 0, 393);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 	    },
 	    m: function mount(target, anchor) {
-	      insert_dev(target, div0, anchor);
-	      mount_component(translatebutton, div0, null);
+	      mount_component(translatebutton, target, anchor);
 	      insert_dev(target, t, anchor);
-	      insert_dev(target, div1, anchor);
-	      mount_component(cardwrapper, div1, null);
+	      insert_dev(target, div, anchor);
+	      mount_component(cardwrapper, div, null);
 	      current = true;
 	    },
 	    p: function update(ctx, _ref) {
@@ -19293,10 +19293,9 @@ var app = (function () {
 	      current = false;
 	    },
 	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(div0);
-	      destroy_component(translatebutton);
+	      destroy_component(translatebutton, detaching);
 	      if (detaching) detach_dev(t);
-	      if (detaching) detach_dev(div1);
+	      if (detaching) detach_dev(div);
 	      destroy_component(cardwrapper);
 	    }
 	  };

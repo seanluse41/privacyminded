@@ -5,11 +5,9 @@
   import CardWrapper from "../components/CardWrapper.svelte";
 </script>
 
-<div class="container right-align" style="margin-top: 30px;">
   <TranslateButton
     value={$locale}
     on:locale-changed={e => setupI18n({ withLocale: e.detail })} />
-</div>
-<div class="container">
+<div class="container" style="margin-top:10px;">
   <CardWrapper />
 </div>

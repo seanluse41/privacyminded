@@ -20,11 +20,11 @@
 
 <div class="col s4">
   <div class="row">
-    <div class="card">
-      <div class="card-image">
+    <div class="card hoverable">
+      <div class="card-image img-responsive">
         <img src={img} />
         <a class="btn-floating halfway-fab waves-effect waves-light red">
-          <i class="material-icons">add</i>
+          <i class="material-icons">add_shopping_cart</i>
         </a>
       </div>
       <div class="card-content">
