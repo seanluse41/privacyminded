@@ -1,37 +1,25 @@
 <script>
   import { get } from "svelte/store";
-//  import { cart } from "../stores/stores.js";
+  import { cart } from "../stores/stores.js";
   export let item;
   let { img, name, price, sku } = item;
   img = `img/${img}`;
-  // const cartItems = get(cart);
-  // let inCart = cartItems[name] ? cartItems[name].count : 0;
-  // function addToCart() {
-  //   inCart++;
-  //   cart.update(n => {
-  //     return { ...n, [name]: { ...item, count: inCart } };
-  //   });
-  //}
+  const cartItems = get(cart);
+  let inCart = cartItems[name] ? cartItems[name].count : 0;
 
-  let stripe = Stripe("pk_test_N2Kfa6ezxQc8rld0adGzibAV00OLGaocEP");
-
-  // Basic Checkout
-  async function startCheckout() {
-    console.log("checkout started");
-    const { error } = await stripe.redirectToCheckout({
-      items: [{ sku, quantity: 1 }],
-
-      successUrl: "https://localhost:5000/success",
-      cancelUrl: "https://localhost:5000/error"
+function addToCart() {
+    inCart++;
+    cart.update(n => {
+      return { ...n, [name]: { ...item, count: inCart } };
     });
-
-    if (error) {
-      alert("our payment system is broken!");
-    }
+    console.log(inCart);
+    console.log(item);
   }
+
 </script>
 
 <style>
+
 </style>
 
 <div class="col s4">
@@ -41,7 +29,7 @@
         <img src={img} />
         <button
           class="btn-floating halfway-fab waves-effect waves-light red"
-          on:click={startCheckout}>
+          on:click={addToCart}>
           <i class="material-icons">add_shopping_cart</i>
         </button>
       </div>

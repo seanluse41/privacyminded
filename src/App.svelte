@@ -8,6 +8,7 @@
   import Home from "./pages/Home.svelte";
   import About from "./pages/About.svelte";
   import Success from "./pages/Success.svelte";
+  import Checkout from "./pages/Checkout.svelte";
   import Error from "./pages/Error.svelte";
   import Navbar from "./components/Navbar.svelte";
 
@@ -21,8 +22,9 @@
     <Navbar />
     <Route path="/" component={Home} />
     <Route path="/about" component={About} />
-    <Route path="/success" component={Success}/>
-    <Route path="/error" component={Error}/>
+    <Route path="/checkout" component={Checkout} />
+    <Route path="/success" component={Success} />
+    <Route path="/error" component={Error} />
   </Router>
 {:else}
   <p>Loading...</p>

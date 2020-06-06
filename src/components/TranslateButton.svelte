@@ -11,11 +11,12 @@
     dispatch("locale-changed", value);
   }
 </script>
+
 <div class="fixed-action-btn">
-<button
-  class="btn-floating btn-large waves-effect waves-light red"
-  style="margin-left: 20px;"
-  on:click={changeLanguage}>
-  <i class="material-icons">g_translate</i>
-</button>
+  <button
+    class="btn-floating btn-large waves-effect waves-light red"
+    style="margin-left: 20px;"
+    on:click={changeLanguage}>
+    <i class="material-icons">g_translate</i>
+  </button>
 </div>
