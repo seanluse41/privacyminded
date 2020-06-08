@@ -20622,116 +20622,182 @@ var app = (function () {
 	var file$7 = "src/components/CheckoutItem.svelte";
 
 	function create_fragment$a(ctx) {
-	  var div2;
-	  var div1;
+	  var div6;
+	  var div5;
 	  var div0;
 	  var img_1;
 	  var img_1_src_value;
 	  var t0;
-	  var h5;
+	  var div4;
+	  var span;
 	  var t2;
 	  var p;
+	  var t3;
+	  var t4_value =
+	  /*price*/
+	  ctx[2] *
+	  /*count*/
+	  ctx[0] + "";
+	  var t4;
 	  var t5;
+	  var div3;
 	  var button0;
 	  var i0;
 	  var t7;
+	  var div1;
+	  var t8;
+	  var t9;
 	  var button1;
 	  var i1;
-	  var t9;
+	  var t11;
+	  var div2;
+	  var t12;
 	  var button2;
 	  var i2;
 	  var dispose;
 	  var block = {
 	    c: function create() {
-	      div2 = element("div");
-	      div1 = element("div");
+	      div6 = element("div");
+	      div5 = element("div");
 	      div0 = element("div");
 	      img_1 = element("img");
 	      t0 = space();
-	      h5 = element("h5");
-	      h5.textContent = "".concat(
+	      div4 = element("div");
+	      span = element("span");
+	      span.textContent = "".concat(
 	      /*name*/
-	      ctx[0]);
+	      ctx[1]);
 	      t2 = space();
 	      p = element("p");
-	      p.textContent = "Price: \u09F3 ".concat(
-	      /*price*/
-	      ctx[1]);
+	      t3 = text("Price: ৳ ");
+	      t4 = text(t4_value);
 	      t5 = space();
+	      div3 = element("div");
 	      button0 = element("button");
 	      i0 = element("i");
 	      i0.textContent = "remove";
 	      t7 = space();
+	      div1 = element("div");
+	      t8 = text(
+	      /*count*/
+	      ctx[0]);
+	      t9 = space();
 	      button1 = element("button");
 	      i1 = element("i");
 	      i1.textContent = "add";
-	      t9 = space();
+	      t11 = space();
+	      div2 = element("div");
+	      t12 = space();
 	      button2 = element("button");
 	      i2 = element("i");
 	      i2.textContent = "cancel";
 	      if (img_1.src !== (img_1_src_value = "img/".concat(
 	      /*img*/
-	      ctx[2]))) attr_dev(img_1, "src", img_1_src_value);
+	      ctx[3]))) attr_dev(img_1, "src", img_1_src_value);
 	      attr_dev(img_1, "alt",
 	      /*name*/
-	      ctx[0]);
-	      add_location(img_1, file$7, 25, 6, 563);
+	      ctx[1]);
+	      add_location(img_1, file$7, 32, 6, 663);
 	      attr_dev(div0, "class", "card-image");
-	      add_location(div0, file$7, 24, 4, 532);
-	      add_location(h5, file$7, 27, 4, 616);
-	      add_location(p, file$7, 28, 4, 636);
+	      add_location(div0, file$7, 31, 4, 632);
+	      attr_dev(span, "class", "card-title");
+	      add_location(span, file$7, 35, 6, 748);
+	      add_location(p, file$7, 36, 6, 793);
 	      attr_dev(i0, "class", "material-icons");
-	      add_location(i0, file$7, 32, 6, 769);
-	      attr_dev(button0, "class", "waves-effect waves-light btn red remove");
-	      add_location(button0, file$7, 29, 4, 664);
+	      add_location(i0, file$7, 41, 10, 973);
+	      attr_dev(button0, "class", "waves-effect waves-light btn red remove col s2");
+	      add_location(button0, file$7, 38, 8, 857);
+	      attr_dev(div1, "class", "col s1");
+	      set_style(div1, "font-size", "24px");
+	      add_location(div1, file$7, 43, 8, 1036);
 	      attr_dev(i1, "class", "material-icons");
-	      add_location(i1, file$7, 37, 6, 926);
-	      attr_dev(button1, "class", "waves-effect waves-light btn red add");
-	      add_location(button1, file$7, 34, 4, 824);
+	      add_location(i1, file$7, 47, 10, 1216);
+	      attr_dev(button1, "class", "waves-effect waves-light btn red add col s2");
+	      add_location(button1, file$7, 44, 8, 1103);
+	      attr_dev(div2, "class", "col s1");
+	      add_location(div2, file$7, 49, 8, 1276);
 	      attr_dev(i2, "class", "material-icons");
-	      add_location(i2, file$7, 40, 6, 1056);
-	      attr_dev(button2, "class", "waves-effect waves-light btn red");
-	      add_location(button2, file$7, 39, 4, 978);
-	      attr_dev(div1, "class", "card medium");
-	      add_location(div1, file$7, 23, 2, 502);
-	      attr_dev(div2, "class", "container");
-	      add_location(div2, file$7, 22, 0, 476);
+	      add_location(i2, file$7, 53, 10, 1416);
+	      attr_dev(button2, "class", "waves-effect waves-light btn red col s2");
+	      add_location(button2, file$7, 50, 8, 1307);
+	      attr_dev(div3, "class", "row");
+	      add_location(div3, file$7, 37, 6, 831);
+	      attr_dev(div4, "class", "card-action");
+	      add_location(div4, file$7, 34, 4, 716);
+	      attr_dev(div5, "class", "card large");
+	      add_location(div5, file$7, 30, 2, 603);
+	      attr_dev(div6, "class", "container");
+	      add_location(div6, file$7, 29, 0, 577);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 	    },
 	    m: function mount(target, anchor, remount) {
-	      insert_dev(target, div2, anchor);
-	      append_dev(div2, div1);
-	      append_dev(div1, div0);
+	      insert_dev(target, div6, anchor);
+	      append_dev(div6, div5);
+	      append_dev(div5, div0);
 	      append_dev(div0, img_1);
-	      append_dev(div1, t0);
-	      append_dev(div1, h5);
-	      append_dev(div1, t2);
-	      append_dev(div1, p);
-	      append_dev(div1, t5);
-	      append_dev(div1, button0);
+	      append_dev(div5, t0);
+	      append_dev(div5, div4);
+	      append_dev(div4, span);
+	      append_dev(div4, t2);
+	      append_dev(div4, p);
+	      append_dev(p, t3);
+	      append_dev(p, t4);
+	      append_dev(div4, t5);
+	      append_dev(div4, div3);
+	      append_dev(div3, button0);
 	      append_dev(button0, i0);
-	      append_dev(div1, t7);
-	      append_dev(div1, button1);
+	      append_dev(div3, t7);
+	      append_dev(div3, div1);
+	      append_dev(div1, t8);
+	      append_dev(div3, t9);
+	      append_dev(div3, button1);
 	      append_dev(button1, i1);
-	      append_dev(div1, t9);
-	      append_dev(div1, button2);
+	      append_dev(div3, t11);
+	      append_dev(div3, div2);
+	      append_dev(div3, t12);
+	      append_dev(div3, button2);
 	      append_dev(button2, i2);
 	      if (remount) run_all(dispose);
-	      dispose = [listen_dev(button0, "click",
-	      /*countButtonHandler*/
-	      ctx[3], false, false, false), listen_dev(button1, "click",
-	      /*countButtonHandler*/
-	      ctx[3], false, false, false), listen_dev(button2, "click",
+	      dispose = [listen_dev(button0, "click", function () {
+	        if (is_function(
+	        /*count*/
+	        ctx[0] -= 1)) (
+	        /*count*/
+	        ctx[0] -= 1).apply(this, arguments);
+	      }, false, false, false), listen_dev(button1, "click", function () {
+	        if (is_function(
+	        /*count*/
+	        ctx[0] += 1)) (
+	        /*count*/
+	        ctx[0] += 1).apply(this, arguments);
+	      }, false, false, false), listen_dev(button2, "click",
 	      /*removeItem*/
 	      ctx[4], false, false, false)];
 	    },
-	    p: noop,
+	    p: function update(new_ctx, _ref) {
+	      var _ref2 = _slicedToArray(_ref, 1),
+	          dirty = _ref2[0];
+
+	      ctx = new_ctx;
+	      if (dirty &
+	      /*count*/
+	      1 && t4_value !== (t4_value =
+	      /*price*/
+	      ctx[2] *
+	      /*count*/
+	      ctx[0] + "")) set_data_dev(t4, t4_value);
+	      if (dirty &
+	      /*count*/
+	      1) set_data_dev(t8,
+	      /*count*/
+	      ctx[0]);
+	    },
 	    i: noop,
 	    o: noop,
 	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(div2);
+	      if (detaching) detach_dev(div6);
 	      run_all(dispose);
 	    }
 	  };
@@ -20755,9 +20821,13 @@ var app = (function () {
 
 	  var countButtonHandler = function countButtonHandler(e) {
 	    if (e.target.classList.contains("add")) {
-	      count++;
+	      $$invalidate(0, count++, count);
 	    } else if (e.target.classlist.contains("remove")) {
-	      count--;
+	      if (count == 1) {
+	        removeItem();
+	      } else {
+	        $$invalidate(0, count--, count);
+	      }
 	    }
 
 	    cart.update(function (n) {
@@ -20796,23 +20866,35 @@ var app = (function () {
 	      img: img,
 	      count: count,
 	      countButtonHandler: countButtonHandler,
-	      removeItem: removeItem
+	      removeItem: removeItem,
+	      total: total
 	    };
 	  };
 
 	  $$self.$inject_state = function ($$props) {
 	    if ("item" in $$props) $$invalidate(5, item = $$props.item);
-	    if ("name" in $$props) $$invalidate(0, name = $$props.name);
-	    if ("price" in $$props) $$invalidate(1, price = $$props.price);
-	    if ("img" in $$props) $$invalidate(2, img = $$props.img);
-	    if ("count" in $$props) count = $$props.count;
+	    if ("name" in $$props) $$invalidate(1, name = $$props.name);
+	    if ("price" in $$props) $$invalidate(2, price = $$props.price);
+	    if ("img" in $$props) $$invalidate(3, img = $$props.img);
+	    if ("count" in $$props) $$invalidate(0, count = $$props.count);
+	    if ("total" in $$props) total = $$props.total;
 	  };
+
+	  var total;
 
 	  if ($$props && "$$inject" in $$props) {
 	    $$self.$inject_state($$props.$$inject);
 	  }
 
-	  return [name, price, img, countButtonHandler, removeItem, item];
+	  $$self.$$.update = function () {
+	    if ($$self.$$.dirty &
+	    /*count*/
+	    1) {
+	       total = count * price;
+	    }
+	  };
+
+	  return [count, name, price, img, removeItem, item];
 	}
 
 	var CheckoutItem = /*#__PURE__*/function (_SvelteComponentDev) {
