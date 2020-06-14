@@ -20622,13 +20622,13 @@ var app = (function () {
 	var file$7 = "src/components/CheckoutItem.svelte";
 
 	function create_fragment$a(ctx) {
-	  var div6;
-	  var div5;
+	  var div8;
+	  var div7;
 	  var div0;
 	  var img_1;
 	  var img_1_src_value;
 	  var t0;
-	  var div4;
+	  var div6;
 	  var span;
 	  var t2;
 	  var p;
@@ -20640,29 +20640,31 @@ var app = (function () {
 	  ctx[0] + "";
 	  var t4;
 	  var t5;
-	  var div3;
+	  var div5;
+	  var div1;
 	  var button0;
 	  var i0;
 	  var t7;
-	  var div1;
+	  var div2;
 	  var t8;
 	  var t9;
+	  var div3;
 	  var button1;
 	  var i1;
 	  var t11;
-	  var div2;
+	  var div4;
 	  var t12;
 	  var button2;
 	  var i2;
 	  var dispose;
 	  var block = {
 	    c: function create() {
-	      div6 = element("div");
-	      div5 = element("div");
+	      div8 = element("div");
+	      div7 = element("div");
 	      div0 = element("div");
 	      img_1 = element("img");
 	      t0 = space();
-	      div4 = element("div");
+	      div6 = element("div");
 	      span = element("span");
 	      span.textContent = "".concat(
 	      /*name*/
@@ -20672,21 +20674,23 @@ var app = (function () {
 	      t3 = text("Price: ৳ ");
 	      t4 = text(t4_value);
 	      t5 = space();
-	      div3 = element("div");
+	      div5 = element("div");
+	      div1 = element("div");
 	      button0 = element("button");
 	      i0 = element("i");
 	      i0.textContent = "remove";
 	      t7 = space();
-	      div1 = element("div");
+	      div2 = element("div");
 	      t8 = text(
 	      /*count*/
 	      ctx[0]);
 	      t9 = space();
+	      div3 = element("div");
 	      button1 = element("button");
 	      i1 = element("i");
 	      i1.textContent = "add";
 	      t11 = space();
-	      div2 = element("div");
+	      div4 = element("div");
 	      t12 = space();
 	      button2 = element("button");
 	      i2 = element("i");
@@ -20697,90 +20701,87 @@ var app = (function () {
 	      attr_dev(img_1, "alt",
 	      /*name*/
 	      ctx[1]);
-	      add_location(img_1, file$7, 32, 6, 663);
+	      add_location(img_1, file$7, 29, 6, 571);
 	      attr_dev(div0, "class", "card-image");
-	      add_location(div0, file$7, 31, 4, 632);
+	      add_location(div0, file$7, 28, 4, 540);
 	      attr_dev(span, "class", "card-title");
-	      add_location(span, file$7, 35, 6, 748);
-	      add_location(p, file$7, 36, 6, 793);
+	      add_location(span, file$7, 32, 6, 656);
+	      add_location(p, file$7, 33, 6, 701);
 	      attr_dev(i0, "class", "material-icons");
-	      add_location(i0, file$7, 41, 10, 973);
+	      add_location(i0, file$7, 39, 12, 921);
 	      attr_dev(button0, "class", "waves-effect waves-light btn red remove col s2");
-	      add_location(button0, file$7, 38, 8, 857);
-	      attr_dev(div1, "class", "col s1");
-	      set_style(div1, "font-size", "24px");
-	      add_location(div1, file$7, 43, 8, 1036);
-	      attr_dev(i1, "class", "material-icons");
-	      add_location(i1, file$7, 47, 10, 1216);
-	      attr_dev(button1, "class", "waves-effect waves-light btn red add col s2");
-	      add_location(button1, file$7, 44, 8, 1103);
+	      add_location(button0, file$7, 36, 10, 796);
+	      attr_dev(div1, "class", "remove");
+	      add_location(div1, file$7, 35, 8, 765);
 	      attr_dev(div2, "class", "col s1");
-	      add_location(div2, file$7, 49, 8, 1276);
+	      set_style(div2, "font-size", "24px");
+	      add_location(div2, file$7, 42, 8, 1001);
+	      attr_dev(i1, "class", "material-icons");
+	      add_location(i1, file$7, 47, 12, 1218);
+	      attr_dev(button1, "class", "waves-effect waves-light btn red add col s2");
+	      add_location(button1, file$7, 44, 10, 1096);
+	      attr_dev(div3, "class", "add");
+	      add_location(div3, file$7, 43, 8, 1068);
+	      attr_dev(div4, "class", "col s1");
+	      add_location(div4, file$7, 50, 8, 1295);
 	      attr_dev(i2, "class", "material-icons");
-	      add_location(i2, file$7, 53, 10, 1416);
+	      add_location(i2, file$7, 54, 10, 1435);
 	      attr_dev(button2, "class", "waves-effect waves-light btn red col s2");
-	      add_location(button2, file$7, 50, 8, 1307);
-	      attr_dev(div3, "class", "row");
-	      add_location(div3, file$7, 37, 6, 831);
-	      attr_dev(div4, "class", "card-action");
-	      add_location(div4, file$7, 34, 4, 716);
-	      attr_dev(div5, "class", "card large");
-	      add_location(div5, file$7, 30, 2, 603);
-	      attr_dev(div6, "class", "container");
-	      add_location(div6, file$7, 29, 0, 577);
+	      add_location(button2, file$7, 51, 8, 1326);
+	      attr_dev(div5, "class", "row");
+	      add_location(div5, file$7, 34, 6, 739);
+	      attr_dev(div6, "class", "card-action");
+	      add_location(div6, file$7, 31, 4, 624);
+	      attr_dev(div7, "class", "card large");
+	      add_location(div7, file$7, 27, 2, 511);
+	      attr_dev(div8, "class", "container");
+	      add_location(div8, file$7, 26, 0, 485);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
 	    },
 	    m: function mount(target, anchor, remount) {
-	      insert_dev(target, div6, anchor);
-	      append_dev(div6, div5);
-	      append_dev(div5, div0);
+	      insert_dev(target, div8, anchor);
+	      append_dev(div8, div7);
+	      append_dev(div7, div0);
 	      append_dev(div0, img_1);
-	      append_dev(div5, t0);
-	      append_dev(div5, div4);
-	      append_dev(div4, span);
-	      append_dev(div4, t2);
-	      append_dev(div4, p);
+	      append_dev(div7, t0);
+	      append_dev(div7, div6);
+	      append_dev(div6, span);
+	      append_dev(div6, t2);
+	      append_dev(div6, p);
 	      append_dev(p, t3);
 	      append_dev(p, t4);
-	      append_dev(div4, t5);
-	      append_dev(div4, div3);
-	      append_dev(div3, button0);
+	      append_dev(div6, t5);
+	      append_dev(div6, div5);
+	      append_dev(div5, div1);
+	      append_dev(div1, button0);
 	      append_dev(button0, i0);
-	      append_dev(div3, t7);
-	      append_dev(div3, div1);
-	      append_dev(div1, t8);
-	      append_dev(div3, t9);
+	      append_dev(div5, t7);
+	      append_dev(div5, div2);
+	      append_dev(div2, t8);
+	      append_dev(div5, t9);
+	      append_dev(div5, div3);
 	      append_dev(div3, button1);
 	      append_dev(button1, i1);
-	      append_dev(div3, t11);
-	      append_dev(div3, div2);
-	      append_dev(div3, t12);
-	      append_dev(div3, button2);
+	      append_dev(div5, t11);
+	      append_dev(div5, div4);
+	      append_dev(div5, t12);
+	      append_dev(div5, button2);
 	      append_dev(button2, i2);
 	      if (remount) run_all(dispose);
-	      dispose = [listen_dev(button0, "click", function () {
-	        if (is_function(
-	        /*count*/
-	        ctx[0] -= 1)) (
-	        /*count*/
-	        ctx[0] -= 1).apply(this, arguments);
-	      }, false, false, false), listen_dev(button1, "click", function () {
-	        if (is_function(
-	        /*count*/
-	        ctx[0] += 1)) (
-	        /*count*/
-	        ctx[0] += 1).apply(this, arguments);
-	      }, false, false, false), listen_dev(button2, "click",
+	      dispose = [listen_dev(button0, "click",
+	      /*decreaseCount*/
+	      ctx[5], false, false, false), listen_dev(button1, "click",
+	      /*increaseCount*/
+	      ctx[4], false, false, false), listen_dev(button2, "click",
 	      /*removeItem*/
-	      ctx[4], false, false, false)];
+	      ctx[6], false, false, false)];
 	    },
-	    p: function update(new_ctx, _ref) {
+	    p: function update(ctx, _ref) {
 	      var _ref2 = _slicedToArray(_ref, 1),
 	          dirty = _ref2[0];
 
-	      ctx = new_ctx;
 	      if (dirty &
 	      /*count*/
 	      1 && t4_value !== (t4_value =
@@ -20797,7 +20798,7 @@ var app = (function () {
 	    i: noop,
 	    o: noop,
 	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(div6);
+	      if (detaching) detach_dev(div8);
 	      run_all(dispose);
 	    }
 	  };
@@ -20819,23 +20820,23 @@ var app = (function () {
 	      img = _item.img,
 	      count = _item.count;
 
-	  var countButtonHandler = function countButtonHandler(e) {
-	    if (e.target.classList.contains("add")) {
-	      $$invalidate(0, count++, count);
-	    } else if (e.target.classlist.contains("remove")) {
-	      if (count == 1) {
-	        removeItem();
-	      } else {
-	        $$invalidate(0, count--, count);
-	      }
-	    }
-
+	  function increaseCount() {
+	    $$invalidate(0, count++, count);
 	    cart.update(function (n) {
 	      return _objectSpread$2({}, n, _defineProperty({}, name, _objectSpread$2({}, n[name], {
 	        count: count
 	      })));
 	    });
-	  };
+	  }
+
+	  function decreaseCount() {
+	    $$invalidate(0, count--, count);
+	    cart.update(function (n) {
+	      return _objectSpread$2({}, n, _defineProperty({}, name, _objectSpread$2({}, n[name], {
+	        count: count
+	      })));
+	    });
+	  }
 
 	  var removeItem = function removeItem() {
 	    cart.update(function (n) {
@@ -20854,7 +20855,7 @@ var app = (function () {
 	  validate_slots("CheckoutItem", $$slots, []);
 
 	  $$self.$set = function ($$props) {
-	    if ("item" in $$props) $$invalidate(5, item = $$props.item);
+	    if ("item" in $$props) $$invalidate(7, item = $$props.item);
 	  };
 
 	  $$self.$capture_state = function () {
@@ -20865,14 +20866,15 @@ var app = (function () {
 	      price: price,
 	      img: img,
 	      count: count,
-	      countButtonHandler: countButtonHandler,
+	      increaseCount: increaseCount,
+	      decreaseCount: decreaseCount,
 	      removeItem: removeItem,
 	      total: total
 	    };
 	  };
 
 	  $$self.$inject_state = function ($$props) {
-	    if ("item" in $$props) $$invalidate(5, item = $$props.item);
+	    if ("item" in $$props) $$invalidate(7, item = $$props.item);
 	    if ("name" in $$props) $$invalidate(1, name = $$props.name);
 	    if ("price" in $$props) $$invalidate(2, price = $$props.price);
 	    if ("img" in $$props) $$invalidate(3, img = $$props.img);
@@ -20894,7 +20896,7 @@ var app = (function () {
 	    }
 	  };
 
-	  return [count, name, price, img, removeItem, item];
+	  return [count, name, price, img, increaseCount, decreaseCount, removeItem, item];
 	}
 
 	var CheckoutItem = /*#__PURE__*/function (_SvelteComponentDev) {
@@ -20909,7 +20911,7 @@ var app = (function () {
 
 	    _this = _super.call(this, options);
 	    init(_assertThisInitialized(_this), options, instance$a, create_fragment$a, safe_not_equal, {
-	      item: 5
+	      item: 7
 	    });
 	    dispatch_dev("SvelteRegisterComponent", {
 	      component: _assertThisInitialized(_this),
@@ -20922,7 +20924,7 @@ var app = (function () {
 
 	    if (
 	    /*item*/
-	    ctx[5] === undefined && !("item" in props)) {
+	    ctx[7] === undefined && !("item" in props)) {
 	      console.warn("<CheckoutItem> was created without expected prop 'item'");
 	    }
 
@@ -20953,10 +20955,10 @@ var app = (function () {
 	  var child_ctx = ctx.slice();
 	  child_ctx[4] = list[i];
 	  return child_ctx;
-	} // (40:2) {:else}
+	} // (37:2) {:else}
 
 
-	function create_else_block_1(ctx) {
+	function create_else_block$1(ctx) {
 	  var each_blocks = [];
 	  var each_1_lookup = new Map();
 	  var t0;
@@ -20997,9 +20999,9 @@ var app = (function () {
 	      i.textContent = "shopping_cart";
 	      t2 = text("\n      Checkout");
 	      attr_dev(i, "class", "material-icons right");
-	      add_location(i, file$8, 46, 6, 1137);
+	      add_location(i, file$8, 43, 6, 1048);
 	      attr_dev(button, "class", "waves-effect waves-light btn-large red");
-	      add_location(button, file$8, 43, 4, 1038);
+	      add_location(button, file$8, 40, 4, 949);
 	    },
 	    m: function mount(target, anchor, remount) {
 	      for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
@@ -21058,51 +21060,43 @@ var app = (function () {
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
-	    id: create_else_block_1.name,
+	    id: create_else_block$1.name,
 	    type: "else",
-	    source: "(40:2) {:else}",
+	    source: "(37:2) {:else}",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (34:2) {#if cartItems.length === 0}
+	} // (35:2) {#if cartItems.length === 0}
 
 
 	function create_if_block$1(ctx) {
-	  var if_block_anchor;
-
-	  function select_block_type_1(ctx, dirty) {
-	    if (checkedOut) return create_if_block_1$1;
-	    return create_else_block$1;
-	  }
-
-	  var current_block_type = select_block_type_1();
-	  var if_block = current_block_type(ctx);
+	  var p;
 	  var block = {
 	    c: function create() {
-	      if_block.c();
-	      if_block_anchor = empty();
+	      p = element("p");
+	      p.textContent = "Your cart is empty";
+	      attr_dev(p, "class", "empty-message");
+	      add_location(p, file$8, 35, 4, 803);
 	    },
 	    m: function mount(target, anchor) {
-	      if_block.m(target, anchor);
-	      insert_dev(target, if_block_anchor, anchor);
+	      insert_dev(target, p, anchor);
 	    },
 	    p: noop,
 	    i: noop,
 	    o: noop,
 	    d: function destroy(detaching) {
-	      if_block.d(detaching);
-	      if (detaching) detach_dev(if_block_anchor);
+	      if (detaching) detach_dev(p);
 	    }
 	  };
 	  dispatch_dev("SvelteRegisterBlock", {
 	    block: block,
 	    id: create_if_block$1.name,
 	    type: "if",
-	    source: "(34:2) {#if cartItems.length === 0}",
+	    source: "(35:2) {#if cartItems.length === 0}",
 	    ctx: ctx
 	  });
 	  return block;
-	} // (41:4) {#each cartItems as item (item.name)}
+	} // (38:4) {#each cartItems as item (item.name)}
 
 
 	function create_each_block$1(key_1, ctx) {
@@ -21156,61 +21150,7 @@ var app = (function () {
 	    block: block,
 	    id: create_each_block$1.name,
 	    type: "each",
-	    source: "(41:4) {#each cartItems as item (item.name)}",
-	    ctx: ctx
-	  });
-	  return block;
-	} // (37:4) {:else}
-
-
-	function create_else_block$1(ctx) {
-	  var p;
-	  var block = {
-	    c: function create() {
-	      p = element("p");
-	      p.textContent = "Your cart is empty";
-	      attr_dev(p, "class", "empty-message");
-	      add_location(p, file$8, 37, 6, 882);
-	    },
-	    m: function mount(target, anchor) {
-	      insert_dev(target, p, anchor);
-	    },
-	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(p);
-	    }
-	  };
-	  dispatch_dev("SvelteRegisterBlock", {
-	    block: block,
-	    id: create_else_block$1.name,
-	    type: "else",
-	    source: "(37:4) {:else}",
-	    ctx: ctx
-	  });
-	  return block;
-	} // (35:4) {#if checkedOut}
-
-
-	function create_if_block_1$1(ctx) {
-	  var p;
-	  var block = {
-	    c: function create() {
-	      p = element("p");
-	      p.textContent = "Thank you for shopping with us";
-	      attr_dev(p, "class", "empty-message");
-	      add_location(p, file$8, 35, 6, 804);
-	    },
-	    m: function mount(target, anchor) {
-	      insert_dev(target, p, anchor);
-	    },
-	    d: function destroy(detaching) {
-	      if (detaching) detach_dev(p);
-	    }
-	  };
-	  dispatch_dev("SvelteRegisterBlock", {
-	    block: block,
-	    id: create_if_block_1$1.name,
-	    type: "if",
-	    source: "(35:4) {#if checkedOut}",
+	    source: "(38:4) {#each cartItems as item (item.name)}",
 	    ctx: ctx
 	  });
 	  return block;
@@ -21223,7 +21163,7 @@ var app = (function () {
 	  var current_block_type_index;
 	  var if_block;
 	  var current;
-	  var if_block_creators = [create_if_block$1, create_else_block_1];
+	  var if_block_creators = [create_if_block$1, create_else_block$1];
 	  var if_blocks = [];
 
 	  function select_block_type(ctx, dirty) {
@@ -21242,9 +21182,9 @@ var app = (function () {
 	      h1.textContent = "My Cart";
 	      t1 = space();
 	      if_block.c();
-	      add_location(h1, file$8, 32, 2, 729);
+	      add_location(h1, file$8, 33, 2, 751);
 	      attr_dev(div, "class", "container");
-	      add_location(div, file$8, 31, 0, 703);
+	      add_location(div, file$8, 32, 0, 725);
 	    },
 	    l: function claim(nodes) {
 	      throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -21326,7 +21266,8 @@ var app = (function () {
 	          switch (_context.prev = _context.next) {
 	            case 0:
 	              console.log("checkout started");
-	              _context.next = 3;
+	              console.log(sku);
+	              _context.next = 4;
 	              return stripe.redirectToCheckout({
 	                items: [{
 	                  sku: sku,
@@ -21336,7 +21277,7 @@ var app = (function () {
 	                cancelUrl: "https://localhost:5000/error"
 	              });
 
-	            case 3:
+	            case 4:
 	              _yield$stripe$redirec = _context.sent;
 	              error = _yield$stripe$redirec.error;
 
@@ -21344,7 +21285,7 @@ var app = (function () {
 	                alert("our payment system is broken!");
 	              }
 
-	            case 6:
+	            case 7:
 	            case "end":
 	              return _context.stop();
 	          }

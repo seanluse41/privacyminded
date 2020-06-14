@@ -12,6 +12,7 @@
   // Basic Checkout
   async function startCheckout() {
     console.log("checkout started");
+    console.log(sku);
     const { error } = await stripe.redirectToCheckout({
       items: [{ sku, quantity: 1 }],
 
@@ -32,11 +33,7 @@
 <div class="container">
   <h1>My Cart</h1>
   {#if cartItems.length === 0}
-    {#if checkedOut}
-      <p class="empty-message">Thank you for shopping with us</p>
-    {:else}
-      <p class="empty-message">Your cart is empty</p>
-    {/if}
+    <p class="empty-message">Your cart is empty</p>
   {:else}
     {#each cartItems as item (item.name)}
       <CheckoutItem {item} />

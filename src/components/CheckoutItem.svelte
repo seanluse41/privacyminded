@@ -6,18 +6,15 @@
 
   let { name, price, img, count } = item;
 
-  const countButtonHandler = e => {
-    if (e.target.classList.contains("add")) {
-      count++;
-    } else if (e.target.classlist.contains("remove")) {
-      if (count == 1) {
-        removeItem();
-      } else {
-        count--;
-      }
-    }
+  function increaseCount() {
+    count++;
     cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
-  };
+  }
+
+  function decreaseCount() {
+    count--;
+    cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
+  }
 
   const removeItem = () => {
     cart.update(n => {
@@ -36,17 +33,21 @@
       <span class="card-title">{name}</span>
       <p>Price: ৳ {price * count}</p>
       <div class="row">
-        <button
-          class="waves-effect waves-light btn red remove col s2"
-          on:click={count -= 1}>
-          <i class="material-icons">remove</i>
-        </button>
+        <div class="remove">
+          <button
+            class="waves-effect waves-light btn red remove col s2"
+            on:click={decreaseCount}>
+            <i class="material-icons">remove</i>
+          </button>
+        </div>
         <div class="col s1" style="font-size: 24px;">{count}</div>
-        <button
-          class="waves-effect waves-light btn red add col s2"
-          on:click={count += 1}>
-          <i class="material-icons">add</i>
-        </button>
+        <div class="add">
+          <button
+            class="waves-effect waves-light btn red add col s2"
+            on:click={increaseCount}>
+            <i class="material-icons">add</i>
+          </button>
+        </div>
         <div class="col s1" />
         <button
           class="waves-effect waves-light btn red col s2"
