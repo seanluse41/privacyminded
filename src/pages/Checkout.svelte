@@ -3,6 +3,8 @@
   import { cart } from "../stores/stores.js";
 
   let cartItems = [];
+  let finalCart = [];
+
   const unsubscribe = cart.subscribe(items => {
     cartItems = Object.values(items);
   });
@@ -12,10 +14,9 @@
   // Basic Checkout
   async function startCheckout() {
     console.log("checkout started");
-    console.log(sku);
     const { error } = await stripe.redirectToCheckout({
-      items: [{ sku, quantity: 1 }],
-
+      lineItems: cartItems,
+      mode: "payment",
       successUrl: "https://localhost:5000/success",
       cancelUrl: "https://localhost:5000/error"
     });
@@ -23,6 +24,10 @@
     if (error) {
       alert("our payment system is broken!");
     }
+  }
+
+  function testCheckout() {
+    console.log(cartItems);
   }
 </script>
 
@@ -40,7 +45,7 @@
     {/each}
     <button
       class="waves-effect waves-light btn-large red"
-      on:click={startCheckout}>
+      on:click={testCheckout}>
       <i class="material-icons right">shopping_cart</i>
       Checkout
     </button>

@@ -2,7 +2,7 @@
   import { cart } from "../stores/stores.js";
   export let item;
 
-  $: total = count * price;
+  $: total = parseInt(count * price);
 
   let { name, price, img, count } = item;
 
@@ -12,8 +12,12 @@
   }
 
   function decreaseCount() {
-    count--;
-    cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
+    if (count > 1) {
+      count--;
+      cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
+    } else {
+      removeItem();
+    }
   }
 
   const removeItem = () => {
@@ -31,7 +35,7 @@
     </div>
     <div class="card-action">
       <span class="card-title">{name}</span>
-      <p>Price: ৳ {price * count}</p>
+      <p>Price: ￥ {total}</p>
       <div class="row">
         <div class="remove">
           <button
