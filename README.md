@@ -1,14 +1,20 @@
-### svelte template with i18n, ie11, and materialize css setup
+# Svelte ecommerce app
 
-Made via these tutorials:
+Responsive design template and basic frontend functionality for an ecommerce app built in [Svelte](https://github.com/sveltejs/svelte). I really started this project to try my hand out at Svelte and it was an absolute blast. The project is deployed on [Netlify](https://kind-davinci-0e6394.netlify.com/).
 
-i18n
-https://medium.com/i18n-and-l10n-resources-for-developers/how-to-localize-a-svelte-app-with-svelte-i18n-9e86cc9eb727
+## Get started
 
-ie11
-https://blog.az.sg/posts/svelte-and-ie11/
+Install the dependencies...
 
-materialize css
-https://materializecss.com/
+```bash
+cd svelte-app
+npm install
+```
 
-feel free to use.
+...then start [Rollup](https://rollupjs.org):
+
+```bash
+npm run dev
+```
+
+Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.

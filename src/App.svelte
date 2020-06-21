@@ -1,31 +1,18 @@
 <script>
-  import "../node_modules/materialize-css/dist/css/materialize.min.css";
-  import "../node_modules/materialize-css/dist/js/materialize.min.js";
-
-  import { Router, Route } from "svelte-routing";
-  import { setupI18n, isLocaleLoaded, locale } from "./services/i18n";
-  import { derived } from "svelte/store";
-  import Home from "./pages/Home.svelte";
-  import About from "./pages/About.svelte";
-  import Success from "./pages/Success.svelte";
-  import Checkout from "./pages/Checkout.svelte";
-  import Error from "./pages/Error.svelte";
+  import CardWrapper from "./components/CardWrapper.svelte";
   import Navbar from "./components/Navbar.svelte";
+  import Checkout from "./components/Checkout.svelte";
 
-  $: if (!$isLocaleLoaded) {
-    setupI18n({ withLocale: "jp" });
+  let nav = "home";
+
+  function navHandler(event) {
+    nav = event.detail.option;
   }
 </script>
 
-{#if $isLocaleLoaded}
-  <Router>
-    <Navbar />
-    <Route path="/" component={Home} />
-    <Route path="/about" component={About} />
-    <Route path="/checkout" component={Checkout} />
-    <Route path="/success" component={Success} />
-    <Route path="/error" component={Error} />
-  </Router>
+<Navbar on:nav={navHandler} />
+{#if nav === 'home'}
+  <CardWrapper />
 {:else}
-  <p>Loading...</p>
+  <Checkout />
 {/if}
