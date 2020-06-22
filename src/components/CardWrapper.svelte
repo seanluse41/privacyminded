@@ -5,10 +5,6 @@
 
 <style>
 
-  body {
-    background-color: #242331;
-  }
-
   .grid {
     width: 70vw;
     margin: 10vh auto;

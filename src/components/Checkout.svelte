@@ -8,22 +8,17 @@
   const unsubscribe = cart.subscribe(items => {
     cartItems = Object.values(items);
   });
-
-  // const checkout = () => {
-  //   console.log(cartItems);
-  //   checkedOut = true;
-  //   cart.update(n => {
-  //     return {};
-  //   });
-  // };
-
-    let stripe = Stripe("pk_test_N2Kfa6ezxQc8rld0adGzibAV00OLGaocEP");
+  let stripe = Stripe("pk_test_N2Kfa6ezxQc8rld0adGzibAV00OLGaocEP");
 
   // Basic Checkout
   async function startCheckout() {
+    const finalCart = cartItems.map(({ sku, count }) => ({
+      price: sku,
+      quantity: count
+    }));
 
     const { error } = await stripe.redirectToCheckout({
-      lineItems: [{price: cartItems[0].sku, quantity: cartItems[0].count}],
+      lineItems: finalCart,
       mode: "payment",
       successUrl: "https://localhost:5000/success",
       cancelUrl: "https://localhost:5000/error"
@@ -33,7 +28,6 @@
       alert("our payment system is broken!");
     }
   }
-
 </script>
 
 <style>

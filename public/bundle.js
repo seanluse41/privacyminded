@@ -671,7 +671,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (47:2) {#each items as item}
+    // (43:2) {#each items as item}
     function create_each_block(ctx) {
     	var current;
 
@@ -736,8 +736,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-1e7vhxo");
-    			add_location(section, file$1, 45, 0, 706);
+    			attr(section, "class", "card-wrapper grid svelte-1em7f1h");
+    			add_location(section, file$1, 41, 0, 661);
     		},
 
     		l: function claim(nodes) {
@@ -1150,7 +1150,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (87:2) {:else}
+    // (81:2) {:else}
     function create_else_block_1(ctx) {
     	var each_blocks = [], each_1_lookup = new Map(), t, button, current, dispose;
 
@@ -1172,7 +1172,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Checkout";
     			attr(button, "class", "checkout svelte-79wqkg");
-    			add_location(button, file$4, 90, 4, 1892);
+    			add_location(button, file$4, 84, 4, 1795);
     			dispose = listen(button, "click", ctx.startCheckout);
     		},
 
@@ -1218,7 +1218,7 @@ var app = (function () {
     	};
     }
 
-    // (81:2) {#if cartItems.length === 0}
+    // (75:2) {#if cartItems.length === 0}
     function create_if_block$2(ctx) {
     	var if_block_anchor;
 
@@ -1264,7 +1264,7 @@ var app = (function () {
     	};
     }
 
-    // (88:4) {#each cartItems as item (item.name)}
+    // (82:4) {#each cartItems as item (item.name)}
     function create_each_block$1(key_1, ctx) {
     	var first, current;
 
@@ -1318,7 +1318,7 @@ var app = (function () {
     	};
     }
 
-    // (84:4) {:else}
+    // (78:4) {:else}
     function create_else_block(ctx) {
     	var p;
 
@@ -1327,7 +1327,7 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Your cart is empty";
     			attr(p, "class", "empty-message svelte-79wqkg");
-    			add_location(p, file$4, 84, 6, 1736);
+    			add_location(p, file$4, 78, 6, 1639);
     		},
 
     		m: function mount(target, anchor) {
@@ -1367,9 +1367,9 @@ var app = (function () {
     			h1.textContent = "My Cart";
     			t_1 = space();
     			if_block.c();
-    			add_location(h1, file$4, 79, 2, 1583);
+    			add_location(h1, file$4, 73, 2, 1486);
     			attr(div, "class", "checkout-container svelte-79wqkg");
-    			add_location(div, file$4, 78, 0, 1548);
+    			add_location(div, file$4, 72, 0, 1451);
     		},
 
     		l: function claim(nodes) {
@@ -1434,22 +1434,17 @@ var app = (function () {
       const unsubscribe = cart.subscribe(items => {
         $$invalidate('cartItems', cartItems = Object.values(items));
       });
-
-      // const checkout = () => {
-      //   console.log(cartItems);
-      //   checkedOut = true;
-      //   cart.update(n => {
-      //     return {};
-      //   });
-      // };
-
-        let stripe = Stripe("pk_test_N2Kfa6ezxQc8rld0adGzibAV00OLGaocEP");
+      let stripe = Stripe("pk_test_N2Kfa6ezxQc8rld0adGzibAV00OLGaocEP");
 
       // Basic Checkout
       async function startCheckout() {
+        const finalCart = cartItems.map(({ sku, count }) => ({
+          price: sku,
+          quantity: count
+        }));
 
         const { error } = await stripe.redirectToCheckout({
-          lineItems: [{price: cartItems[0].sku, quantity: cartItems[0].count}],
+          lineItems: finalCart,
           mode: "payment",
           successUrl: "https://localhost:5000/success",
           cancelUrl: "https://localhost:5000/error"
