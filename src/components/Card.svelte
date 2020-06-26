@@ -61,30 +61,6 @@
     align-content: center;
   }
 
-  button {
-    font-size: 1.2em;
-    display: flex;
-    align-self: end;
-    justify-self: start;
-    background: #E60012;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    padding: 0.4em 1.1em;
-    border-radius: 5px;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
-  button:focus {
-    box-shadow: none;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
-  }
-
-  button object {
-    margin-right: 0.5em;
-    height: 1.2em;
-  }
-
   .button-group span {
     align-self: center;
     color: rgba(0, 0, 0, 0.5);
@@ -104,12 +80,9 @@
   <h3 class="title">{name}</h3>
   <p class="price">৳ {price}</p>
   <div class="button-group">
-    <button on:click={addToCart}>
-      <object
-        aria-label="shopping cart"
-        type="image/svg+xml"
-        data="img/svg/shopping-cart.svg" />
-      Add to cart
+    <button on:click={addToCart} class="waves-effect waves-light red darken-2 btn">
+      <i class="material-icons right">shopping_cart</i>
+      Checkout
     </button>
     {#if inCart > 0}
       <span>

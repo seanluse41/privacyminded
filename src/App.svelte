@@ -1,18 +1,22 @@
 <script>
+  import "../node_modules/materialize-css/dist/css/materialize.min.css";
+  import "../node_modules/materialize-css/dist/js/materialize.min.js";
+
+  import { Link } from "svelte-routing";
+  import { Router, Route } from "svelte-routing";
+
   import CardWrapper from "./components/CardWrapper.svelte";
   import Navbar from "./components/Navbar.svelte";
-  import Checkout from "./components/Checkout.svelte";
+  import Checkout from "./pages/Checkout.svelte";
+  import Home from "./pages/Home.svelte";
+  import About from "./pages/About.svelte";
 
-  let nav = "home";
-
-  function navHandler(event) {
-    nav = event.detail.option;
-  }
+  M.AutoInit();
 </script>
 
-<Navbar on:nav={navHandler} />
-{#if nav === 'home'}
-  <CardWrapper />
-{:else}
-  <Checkout />
-{/if}
+<Router>
+  <Navbar />
+  <Route path="/" component={Home} />
+  <Route path="/about" component={About} />
+  <Route path="/checkout" component={Checkout} />
+</Router>

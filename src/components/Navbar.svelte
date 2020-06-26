@@ -1,8 +1,11 @@
 <script>
   import { cart } from "../stores/stores.js";
-  import { createEventDispatcher } from "svelte";
+  import { Link } from "svelte-routing";
 
-  const dispatch = createEventDispatcher();
+  function mobileNav() {
+    var elems = document.querySelectorAll(".sidenav");
+    var instances = M.Sidenav.init(elems);
+  }
 
   let cart_sum = 0;
 
@@ -13,103 +16,61 @@
       cart_sum += item.count;
     });
   });
-
-  function goToHome() {
-    dispatch("nav", {
-      option: "home"
-    });
-  }
-
-  function goToCheckout() {
-    dispatch("nav", {
-      option: "checkout"
-    });
-  }
 </script>
 
-<style>
-  header {
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    background: #E60012;
-    color: white;
-  }
+<nav>
+  <div class="nav-wrapper red darken-2">
+    <a
+      href="#"
+      data-target="mobile-demo"
+      class="sidenav-trigger"
+      on:click={mobileNav}>
+      <i class="material-icons">menu</i>
+    </a>
+    <div class="container">
+      <Link to="/">
+        <span class="brand-logo">SECUME!</span>
+      </Link>
+      <ul id="nav-mobile" class="right hide-on-small-only">
+        <li>
+          <Link to="/">
+            <i class="material-icons">home</i>
+          </Link>
+        </li>
+        <li>
+          <Link to="/about">
+            <i class="material-icons">info</i>
+          </Link>
+        </li>
+        <li>
+          <Link to="/checkout">
+            <i class="material-icons">shopping_cart</i>
+          </Link>
+        </li>
 
-  ul > li:first-child {
-    font-family: "Molengo", sans-serif;
-  }
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  ul {
-    list-style-type: none;
-    width: 70vw;
-    min-height: 50px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 0;
-  }
+<ul class="sidenav" id="mobile-demo">
+  <li>
+    <Link to="/">
+      <i class="material-icons">home</i>
+    </Link>
+  </li>
+  <li>
+    <Link to="/about">
+      <i class="material-icons">info</i>
+    </Link>
+  </li>
+  <li>
+    <Link to="/checkout">
+      <i class="material-icons">shopping_cart</i>
+    </Link>
+  </li>
 
-  ul li {
-    align-self: center;
-    height: 100%;
-    cursor: pointer;
-  }
-
-  ul li:last-child {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  ul li .shopping-cart {
-    margin-left: 0.5em;
-  }
-
-  ul li .circle {
-    position: absolute;
-    top: -2px;
-    right: -5px;
-    background-color: #fffd85;
-    color: #000;
-    font-weight: 700;
-    padding: 0.1em;
-    text-align: center;
-    line-height: 1em;
-    font-size: 0.6em;
-    width: 1em;
-    height: 1em;
-    border-radius: 1em;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
-  }
-
-  @media screen and (max-width: 1600px) {
-    ul {
-      width: 80vw;
-    }
-  }
-
-  @media screen and (max-width: 1400px) {
-    ul {
-      width: 90vw;
-    }
-  }
-</style>
-
-<header>
-  <ul>
-    <li on:click={goToHome}>Security NOW!</li>
-    <li on:click={goToCheckout}>
-      <img
-        class="shopping-cart"
-        aria-label="shopping cart"
-        alt="Checkout"
-        src="img/svg/checkout.svg"
-        height="34px" />
-      {#if cart_sum > 0}
-        <div class="circle">{cart_sum}</div>
-      {/if}
-    </li>
-  </ul>
-</header>
+  <li>
+    <a href="http://www.seanbase.com">www.seanbase.com</a>
+  </li>
+</ul>
