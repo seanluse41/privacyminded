@@ -2228,7 +2228,7 @@ var app = (function () {
 
     const file$3 = "src/components/Navbar.svelte";
 
-    // (31:6) <Link to="/">
+    // (36:6) <Link to="/">
     function create_default_slot_6(ctx) {
     	var span;
 
@@ -2237,7 +2237,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "SECUME!";
     			attr(span, "class", "brand-logo");
-    			add_location(span, file$3, 31, 8, 710);
+    			add_location(span, file$3, 36, 8, 837);
     		},
 
     		m: function mount(target, anchor) {
@@ -2252,7 +2252,7 @@ var app = (function () {
     	};
     }
 
-    // (36:10) <Link to="/">
+    // (41:10) <Link to="/">
     function create_default_slot_5(ctx) {
     	var i;
 
@@ -2261,7 +2261,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "home";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 36, 12, 873);
+    			add_location(i, file$3, 41, 12, 1000);
     		},
 
     		m: function mount(target, anchor) {
@@ -2276,7 +2276,7 @@ var app = (function () {
     	};
     }
 
-    // (41:10) <Link to="/about">
+    // (51:10) <Link to="/about">
     function create_default_slot_4(ctx) {
     	var i;
 
@@ -2285,7 +2285,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "info";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 41, 12, 994);
+    			add_location(i, file$3, 51, 12, 1285);
     		},
 
     		m: function mount(target, anchor) {
@@ -2300,7 +2300,7 @@ var app = (function () {
     	};
     }
 
-    // (46:10) <Link to="/checkout">
+    // (56:10) <Link to="/checkout">
     function create_default_slot_3(ctx) {
     	var i;
 
@@ -2309,7 +2309,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "shopping_cart";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 46, 12, 1118);
+    			add_location(i, file$3, 56, 12, 1409);
     		},
 
     		m: function mount(target, anchor) {
@@ -2324,72 +2324,96 @@ var app = (function () {
     	};
     }
 
-    // (58:4) <Link to="/">
+    // (68:4) <Link to="/">
     function create_default_slot_2(ctx) {
-    	var i;
+    	var span, t_1, i;
 
     	return {
     		c: function create() {
+    			span = element("span");
+    			span.textContent = "Home";
+    			t_1 = space();
     			i = element("i");
     			i.textContent = "home";
+    			add_location(span, file$3, 67, 17, 1588);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 58, 6, 1304);
+    			add_location(i, file$3, 68, 6, 1612);
     		},
 
     		m: function mount(target, anchor) {
+    			insert(target, span, anchor);
+    			insert(target, t_1, anchor);
     			insert(target, i, anchor);
     		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
+    				detach(span);
+    				detach(t_1);
     				detach(i);
     			}
     		}
     	};
     }
 
-    // (63:4) <Link to="/about">
+    // (79:4) <Link to="/about">
     function create_default_slot_1(ctx) {
-    	var i;
+    	var span, t_1, i;
 
     	return {
     		c: function create() {
+    			span = element("span");
+    			span.textContent = "About";
+    			t_1 = space();
     			i = element("i");
     			i.textContent = "info";
+    			add_location(span, file$3, 78, 22, 1852);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 63, 6, 1395);
+    			add_location(i, file$3, 79, 6, 1877);
     		},
 
     		m: function mount(target, anchor) {
+    			insert(target, span, anchor);
+    			insert(target, t_1, anchor);
     			insert(target, i, anchor);
     		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
+    				detach(span);
+    				detach(t_1);
     				detach(i);
     			}
     		}
     	};
     }
 
-    // (68:4) <Link to="/checkout">
+    // (84:4) <Link to="/checkout">
     function create_default_slot(ctx) {
-    	var i;
+    	var span, t_1, i;
 
     	return {
     		c: function create() {
+    			span = element("span");
+    			span.textContent = "Cart";
+    			t_1 = space();
     			i = element("i");
     			i.textContent = "shopping_cart";
+    			add_location(span, file$3, 83, 25, 1964);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 68, 6, 1489);
+    			add_location(i, file$3, 84, 6, 1988);
     		},
 
     		m: function mount(target, anchor) {
+    			insert(target, span, anchor);
+    			insert(target, t_1, anchor);
     			insert(target, i, anchor);
     		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
+    				detach(span);
+    				detach(t_1);
     				detach(i);
     			}
     		}
@@ -2397,7 +2421,7 @@ var app = (function () {
     }
 
     function create_fragment$5(ctx) {
-    	var nav, div1, a0, i, t1, div0, t2, ul0, li0, t3, li1, t4, li2, t5, ul1, li3, t6, li4, t7, li5, t8, li6, a1, current, dispose;
+    	var nav, div1, a0, i0, t1, div0, t2, ul0, li0, t3, li1, a1, i1, t5, li2, t6, li3, t7, ul1, li4, t8, li5, a2, i2, span, t11, li6, t12, li7, t13, li8, a3, t15, div4, div2, h4, t17, p, t19, div3, a4, current, dispose;
 
     	var link0 = new Link({
     		props: {
@@ -2467,8 +2491,8 @@ var app = (function () {
     			nav = element("nav");
     			div1 = element("div");
     			a0 = element("a");
-    			i = element("i");
-    			i.textContent = "menu";
+    			i0 = element("i");
+    			i0.textContent = "menu";
     			t1 = space();
     			div0 = element("div");
     			link0.$$.fragment.c();
@@ -2478,51 +2502,105 @@ var app = (function () {
     			link1.$$.fragment.c();
     			t3 = space();
     			li1 = element("li");
-    			link2.$$.fragment.c();
-    			t4 = space();
-    			li2 = element("li");
-    			link3.$$.fragment.c();
-    			t5 = space();
-    			ul1 = element("ul");
-    			li3 = element("li");
-    			link4.$$.fragment.c();
-    			t6 = space();
-    			li4 = element("li");
-    			link5.$$.fragment.c();
-    			t7 = space();
-    			li5 = element("li");
-    			link6.$$.fragment.c();
-    			t8 = space();
-    			li6 = element("li");
     			a1 = element("a");
-    			a1.textContent = "www.seanbase.com";
-    			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 27, 6, 610);
+    			i1 = element("i");
+    			i1.textContent = "apps";
+    			t5 = space();
+    			li2 = element("li");
+    			link2.$$.fragment.c();
+    			t6 = space();
+    			li3 = element("li");
+    			link3.$$.fragment.c();
+    			t7 = space();
+    			ul1 = element("ul");
+    			li4 = element("li");
+    			link4.$$.fragment.c();
+    			t8 = space();
+    			li5 = element("li");
+    			a2 = element("a");
+    			i2 = element("i");
+    			i2.textContent = "apps";
+    			span = element("span");
+    			span.textContent = "Products";
+    			t11 = space();
+    			li6 = element("li");
+    			link5.$$.fragment.c();
+    			t12 = space();
+    			li7 = element("li");
+    			link6.$$.fragment.c();
+    			t13 = space();
+    			li8 = element("li");
+    			a3 = element("a");
+    			a3.textContent = "www.seanbase.com";
+    			t15 = space();
+    			div4 = element("div");
+    			div2 = element("div");
+    			h4 = element("h4");
+    			h4.textContent = "Modal Header";
+    			t17 = space();
+    			p = element("p");
+    			p.textContent = "A bunch of text";
+    			t19 = space();
+    			div3 = element("div");
+    			a4 = element("a");
+    			a4.textContent = "Agree";
+    			attr(i0, "class", "material-icons");
+    			add_location(i0, file$3, 32, 6, 737);
     			attr(a0, "href", "#");
     			a0.dataset.target = "mobile-demo";
     			attr(a0, "class", "sidenav-trigger");
-    			add_location(a0, file$3, 22, 4, 496);
-    			add_location(li0, file$3, 34, 8, 832);
-    			add_location(li1, file$3, 39, 8, 948);
-    			add_location(li2, file$3, 44, 8, 1069);
+    			add_location(a0, file$3, 27, 4, 623);
+    			add_location(li0, file$3, 39, 8, 959);
+    			attr(i1, "class", "material-icons");
+    			add_location(i1, file$3, 46, 12, 1167);
+    			attr(a1, "class", "modal-trigger");
+    			attr(a1, "href", "#modal1");
+    			add_location(a1, file$3, 45, 10, 1090);
+    			add_location(li1, file$3, 44, 8, 1075);
+    			add_location(li2, file$3, 49, 8, 1239);
+    			add_location(li3, file$3, 54, 8, 1360);
     			attr(ul0, "id", "nav-mobile");
     			attr(ul0, "class", "right hide-on-small-only");
-    			add_location(ul0, file$3, 33, 6, 770);
+    			add_location(ul0, file$3, 38, 6, 897);
     			attr(div0, "class", "container");
-    			add_location(div0, file$3, 29, 4, 658);
+    			add_location(div0, file$3, 34, 4, 785);
     			attr(div1, "class", "nav-wrapper red darken-2");
-    			add_location(div1, file$3, 21, 2, 453);
-    			add_location(nav, file$3, 20, 0, 445);
-    			add_location(li3, file$3, 56, 2, 1275);
-    			add_location(li4, file$3, 61, 2, 1361);
-    			add_location(li5, file$3, 66, 2, 1452);
-    			attr(a1, "href", "http://www.seanbase.com");
-    			add_location(a1, file$3, 73, 4, 1565);
-    			add_location(li6, file$3, 72, 2, 1556);
+    			add_location(div1, file$3, 26, 2, 580);
+    			add_location(nav, file$3, 25, 0, 572);
+    			add_location(li4, file$3, 66, 2, 1566);
+    			attr(i2, "class", "material-icons");
+    			add_location(i2, file$3, 74, 6, 1750);
+    			add_location(span, file$3, 74, 40, 1784);
+    			attr(a2, "class", "modal-trigger");
+    			attr(a2, "href", "#modal1");
+    			add_location(a2, file$3, 73, 4, 1679);
+    			add_location(li5, file$3, 72, 2, 1670);
+    			add_location(li6, file$3, 77, 2, 1825);
+    			add_location(li7, file$3, 82, 2, 1934);
+    			attr(a3, "href", "http://www.seanbase.com");
+    			add_location(a3, file$3, 89, 4, 2064);
+    			add_location(li8, file$3, 88, 2, 2055);
     			attr(ul1, "class", "sidenav");
     			attr(ul1, "id", "mobile-demo");
-    			add_location(ul1, file$3, 55, 0, 1235);
-    			dispose = listen(a0, "click", mobileNav);
+    			add_location(ul1, file$3, 65, 0, 1526);
+    			add_location(h4, file$3, 96, 4, 2225);
+    			add_location(p, file$3, 97, 4, 2251);
+    			attr(div2, "class", "modal-content");
+    			add_location(div2, file$3, 95, 2, 2193);
+    			attr(a4, "href", "#!");
+    			attr(a4, "class", "modal-close waves-effect waves-green btn-flat");
+    			add_location(a4, file$3, 100, 4, 2316);
+    			attr(div3, "class", "modal-footer");
+    			add_location(div3, file$3, 99, 2, 2285);
+    			attr(div4, "id", "modal1");
+    			attr(div4, "class", "modal");
+    			add_location(div4, file$3, 94, 0, 2159);
+
+    			dispose = [
+    				listen(a0, "click", mobileNav),
+    				listen(a1, "click", modalTrigger),
+    				listen(a2, "click", modalTrigger)
+    			];
     		},
 
     		l: function claim(nodes) {
@@ -2533,7 +2611,7 @@ var app = (function () {
     			insert(target, nav, anchor);
     			append(nav, div1);
     			append(div1, a0);
-    			append(a0, i);
+    			append(a0, i0);
     			append(div1, t1);
     			append(div1, div0);
     			mount_component(link0, div0, null);
@@ -2543,23 +2621,41 @@ var app = (function () {
     			mount_component(link1, li0, null);
     			append(ul0, t3);
     			append(ul0, li1);
-    			mount_component(link2, li1, null);
-    			append(ul0, t4);
+    			append(li1, a1);
+    			append(a1, i1);
+    			append(ul0, t5);
     			append(ul0, li2);
-    			mount_component(link3, li2, null);
-    			insert(target, t5, anchor);
+    			mount_component(link2, li2, null);
+    			append(ul0, t6);
+    			append(ul0, li3);
+    			mount_component(link3, li3, null);
+    			insert(target, t7, anchor);
     			insert(target, ul1, anchor);
-    			append(ul1, li3);
-    			mount_component(link4, li3, null);
-    			append(ul1, t6);
     			append(ul1, li4);
-    			mount_component(link5, li4, null);
-    			append(ul1, t7);
-    			append(ul1, li5);
-    			mount_component(link6, li5, null);
+    			mount_component(link4, li4, null);
     			append(ul1, t8);
+    			append(ul1, li5);
+    			append(li5, a2);
+    			append(a2, i2);
+    			append(a2, span);
+    			append(ul1, t11);
     			append(ul1, li6);
-    			append(li6, a1);
+    			mount_component(link5, li6, null);
+    			append(ul1, t12);
+    			append(ul1, li7);
+    			mount_component(link6, li7, null);
+    			append(ul1, t13);
+    			append(ul1, li8);
+    			append(li8, a3);
+    			insert(target, t15, anchor);
+    			insert(target, div4, anchor);
+    			append(div4, div2);
+    			append(div2, h4);
+    			append(div2, t17);
+    			append(div2, p);
+    			append(div4, t19);
+    			append(div4, div3);
+    			append(div3, a4);
     			current = true;
     		},
 
@@ -2637,7 +2733,7 @@ var app = (function () {
     			destroy_component(link3, );
 
     			if (detaching) {
-    				detach(t5);
+    				detach(t7);
     				detach(ul1);
     			}
 
@@ -2647,7 +2743,12 @@ var app = (function () {
 
     			destroy_component(link6, );
 
-    			dispose();
+    			if (detaching) {
+    				detach(t15);
+    				detach(div4);
+    			}
+
+    			run_all(dispose);
     		}
     	};
     }
@@ -2655,6 +2756,11 @@ var app = (function () {
     function mobileNav() {
       var elems = document.querySelectorAll(".sidenav");
       var instances = M.Sidenav.init(elems);
+    }
+
+    function modalTrigger() {
+      var elems = document.querySelectorAll(".modal");
+      var instances = M.Modal.init(elems);
     }
 
     function instance$4($$self, $$props, $$invalidate) {
@@ -3143,14 +3249,40 @@ var app = (function () {
 
     /* src/pages/Home.svelte generated by Svelte v3.6.4 */
 
+    const file$6 = "src/pages/Home.svelte";
+
     function create_fragment$8(ctx) {
-    	var current;
+    	var t0, div2, div0, h4, t2, p, t4, div1, a, current;
 
     	var cardwrapper = new CardWrapper({ $$inline: true });
 
     	return {
     		c: function create() {
     			cardwrapper.$$.fragment.c();
+    			t0 = space();
+    			div2 = element("div");
+    			div0 = element("div");
+    			h4 = element("h4");
+    			h4.textContent = "Modal Header";
+    			t2 = space();
+    			p = element("p");
+    			p.textContent = "A bunch of text";
+    			t4 = space();
+    			div1 = element("div");
+    			a = element("a");
+    			a.textContent = "Agree";
+    			add_location(h4, file$6, 15, 4, 318);
+    			add_location(p, file$6, 16, 4, 344);
+    			attr(div0, "class", "modal-content");
+    			add_location(div0, file$6, 14, 2, 286);
+    			attr(a, "href", "#!");
+    			attr(a, "class", "modal-close waves-effect waves-green btn-flat");
+    			add_location(a, file$6, 19, 4, 409);
+    			attr(div1, "class", "modal-footer");
+    			add_location(div1, file$6, 18, 2, 378);
+    			attr(div2, "id", "modal1");
+    			attr(div2, "class", "modal");
+    			add_location(div2, file$6, 13, 0, 252);
     		},
 
     		l: function claim(nodes) {
@@ -3159,6 +3291,15 @@ var app = (function () {
 
     		m: function mount(target, anchor) {
     			mount_component(cardwrapper, target, anchor);
+    			insert(target, t0, anchor);
+    			insert(target, div2, anchor);
+    			append(div2, div0);
+    			append(div0, h4);
+    			append(div0, t2);
+    			append(div0, p);
+    			append(div2, t4);
+    			append(div2, div1);
+    			append(div1, a);
     			current = true;
     		},
 
@@ -3178,6 +3319,11 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			destroy_component(cardwrapper, detaching);
+
+    			if (detaching) {
+    				detach(t0);
+    				detach(div2);
+    			}
     		}
     	};
     }
@@ -3191,7 +3337,7 @@ var app = (function () {
 
     /* src/pages/About.svelte generated by Svelte v3.6.4 */
 
-    const file$6 = "src/pages/About.svelte";
+    const file$7 = "src/pages/About.svelte";
 
     function create_fragment$9(ctx) {
     	var h1;
@@ -3200,7 +3346,7 @@ var app = (function () {
     		c: function create() {
     			h1 = element("h1");
     			h1.textContent = "About";
-    			add_location(h1, file$6, 0, 0, 0);
+    			add_location(h1, file$7, 0, 0, 0);
     		},
 
     		l: function claim(nodes) {

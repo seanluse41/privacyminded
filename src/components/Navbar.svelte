@@ -16,6 +16,11 @@
       cart_sum += item.count;
     });
   });
+
+  function modalTrigger() {
+    var elems = document.querySelectorAll(".modal");
+    var instances = M.Modal.init(elems);
+  }
 </script>
 
 <nav>
@@ -38,6 +43,11 @@
           </Link>
         </li>
         <li>
+          <a class="modal-trigger" href="#modal1" on:click={modalTrigger}>
+            <i class="material-icons">apps</i>
+          </a>
+        </li>
+        <li>
           <Link to="/about">
             <i class="material-icons">info</i>
           </Link>
@@ -55,17 +65,23 @@
 
 <ul class="sidenav" id="mobile-demo">
   <li>
-    <Link to="/">
+    <Link to="/"><span>Home</span>
       <i class="material-icons">home</i>
     </Link>
   </li>
+
   <li>
-    <Link to="/about">
+    <a class="modal-trigger" href="#modal1" on:click={modalTrigger}>
+      <i class="material-icons">apps</i><span>Products</span>
+    </a>
+  </li>
+  <li>
+    <Link to="/about"><span>About</span>
       <i class="material-icons">info</i>
     </Link>
   </li>
   <li>
-    <Link to="/checkout">
+    <Link to="/checkout"><span>Cart</span>
       <i class="material-icons">shopping_cart</i>
     </Link>
   </li>
@@ -74,3 +90,14 @@
     <a href="http://www.seanbase.com">www.seanbase.com</a>
   </li>
 </ul>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+</div>
