@@ -1,6 +1,7 @@
 <script>
   import { get } from "svelte/store";
   import { cart } from "../stores/stores.js";
+  import { fly } from "svelte/transition";
 
   export let item;
   let { img, name, price } = item;
@@ -75,7 +76,7 @@
   } */
 </style>
 
-<div class="item-card">
+<div class="item-card" in:fly="{{ y: 200, duration: 2000 }}">
   <img src={img} alt={name} />
   <h3 class="title">{name}</h3>
   <p class="price">৳ {price}</p>
