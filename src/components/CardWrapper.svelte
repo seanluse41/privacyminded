@@ -1,10 +1,20 @@
 <script>
   import Card from "./Card.svelte";
   import items from "../items.js";
+  import { currentCategory } from "../stores/stores.js";
+
+  let category;
+
+  const unsubscribe = currentCategory.subscribe(value => {
+    category = value;
+  });
+
+  function testCategory() {
+    console.log(category);
+  }
 </script>
 
 <style>
-
   .grid {
     width: 70vw;
     margin: 10vh auto;
@@ -44,3 +54,5 @@
     <Card {item} />
   {/each}
 </section>
+
+<button on:click={testCategory}>test</button>

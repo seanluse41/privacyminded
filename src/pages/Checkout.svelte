@@ -2,8 +2,6 @@
   import CheckoutItem from "../components/CheckoutItem.svelte";
   import { cart } from "../stores/stores.js";
 
-  let checkedOut = false;
-
   let cartItems = [];
   const unsubscribe = cart.subscribe(items => {
     cartItems = Object.values(items);
@@ -31,7 +29,6 @@
 </script>
 
 <style>
-
   .empty-message {
     margin: 10px 0;
   }
@@ -43,24 +40,6 @@
     background: #20447d;
     color: white;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  @media screen and (max-width: 1600px) {
-    .checkout-container {
-      width: 80vw;
-    }
-  }
-
-  @media screen and (max-width: 1400px) {
-    .checkout-container {
-      width: 90vw;
-    }
-  }
-
-  @media screen and (max-width: 454px) {
-    button.checkout {
-      align-self: stretch;
-    }
   }
 </style>
 

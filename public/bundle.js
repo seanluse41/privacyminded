@@ -2028,6 +2028,8 @@ var app = (function () {
 
     const cart = writable({});
 
+    const currentCategory = writable("all");
+
     function cubicOut(t) {
         const f = t - 1.0;
         return f * f * f + 1.0;
@@ -2304,7 +2306,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (43:2) {#each items as item}
+    // (53:2) {#each items as item}
     function create_each_block(ctx) {
     	var current;
 
@@ -2348,7 +2350,7 @@ var app = (function () {
     }
 
     function create_fragment$4(ctx) {
-    	var section, current;
+    	var section, t, button, current, dispose;
 
     	var each_value = items;
 
@@ -2369,8 +2371,14 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-1em7f1h");
-    			add_location(section, file$2, 41, 0, 661);
+
+    			t = space();
+    			button = element("button");
+    			button.textContent = "test";
+    			attr(section, "class", "card-wrapper grid svelte-fdpesx");
+    			add_location(section, file$2, 51, 0, 882);
+    			add_location(button, file$2, 57, 0, 984);
+    			dispose = listen(button, "click", ctx.testCategory);
     		},
 
     		l: function claim(nodes) {
@@ -2384,6 +2392,8 @@ var app = (function () {
     				each_blocks[i].m(section, null);
     			}
 
+    			insert(target, t, anchor);
+    			insert(target, button, anchor);
     			current = true;
     		},
 
@@ -2431,14 +2441,37 @@ var app = (function () {
     			}
 
     			destroy_each(each_blocks, detaching);
+
+    			if (detaching) {
+    				detach(t);
+    				detach(button);
+    			}
+
+    			dispose();
     		}
     	};
+    }
+
+    function instance$4($$self, $$props, $$invalidate) {
+    	
+
+      let category;
+
+      const unsubscribe = currentCategory.subscribe(value => {
+        category = value;
+      });
+
+      function testCategory() {
+        console.log(category);
+      }
+
+    	return { testCategory };
     }
 
     class CardWrapper extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, null, create_fragment$4, safe_not_equal, []);
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, []);
     	}
     }
 
@@ -2447,7 +2480,7 @@ var app = (function () {
     const file$3 = "src/components/CategoryCards.svelte";
 
     function create_fragment$5(ctx) {
-    	var h40, t1, div12, div2, div0, img0, t2, div1, h41, t4, div5, div3, img1, t5, div4, h42, t7, div8, div6, img2, t8, div7, h43, t10, div11, div9, img3, t11, div10, h44;
+    	var h40, t1, div12, div2, div0, img0, t2, div1, h41, t4, div5, div3, img1, t5, div4, h42, t7, div8, div6, img2, t8, div7, h43, t10, div11, div9, img3, t11, div10, h44, dispose;
 
     	return {
     		c: function create() {
@@ -2486,55 +2519,61 @@ var app = (function () {
     			div10 = element("div");
     			h44 = element("h4");
     			h44.textContent = "ABOUT";
-    			add_location(h40, file$3, 14, 0, 245);
+    			add_location(h40, file$3, 18, 0, 355);
     			attr(img0, "src", "img/librem14.png");
     			attr(img0, "alt", "TECH");
-    			add_location(img0, file$3, 18, 6, 363);
+    			add_location(img0, file$3, 22, 6, 525);
     			attr(div0, "class", "card-image");
-    			add_location(div0, file$3, 17, 4, 332);
-    			add_location(h41, file$3, 21, 6, 487);
+    			add_location(div0, file$3, 21, 4, 494);
+    			add_location(h41, file$3, 25, 6, 649);
     			attr(div1, "class", "card-content center-align");
     			set_style(div1, "padding", "0px");
-    			add_location(div1, file$3, 20, 4, 420);
-    			attr(div2, "class", "card hoverable");
-    			add_location(div2, file$3, 16, 2, 299);
+    			add_location(div1, file$3, 24, 4, 582);
+    			attr(div2, "class", "card hoverable modal-close");
+    			add_location(div2, file$3, 20, 2, 409);
     			attr(img1, "src", "img/apparel.jpeg");
     			attr(img1, "alt", "WEAR");
     			set_style(img1, "max-height", "150px");
-    			add_location(img1, file$3, 26, 6, 587);
+    			add_location(img1, file$3, 30, 6, 801);
     			attr(div3, "class", "card-image");
-    			add_location(div3, file$3, 25, 4, 556);
-    			add_location(h42, file$3, 29, 6, 737);
+    			add_location(div3, file$3, 29, 4, 770);
+    			add_location(h42, file$3, 33, 6, 951);
     			attr(div4, "class", "card-content center-align");
     			set_style(div4, "padding", "0px");
-    			add_location(div4, file$3, 28, 4, 670);
-    			attr(div5, "class", "card hoverable");
-    			add_location(div5, file$3, 24, 2, 523);
+    			add_location(div4, file$3, 32, 4, 884);
+    			attr(div5, "class", "card hoverable modal-close");
+    			add_location(div5, file$3, 28, 2, 685);
     			attr(img2, "src", "img/librem14.png");
     			attr(img2, "alt", "SERVICES");
-    			add_location(img2, file$3, 34, 6, 837);
+    			add_location(img2, file$3, 38, 6, 1107);
     			attr(div6, "class", "card-image");
-    			add_location(div6, file$3, 33, 4, 806);
-    			add_location(h43, file$3, 37, 6, 965);
+    			add_location(div6, file$3, 37, 4, 1076);
+    			add_location(h43, file$3, 41, 6, 1235);
     			attr(div7, "class", "card-content center-align");
     			set_style(div7, "padding", "0px");
-    			add_location(div7, file$3, 36, 4, 898);
-    			attr(div8, "class", "card hoverable");
-    			add_location(div8, file$3, 32, 2, 773);
+    			add_location(div7, file$3, 40, 4, 1168);
+    			attr(div8, "class", "card hoverable modal-close");
+    			add_location(div8, file$3, 36, 2, 987);
     			attr(img3, "src", "img/lockicon.png");
     			attr(img3, "alt", "ABOUT");
     			set_style(img3, "max-height", "150px");
-    			add_location(img3, file$3, 42, 6, 1069);
+    			add_location(img3, file$3, 46, 6, 1351);
     			attr(div9, "class", "card-image");
-    			add_location(div9, file$3, 41, 4, 1038);
-    			add_location(h44, file$3, 45, 6, 1220);
+    			add_location(div9, file$3, 45, 4, 1320);
+    			add_location(h44, file$3, 49, 6, 1502);
     			attr(div10, "class", "card-content center-align");
     			set_style(div10, "padding", "0px");
-    			add_location(div10, file$3, 44, 4, 1153);
-    			attr(div11, "class", "card hoverable");
-    			add_location(div11, file$3, 40, 2, 1005);
+    			add_location(div10, file$3, 48, 4, 1435);
+    			attr(div11, "class", "card hoverable modal-close");
+    			add_location(div11, file$3, 44, 2, 1275);
     			attr(div12, "class", "category-wrapper svelte-1ru2drc");
-    			add_location(div12, file$3, 15, 0, 266);
+    			add_location(div12, file$3, 19, 0, 376);
+
+    			dispose = [
+    				listen(div2, "click", ctx.click_handler),
+    				listen(div5, "click", ctx.click_handler_1),
+    				listen(div8, "click", ctx.click_handler_2)
+    			];
     		},
 
     		l: function claim(nodes) {
@@ -2584,37 +2623,40 @@ var app = (function () {
     				detach(t1);
     				detach(div12);
     			}
+
+    			run_all(dispose);
     		}
     	};
     }
 
-    function instance$4($$self, $$props, $$invalidate) {
-    	let { currentCategory = "" } = $$props;
+    function changeCategory(selection) {
+      currentCategory.update(n => selection);
+    }
 
-    	const writable_props = ['currentCategory'];
-    	Object.keys($$props).forEach(key => {
-    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<CategoryCards> was created with unknown prop '${key}'`);
-    	});
+    function instance$5($$self) {
+    	function click_handler() {
+    		return changeCategory('tech');
+    	}
 
-    	$$self.$set = $$props => {
-    		if ('currentCategory' in $$props) $$invalidate('currentCategory', currentCategory = $$props.currentCategory);
+    	function click_handler_1() {
+    		return changeCategory('wear');
+    	}
+
+    	function click_handler_2() {
+    		return changeCategory('services');
+    	}
+
+    	return {
+    		click_handler,
+    		click_handler_1,
+    		click_handler_2
     	};
-
-    	return { currentCategory };
     }
 
     class CategoryCards extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$5, safe_not_equal, ["currentCategory"]);
-    	}
-
-    	get currentCategory() {
-    		throw new Error("<CategoryCards>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set currentCategory(value) {
-    		throw new Error("<CategoryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    		init(this, options, instance$5, create_fragment$5, safe_not_equal, []);
     	}
     }
 
@@ -3216,7 +3258,7 @@ var app = (function () {
       var instances = M.Modal.init(elems);
     }
 
-    function instance$5($$self, $$props, $$invalidate) {
+    function instance$6($$self, $$props, $$invalidate) {
     	
 
       let cart_sum = 0;
@@ -3235,7 +3277,7 @@ var app = (function () {
     class Navbar extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$5, create_fragment$7, safe_not_equal, []);
+    		init(this, options, instance$6, create_fragment$7, safe_not_equal, []);
     	}
     }
 
@@ -3355,7 +3397,7 @@ var app = (function () {
     	};
     }
 
-    function instance$6($$self, $$props, $$invalidate) {
+    function instance$7($$self, $$props, $$invalidate) {
     	let { item } = $$props;
       let { name, price, img, count } = item;
 
@@ -3398,7 +3440,7 @@ var app = (function () {
     class CheckoutItem extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$6, create_fragment$8, safe_not_equal, ["item"]);
+    		init(this, options, instance$7, create_fragment$8, safe_not_equal, ["item"]);
 
     		const { ctx } = this.$$;
     		const props = options.props || {};
@@ -3427,7 +3469,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (71:2) {:else}
+    // (50:2) {:else}
     function create_else_block$1(ctx) {
     	var each_blocks = [], each_1_lookup = new Map(), t, button, current, dispose;
 
@@ -3448,8 +3490,8 @@ var app = (function () {
     			t = space();
     			button = element("button");
     			button.textContent = "Checkout";
-    			attr(button, "class", "checkout svelte-1fa4i6t");
-    			add_location(button, file$7, 74, 4, 1565);
+    			attr(button, "class", "checkout svelte-89svy8");
+    			add_location(button, file$7, 53, 4, 1240);
     			dispose = listen(button, "click", ctx.startCheckout);
     		},
 
@@ -3495,7 +3537,7 @@ var app = (function () {
     	};
     }
 
-    // (69:2) {#if cartItems.length === 0}
+    // (48:2) {#if cartItems.length === 0}
     function create_if_block$2(ctx) {
     	var p;
 
@@ -3503,8 +3545,8 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "Your cart is empty";
-    			attr(p, "class", "empty-message svelte-1fa4i6t");
-    			add_location(p, file$7, 69, 4, 1419);
+    			attr(p, "class", "empty-message svelte-89svy8");
+    			add_location(p, file$7, 48, 4, 1094);
     		},
 
     		m: function mount(target, anchor) {
@@ -3523,7 +3565,7 @@ var app = (function () {
     	};
     }
 
-    // (72:4) {#each cartItems as item (item.name)}
+    // (51:4) {#each cartItems as item (item.name)}
     function create_each_block$1(key_1, ctx) {
     	var first, current;
 
@@ -3602,9 +3644,9 @@ var app = (function () {
     			h1.textContent = "My Cart";
     			t_1 = space();
     			if_block.c();
-    			add_location(h1, file$7, 67, 2, 1367);
+    			add_location(h1, file$7, 46, 2, 1042);
     			attr(div, "class", "container");
-    			add_location(div, file$7, 66, 0, 1341);
+    			add_location(div, file$7, 45, 0, 1016);
     		},
 
     		l: function claim(nodes) {
@@ -3662,7 +3704,7 @@ var app = (function () {
     	};
     }
 
-    function instance$7($$self, $$props, $$invalidate) {
+    function instance$8($$self, $$props, $$invalidate) {
     	
 
       let cartItems = [];
@@ -3696,7 +3738,7 @@ var app = (function () {
     class Checkout extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$7, create_fragment$9, safe_not_equal, []);
+    		init(this, options, instance$8, create_fragment$9, safe_not_equal, []);
     	}
     }
 
@@ -4010,7 +4052,7 @@ var app = (function () {
     	};
     }
 
-    function instance$8($$self) {
+    function instance$9($$self) {
     	
 
       M.AutoInit();
@@ -4021,7 +4063,7 @@ var app = (function () {
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$8, create_fragment$c, safe_not_equal, []);
+    		init(this, options, instance$9, create_fragment$c, safe_not_equal, []);
     	}
     }
 
