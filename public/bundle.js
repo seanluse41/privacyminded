@@ -4,6 +4,7 @@ var app = (function () {
     'use strict';
 
     function noop() { }
+    const identity = x => x;
     function assign(tar, src) {
         // @ts-ignore
         for (const k in src)
@@ -65,6 +66,41 @@ var app = (function () {
         return result;
     }
 
+    const is_client = typeof window !== 'undefined';
+    let now = is_client
+        ? () => window.performance.now()
+        : () => Date.now();
+    let raf = cb => requestAnimationFrame(cb);
+
+    const tasks = new Set();
+    let running = false;
+    function run_tasks() {
+        tasks.forEach(task => {
+            if (!task[0](now())) {
+                tasks.delete(task);
+                task[1]();
+            }
+        });
+        running = tasks.size > 0;
+        if (running)
+            raf(run_tasks);
+    }
+    function loop(fn) {
+        let task;
+        if (!running) {
+            running = true;
+            raf(run_tasks);
+        }
+        return {
+            promise: new Promise(fulfil => {
+                tasks.add(task = [fn, fulfil]);
+            }),
+            abort() {
+                tasks.delete(task);
+            }
+        };
+    }
+
     function append(target, node) {
         target.appendChild(node);
     }
@@ -123,10 +159,69 @@ var app = (function () {
         if (text.data !== data)
             text.data = data;
     }
+    function set_style(node, key, value) {
+        node.style.setProperty(key, value);
+    }
     function custom_event(type, detail) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, false, false, detail);
         return e;
+    }
+
+    let stylesheet;
+    let active = 0;
+    let current_rules = {};
+    // https://github.com/darkskyapp/string-hash/blob/master/index.js
+    function hash(str) {
+        let hash = 5381;
+        let i = str.length;
+        while (i--)
+            hash = ((hash << 5) - hash) ^ str.charCodeAt(i);
+        return hash >>> 0;
+    }
+    function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
+        const step = 16.666 / duration;
+        let keyframes = '{\n';
+        for (let p = 0; p <= 1; p += step) {
+            const t = a + (b - a) * ease(p);
+            keyframes += p * 100 + `%{${fn(t, 1 - t)}}\n`;
+        }
+        const rule = keyframes + `100% {${fn(b, 1 - b)}}\n}`;
+        const name = `__svelte_${hash(rule)}_${uid}`;
+        if (!current_rules[name]) {
+            if (!stylesheet) {
+                const style = element('style');
+                document.head.appendChild(style);
+                stylesheet = style.sheet;
+            }
+            current_rules[name] = true;
+            stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
+        }
+        const animation = node.style.animation || '';
+        node.style.animation = `${animation ? `${animation}, ` : ``}${name} ${duration}ms linear ${delay}ms 1 both`;
+        active += 1;
+        return name;
+    }
+    function delete_rule(node, name) {
+        node.style.animation = (node.style.animation || '')
+            .split(', ')
+            .filter(name
+            ? anim => anim.indexOf(name) < 0 // remove specific animation
+            : anim => anim.indexOf('__svelte') === -1 // remove all Svelte animations
+        )
+            .join(', ');
+        if (name && !--active)
+            clear_rules();
+    }
+    function clear_rules() {
+        raf(() => {
+            if (active)
+                return;
+            let i = stylesheet.cssRules.length;
+            while (i--)
+                stylesheet.deleteRule(i);
+            current_rules = {};
+        });
     }
 
     let current_component;
@@ -219,6 +314,20 @@ var app = (function () {
             $$.after_update.forEach(add_render_callback);
         }
     }
+
+    let promise;
+    function wait() {
+        if (!promise) {
+            promise = Promise.resolve();
+            promise.then(() => {
+                promise = null;
+            });
+        }
+        return promise;
+    }
+    function dispatch(node, direction, kind) {
+        node.dispatchEvent(custom_event(`${direction ? 'intro' : 'outro'}${kind}`));
+    }
     const outroing = new Set();
     let outros;
     function group_outros() {
@@ -252,6 +361,68 @@ var app = (function () {
             });
             block.o(local);
         }
+    }
+    function create_in_transition(node, fn, params) {
+        let config = fn(node, params);
+        let running = false;
+        let animation_name;
+        let task;
+        let uid = 0;
+        function cleanup() {
+            if (animation_name)
+                delete_rule(node, animation_name);
+        }
+        function go() {
+            const { delay = 0, duration = 300, easing = identity, tick: tick$$1 = noop, css } = config;
+            if (css)
+                animation_name = create_rule(node, 0, 1, duration, delay, easing, css, uid++);
+            tick$$1(0, 1);
+            const start_time = now() + delay;
+            const end_time = start_time + duration;
+            if (task)
+                task.abort();
+            running = true;
+            add_render_callback(() => dispatch(node, true, 'start'));
+            task = loop(now$$1 => {
+                if (running) {
+                    if (now$$1 >= end_time) {
+                        tick$$1(1, 0);
+                        dispatch(node, true, 'end');
+                        cleanup();
+                        return running = false;
+                    }
+                    if (now$$1 >= start_time) {
+                        const t = easing((now$$1 - start_time) / duration);
+                        tick$$1(t, 1 - t);
+                    }
+                }
+                return running;
+            });
+        }
+        let started = false;
+        return {
+            start() {
+                if (started)
+                    return;
+                delete_rule(node);
+                if (is_function(config)) {
+                    config = config();
+                    wait().then(go);
+                }
+                else {
+                    go();
+                }
+            },
+            invalidate() {
+                started = false;
+            },
+            end() {
+                if (running) {
+                    cleanup();
+                    running = false;
+                }
+            }
+        };
     }
 
     const globals = (typeof window !== 'undefined' ? window : global);
@@ -1857,11 +2028,31 @@ var app = (function () {
 
     const cart = writable({});
 
+    function cubicOut(t) {
+        const f = t - 1.0;
+        return f * f * f + 1.0;
+    }
+
+    function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0, opacity = 0 }) {
+        const style = getComputedStyle(node);
+        const target_opacity = +style.opacity;
+        const transform = style.transform === 'none' ? '' : style.transform;
+        const od = target_opacity * (1 - opacity);
+        return {
+            delay,
+            duration,
+            easing,
+            css: (t, u) => `
+			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px);
+			opacity: ${target_opacity - (od * u)}`
+        };
+    }
+
     /* src/components/Card.svelte generated by Svelte v3.6.4 */
 
     const file$1 = "src/components/Card.svelte";
 
-    // (87:4) {#if inCart > 0}
+    // (72:6) {#if inCart > 0}
     function create_if_block$1(ctx) {
     	var span, em, t0, t1, t2;
 
@@ -1872,9 +2063,9 @@ var app = (function () {
     			t0 = text("(");
     			t1 = text(ctx.inCart);
     			t2 = text(" in cart)");
-    			add_location(em, file$1, 88, 8, 1750);
-    			attr(span, "class", "svelte-iilaf3");
-    			add_location(span, file$1, 87, 6, 1735);
+    			add_location(em, file$1, 73, 10, 1555);
+    			attr(span, "class", "svelte-7t6399");
+    			add_location(span, file$1, 72, 8, 1538);
     		},
 
     		m: function mount(target, anchor) {
@@ -1900,45 +2091,52 @@ var app = (function () {
     }
 
     function create_fragment$3(ctx) {
-    	var div1, img_1, t0, h3, t1, t2, p, t3, t4, t5, div0, button, i, t7, t8, dispose;
+    	var div3, div0, img_1, t0, div2, h3, t1, t2, p, t3, t4, t5, div1, button, i, t7, t8, div3_intro, dispose;
 
     	var if_block = (ctx.inCart > 0) && create_if_block$1(ctx);
 
     	return {
     		c: function create() {
-    			div1 = element("div");
+    			div3 = element("div");
+    			div0 = element("div");
     			img_1 = element("img");
     			t0 = space();
+    			div2 = element("div");
     			h3 = element("h3");
     			t1 = text(ctx.name);
     			t2 = space();
     			p = element("p");
-    			t3 = text("৳ ");
-    			t4 = text(ctx.price);
+    			t3 = text(ctx.price);
+    			t4 = text("￥");
     			t5 = space();
-    			div0 = element("div");
+    			div1 = element("div");
     			button = element("button");
     			i = element("i");
-    			i.textContent = "shopping_cart";
-    			t7 = text("\n      Checkout");
+    			i.textContent = "add_shopping_cart";
+    			t7 = text("\n        Add");
     			t8 = space();
     			if (if_block) if_block.c();
     			attr(img_1, "src", ctx.img);
     			attr(img_1, "alt", ctx.name);
-    			attr(img_1, "class", "svelte-iilaf3");
-    			add_location(img_1, file$1, 78, 2, 1416);
-    			attr(h3, "class", "title svelte-iilaf3");
-    			add_location(h3, file$1, 79, 2, 1447);
-    			attr(p, "class", "price svelte-iilaf3");
-    			add_location(p, file$1, 80, 2, 1479);
+    			attr(img_1, "class", "svelte-7t6399");
+    			add_location(img_1, file$1, 59, 4, 1124);
+    			attr(div0, "class", "card-image");
+    			add_location(div0, file$1, 58, 2, 1095);
+    			attr(h3, "class", "title svelte-7t6399");
+    			add_location(h3, file$1, 62, 4, 1220);
+    			attr(p, "class", "price svelte-7t6399");
+    			add_location(p, file$1, 63, 4, 1254);
     			attr(i, "class", "material-icons right");
-    			add_location(i, file$1, 83, 6, 1629);
+    			add_location(i, file$1, 68, 8, 1425);
     			attr(button, "class", "waves-effect waves-light red darken-2 btn");
-    			add_location(button, file$1, 82, 4, 1543);
-    			attr(div0, "class", "button-group svelte-iilaf3");
-    			add_location(div0, file$1, 81, 2, 1512);
-    			attr(div1, "class", "item-card svelte-iilaf3");
-    			add_location(div1, file$1, 77, 0, 1390);
+    			add_location(button, file$1, 65, 6, 1321);
+    			attr(div1, "class", "button-group svelte-7t6399");
+    			add_location(div1, file$1, 64, 4, 1288);
+    			attr(div2, "class", "card-content");
+    			set_style(div2, "padding-top", "0px");
+    			add_location(div2, file$1, 61, 2, 1164);
+    			attr(div3, "class", "card hoverable");
+    			add_location(div3, file$1, 57, 0, 1028);
     			dispose = listen(button, "click", ctx.addToCart);
     		},
 
@@ -1947,22 +2145,24 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, div1, anchor);
-    			append(div1, img_1);
-    			append(div1, t0);
-    			append(div1, h3);
+    			insert(target, div3, anchor);
+    			append(div3, div0);
+    			append(div0, img_1);
+    			append(div3, t0);
+    			append(div3, div2);
+    			append(div2, h3);
     			append(h3, t1);
-    			append(div1, t2);
-    			append(div1, p);
+    			append(div2, t2);
+    			append(div2, p);
     			append(p, t3);
     			append(p, t4);
-    			append(div1, t5);
-    			append(div1, div0);
-    			append(div0, button);
+    			append(div2, t5);
+    			append(div2, div1);
+    			append(div1, button);
     			append(button, i);
     			append(button, t7);
-    			append(div0, t8);
-    			if (if_block) if_block.m(div0, null);
+    			append(div1, t8);
+    			if (if_block) if_block.m(div1, null);
     		},
 
     		p: function update(changed, ctx) {
@@ -1976,7 +2176,7 @@ var app = (function () {
     				} else {
     					if_block = create_if_block$1(ctx);
     					if_block.c();
-    					if_block.m(div0, null);
+    					if_block.m(div1, null);
     				}
     			} else if (if_block) {
     				if_block.d(1);
@@ -1984,12 +2184,20 @@ var app = (function () {
     			}
     		},
 
-    		i: noop,
+    		i: function intro(local) {
+    			if (!div3_intro) {
+    				add_render_callback(() => {
+    					div3_intro = create_in_transition(div3, fly, { y: 200, duration: 2000 });
+    					div3_intro.start();
+    				});
+    			}
+    		},
+
     		o: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(div1);
+    				detach(div3);
     			}
 
     			if (if_block) if_block.d();
@@ -2058,22 +2266,32 @@ var app = (function () {
     var items = [
     	{
     		name: 'Thinkpad X220',
-    		price: '20000',
+    		price: '30000',
     		img: 'lenoX220.jpg',
-    		sku: 'price_1GquBKJ5Fk3rD5oaqDTOlxOV'
+    		sku: 'price_1GquBKJ5Fk3rD5oaqDTOlxOV',
+    		category: 'tech'
     	},
     	{
     		name: 'Thinkpad X230',
-    		price: '25000',
+    		price: '35000',
     		img: 'lenoX230.jpg',
-    		sku: 'price_1GquGpJ5Fk3rD5oaPcN1kpVf'
+    		sku: 'price_1GquGpJ5Fk3rD5oaPcN1kpVf',
+    		category: 'tech'
     	},
     	{
     		name: 'Thinkpad USB C充電端末',
-    		price: '2000',
+    		price: '2500',
     		img: 'usb-c.jpg',
-    		sku: 'sku_HK3pP3oL6bi9Uf'
-    	}
+    		sku: 'sku_HK3pP3oL6bi9Uf',
+    		category: 'tech',
+    	},
+    	{
+    		name: 'Privacy Tote',
+    		price: '20000',
+    		img: 'tote.jpg',
+    		sku: 'sku_HK3pP3oL6bi9Uf',
+    		category: 'wear'
+    	},
     ];
 
     /* src/components/CardWrapper.svelte generated by Svelte v3.6.4 */
@@ -2224,11 +2442,262 @@ var app = (function () {
     	}
     }
 
+    /* src/components/CategoryCards.svelte generated by Svelte v3.6.4 */
+
+    const file$3 = "src/components/CategoryCards.svelte";
+
+    function create_fragment$5(ctx) {
+    	var h40, t1, div12, div2, div0, img0, t2, div1, h41, t4, div5, div3, img1, t5, div4, h42, t7, div8, div6, img2, t8, div7, h43, t10, div11, div9, img3, t11, div10, h44;
+
+    	return {
+    		c: function create() {
+    			h40 = element("h4");
+    			h40.textContent = "Categories:";
+    			t1 = space();
+    			div12 = element("div");
+    			div2 = element("div");
+    			div0 = element("div");
+    			img0 = element("img");
+    			t2 = space();
+    			div1 = element("div");
+    			h41 = element("h4");
+    			h41.textContent = "TECH";
+    			t4 = space();
+    			div5 = element("div");
+    			div3 = element("div");
+    			img1 = element("img");
+    			t5 = space();
+    			div4 = element("div");
+    			h42 = element("h4");
+    			h42.textContent = "WEAR";
+    			t7 = space();
+    			div8 = element("div");
+    			div6 = element("div");
+    			img2 = element("img");
+    			t8 = space();
+    			div7 = element("div");
+    			h43 = element("h4");
+    			h43.textContent = "SERVICES";
+    			t10 = space();
+    			div11 = element("div");
+    			div9 = element("div");
+    			img3 = element("img");
+    			t11 = space();
+    			div10 = element("div");
+    			h44 = element("h4");
+    			h44.textContent = "ABOUT";
+    			add_location(h40, file$3, 14, 0, 245);
+    			attr(img0, "src", "img/librem14.png");
+    			attr(img0, "alt", "TECH");
+    			add_location(img0, file$3, 18, 6, 363);
+    			attr(div0, "class", "card-image");
+    			add_location(div0, file$3, 17, 4, 332);
+    			add_location(h41, file$3, 21, 6, 487);
+    			attr(div1, "class", "card-content center-align");
+    			set_style(div1, "padding", "0px");
+    			add_location(div1, file$3, 20, 4, 420);
+    			attr(div2, "class", "card hoverable");
+    			add_location(div2, file$3, 16, 2, 299);
+    			attr(img1, "src", "img/apparel.jpeg");
+    			attr(img1, "alt", "WEAR");
+    			set_style(img1, "max-height", "150px");
+    			add_location(img1, file$3, 26, 6, 587);
+    			attr(div3, "class", "card-image");
+    			add_location(div3, file$3, 25, 4, 556);
+    			add_location(h42, file$3, 29, 6, 737);
+    			attr(div4, "class", "card-content center-align");
+    			set_style(div4, "padding", "0px");
+    			add_location(div4, file$3, 28, 4, 670);
+    			attr(div5, "class", "card hoverable");
+    			add_location(div5, file$3, 24, 2, 523);
+    			attr(img2, "src", "img/librem14.png");
+    			attr(img2, "alt", "SERVICES");
+    			add_location(img2, file$3, 34, 6, 837);
+    			attr(div6, "class", "card-image");
+    			add_location(div6, file$3, 33, 4, 806);
+    			add_location(h43, file$3, 37, 6, 965);
+    			attr(div7, "class", "card-content center-align");
+    			set_style(div7, "padding", "0px");
+    			add_location(div7, file$3, 36, 4, 898);
+    			attr(div8, "class", "card hoverable");
+    			add_location(div8, file$3, 32, 2, 773);
+    			attr(img3, "src", "img/lockicon.png");
+    			attr(img3, "alt", "ABOUT");
+    			set_style(img3, "max-height", "150px");
+    			add_location(img3, file$3, 42, 6, 1069);
+    			attr(div9, "class", "card-image");
+    			add_location(div9, file$3, 41, 4, 1038);
+    			add_location(h44, file$3, 45, 6, 1220);
+    			attr(div10, "class", "card-content center-align");
+    			set_style(div10, "padding", "0px");
+    			add_location(div10, file$3, 44, 4, 1153);
+    			attr(div11, "class", "card hoverable");
+    			add_location(div11, file$3, 40, 2, 1005);
+    			attr(div12, "class", "category-wrapper svelte-1ru2drc");
+    			add_location(div12, file$3, 15, 0, 266);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, h40, anchor);
+    			insert(target, t1, anchor);
+    			insert(target, div12, anchor);
+    			append(div12, div2);
+    			append(div2, div0);
+    			append(div0, img0);
+    			append(div2, t2);
+    			append(div2, div1);
+    			append(div1, h41);
+    			append(div12, t4);
+    			append(div12, div5);
+    			append(div5, div3);
+    			append(div3, img1);
+    			append(div5, t5);
+    			append(div5, div4);
+    			append(div4, h42);
+    			append(div12, t7);
+    			append(div12, div8);
+    			append(div8, div6);
+    			append(div6, img2);
+    			append(div8, t8);
+    			append(div8, div7);
+    			append(div7, h43);
+    			append(div12, t10);
+    			append(div12, div11);
+    			append(div11, div9);
+    			append(div9, img3);
+    			append(div11, t11);
+    			append(div11, div10);
+    			append(div10, h44);
+    		},
+
+    		p: noop,
+    		i: noop,
+    		o: noop,
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(h40);
+    				detach(t1);
+    				detach(div12);
+    			}
+    		}
+    	};
+    }
+
+    function instance$4($$self, $$props, $$invalidate) {
+    	let { currentCategory = "" } = $$props;
+
+    	const writable_props = ['currentCategory'];
+    	Object.keys($$props).forEach(key => {
+    		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<CategoryCards> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$set = $$props => {
+    		if ('currentCategory' in $$props) $$invalidate('currentCategory', currentCategory = $$props.currentCategory);
+    	};
+
+    	return { currentCategory };
+    }
+
+    class CategoryCards extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$4, create_fragment$5, safe_not_equal, ["currentCategory"]);
+    	}
+
+    	get currentCategory() {
+    		throw new Error("<CategoryCards>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set currentCategory(value) {
+    		throw new Error("<CategoryCards>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/components/Modal.svelte generated by Svelte v3.6.4 */
+
+    const file$4 = "src/components/Modal.svelte";
+
+    function create_fragment$6(ctx) {
+    	var div2, div0, t, div1, a, current;
+
+    	var categorycards = new CategoryCards({ $$inline: true });
+
+    	return {
+    		c: function create() {
+    			div2 = element("div");
+    			div0 = element("div");
+    			categorycards.$$.fragment.c();
+    			t = space();
+    			div1 = element("div");
+    			a = element("a");
+    			a.textContent = "Close";
+    			attr(div0, "class", "modal-content svelte-61qvv4");
+    			add_location(div0, file$4, 15, 2, 223);
+    			attr(a, "href", "#!");
+    			attr(a, "class", "modal-close waves-effect waves-green btn-flat svelte-61qvv4");
+    			add_location(a, file$4, 20, 4, 314);
+    			attr(div1, "class", "modal-footer svelte-61qvv4");
+    			add_location(div1, file$4, 19, 2, 283);
+    			attr(div2, "id", "modal1");
+    			attr(div2, "class", "modal svelte-61qvv4");
+    			add_location(div2, file$4, 14, 0, 189);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, div2, anchor);
+    			append(div2, div0);
+    			mount_component(categorycards, div0, null);
+    			append(div2, t);
+    			append(div2, div1);
+    			append(div1, a);
+    			current = true;
+    		},
+
+    		p: noop,
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(categorycards.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(categorycards.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(div2);
+    			}
+
+    			destroy_component(categorycards, );
+    		}
+    	};
+    }
+
+    class Modal extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, null, create_fragment$6, safe_not_equal, []);
+    	}
+    }
+
     /* src/components/Navbar.svelte generated by Svelte v3.6.4 */
 
-    const file$3 = "src/components/Navbar.svelte";
+    const file$5 = "src/components/Navbar.svelte";
 
-    // (36:6) <Link to="/">
+    // (38:6) <Link to="/">
     function create_default_slot_6(ctx) {
     	var span;
 
@@ -2237,7 +2706,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "SECUME!";
     			attr(span, "class", "brand-logo");
-    			add_location(span, file$3, 36, 8, 837);
+    			add_location(span, file$5, 38, 8, 876);
     		},
 
     		m: function mount(target, anchor) {
@@ -2252,7 +2721,7 @@ var app = (function () {
     	};
     }
 
-    // (41:10) <Link to="/">
+    // (43:10) <Link to="/">
     function create_default_slot_5(ctx) {
     	var i;
 
@@ -2261,7 +2730,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "home";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 41, 12, 1000);
+    			add_location(i, file$5, 43, 12, 1039);
     		},
 
     		m: function mount(target, anchor) {
@@ -2276,7 +2745,7 @@ var app = (function () {
     	};
     }
 
-    // (51:10) <Link to="/about">
+    // (53:10) <Link to="/about">
     function create_default_slot_4(ctx) {
     	var i;
 
@@ -2285,7 +2754,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "info";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 51, 12, 1285);
+    			add_location(i, file$5, 53, 12, 1324);
     		},
 
     		m: function mount(target, anchor) {
@@ -2300,7 +2769,7 @@ var app = (function () {
     	};
     }
 
-    // (56:10) <Link to="/checkout">
+    // (58:10) <Link to="/checkout">
     function create_default_slot_3(ctx) {
     	var i;
 
@@ -2309,7 +2778,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "shopping_cart";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 56, 12, 1409);
+    			add_location(i, file$5, 58, 12, 1448);
     		},
 
     		m: function mount(target, anchor) {
@@ -2324,7 +2793,7 @@ var app = (function () {
     	};
     }
 
-    // (68:4) <Link to="/">
+    // (70:4) <Link to="/">
     function create_default_slot_2(ctx) {
     	var span, t_1, i;
 
@@ -2335,9 +2804,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "home";
-    			add_location(span, file$3, 67, 17, 1588);
+    			add_location(span, file$5, 70, 6, 1634);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 68, 6, 1612);
+    			add_location(i, file$5, 71, 6, 1658);
     		},
 
     		m: function mount(target, anchor) {
@@ -2356,7 +2825,7 @@ var app = (function () {
     	};
     }
 
-    // (79:4) <Link to="/about">
+    // (83:4) <Link to="/about">
     function create_default_slot_1(ctx) {
     	var span, t_1, i;
 
@@ -2367,9 +2836,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "info";
-    			add_location(span, file$3, 78, 22, 1852);
+    			add_location(span, file$5, 83, 6, 1912);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 79, 6, 1877);
+    			add_location(i, file$5, 84, 6, 1937);
     		},
 
     		m: function mount(target, anchor) {
@@ -2388,7 +2857,7 @@ var app = (function () {
     	};
     }
 
-    // (84:4) <Link to="/checkout">
+    // (89:4) <Link to="/checkout">
     function create_default_slot(ctx) {
     	var span, t_1, i;
 
@@ -2399,9 +2868,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "shopping_cart";
-    			add_location(span, file$3, 83, 25, 1964);
+    			add_location(span, file$5, 89, 6, 2031);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$3, 84, 6, 1988);
+    			add_location(i, file$5, 90, 6, 2055);
     		},
 
     		m: function mount(target, anchor) {
@@ -2420,8 +2889,8 @@ var app = (function () {
     	};
     }
 
-    function create_fragment$5(ctx) {
-    	var nav, div1, a0, i0, t1, div0, t2, ul0, li0, t3, li1, a1, i1, t5, li2, t6, li3, t7, ul1, li4, t8, li5, a2, i2, span, t11, li6, t12, li7, t13, li8, a3, t15, div4, div2, h4, t17, p, t19, div3, a4, current, dispose;
+    function create_fragment$7(ctx) {
+    	var nav, div1, a0, i0, t1, div0, t2, ul0, li0, t3, li1, a1, i1, t5, li2, t6, li3, t7, ul1, li4, t8, li5, a2, i2, t10, span, t12, li6, t13, li7, t14, li8, a3, t16, div2, current, dispose;
 
     	var link0 = new Link({
     		props: {
@@ -2486,6 +2955,8 @@ var app = (function () {
     		$$inline: true
     	});
 
+    	var modal = new Modal({ $$inline: true });
+
     	return {
     		c: function create() {
     			nav = element("nav");
@@ -2520,81 +2991,63 @@ var app = (function () {
     			a2 = element("a");
     			i2 = element("i");
     			i2.textContent = "apps";
+    			t10 = space();
     			span = element("span");
     			span.textContent = "Products";
-    			t11 = space();
+    			t12 = space();
     			li6 = element("li");
     			link5.$$.fragment.c();
-    			t12 = space();
+    			t13 = space();
     			li7 = element("li");
     			link6.$$.fragment.c();
-    			t13 = space();
+    			t14 = space();
     			li8 = element("li");
     			a3 = element("a");
     			a3.textContent = "www.seanbase.com";
-    			t15 = space();
-    			div4 = element("div");
+    			t16 = space();
     			div2 = element("div");
-    			h4 = element("h4");
-    			h4.textContent = "Modal Header";
-    			t17 = space();
-    			p = element("p");
-    			p.textContent = "A bunch of text";
-    			t19 = space();
-    			div3 = element("div");
-    			a4 = element("a");
-    			a4.textContent = "Agree";
+    			modal.$$.fragment.c();
     			attr(i0, "class", "material-icons");
-    			add_location(i0, file$3, 32, 6, 737);
+    			add_location(i0, file$5, 34, 6, 776);
     			attr(a0, "href", "#");
     			a0.dataset.target = "mobile-demo";
     			attr(a0, "class", "sidenav-trigger");
-    			add_location(a0, file$3, 27, 4, 623);
-    			add_location(li0, file$3, 39, 8, 959);
+    			add_location(a0, file$5, 29, 4, 662);
+    			add_location(li0, file$5, 41, 8, 998);
     			attr(i1, "class", "material-icons");
-    			add_location(i1, file$3, 46, 12, 1167);
+    			add_location(i1, file$5, 48, 12, 1206);
     			attr(a1, "class", "modal-trigger");
     			attr(a1, "href", "#modal1");
-    			add_location(a1, file$3, 45, 10, 1090);
-    			add_location(li1, file$3, 44, 8, 1075);
-    			add_location(li2, file$3, 49, 8, 1239);
-    			add_location(li3, file$3, 54, 8, 1360);
+    			add_location(a1, file$5, 47, 10, 1129);
+    			add_location(li1, file$5, 46, 8, 1114);
+    			add_location(li2, file$5, 51, 8, 1278);
+    			add_location(li3, file$5, 56, 8, 1399);
     			attr(ul0, "id", "nav-mobile");
     			attr(ul0, "class", "right hide-on-small-only");
-    			add_location(ul0, file$3, 38, 6, 897);
+    			add_location(ul0, file$5, 40, 6, 936);
     			attr(div0, "class", "container");
-    			add_location(div0, file$3, 34, 4, 785);
+    			add_location(div0, file$5, 36, 4, 824);
     			attr(div1, "class", "nav-wrapper red darken-2");
-    			add_location(div1, file$3, 26, 2, 580);
-    			add_location(nav, file$3, 25, 0, 572);
-    			add_location(li4, file$3, 66, 2, 1566);
+    			add_location(div1, file$5, 28, 2, 619);
+    			add_location(nav, file$5, 27, 0, 611);
+    			add_location(li4, file$5, 68, 2, 1605);
     			attr(i2, "class", "material-icons");
-    			add_location(i2, file$3, 74, 6, 1750);
-    			add_location(span, file$3, 74, 40, 1784);
+    			add_location(i2, file$5, 77, 6, 1796);
+    			add_location(span, file$5, 78, 6, 1837);
     			attr(a2, "class", "modal-trigger");
     			attr(a2, "href", "#modal1");
-    			add_location(a2, file$3, 73, 4, 1679);
-    			add_location(li5, file$3, 72, 2, 1670);
-    			add_location(li6, file$3, 77, 2, 1825);
-    			add_location(li7, file$3, 82, 2, 1934);
+    			add_location(a2, file$5, 76, 4, 1725);
+    			add_location(li5, file$5, 75, 2, 1716);
+    			add_location(li6, file$5, 81, 2, 1878);
+    			add_location(li7, file$5, 87, 2, 1994);
     			attr(a3, "href", "http://www.seanbase.com");
-    			add_location(a3, file$3, 89, 4, 2064);
-    			add_location(li8, file$3, 88, 2, 2055);
+    			add_location(a3, file$5, 95, 4, 2131);
+    			add_location(li8, file$5, 94, 2, 2122);
     			attr(ul1, "class", "sidenav");
     			attr(ul1, "id", "mobile-demo");
-    			add_location(ul1, file$3, 65, 0, 1526);
-    			add_location(h4, file$3, 96, 4, 2225);
-    			add_location(p, file$3, 97, 4, 2251);
-    			attr(div2, "class", "modal-content");
-    			add_location(div2, file$3, 95, 2, 2193);
-    			attr(a4, "href", "#!");
-    			attr(a4, "class", "modal-close waves-effect waves-green btn-flat");
-    			add_location(a4, file$3, 100, 4, 2316);
-    			attr(div3, "class", "modal-footer");
-    			add_location(div3, file$3, 99, 2, 2285);
-    			attr(div4, "id", "modal1");
-    			attr(div4, "class", "modal");
-    			add_location(div4, file$3, 94, 0, 2159);
+    			add_location(ul1, file$5, 67, 0, 1565);
+    			attr(div2, "class", "modal1");
+    			add_location(div2, file$5, 99, 0, 2201);
 
     			dispose = [
     				listen(a0, "click", mobileNav),
@@ -2637,25 +3090,20 @@ var app = (function () {
     			append(ul1, li5);
     			append(li5, a2);
     			append(a2, i2);
+    			append(a2, t10);
     			append(a2, span);
-    			append(ul1, t11);
+    			append(ul1, t12);
     			append(ul1, li6);
     			mount_component(link5, li6, null);
-    			append(ul1, t12);
+    			append(ul1, t13);
     			append(ul1, li7);
     			mount_component(link6, li7, null);
-    			append(ul1, t13);
+    			append(ul1, t14);
     			append(ul1, li8);
     			append(li8, a3);
-    			insert(target, t15, anchor);
-    			insert(target, div4, anchor);
-    			append(div4, div2);
-    			append(div2, h4);
-    			append(div2, t17);
-    			append(div2, p);
-    			append(div4, t19);
-    			append(div4, div3);
-    			append(div3, a4);
+    			insert(target, t16, anchor);
+    			insert(target, div2, anchor);
+    			mount_component(modal, div2, null);
     			current = true;
     		},
 
@@ -2705,6 +3153,8 @@ var app = (function () {
 
     			transition_in(link6.$$.fragment, local);
 
+    			transition_in(modal.$$.fragment, local);
+
     			current = true;
     		},
 
@@ -2716,6 +3166,7 @@ var app = (function () {
     			transition_out(link4.$$.fragment, local);
     			transition_out(link5.$$.fragment, local);
     			transition_out(link6.$$.fragment, local);
+    			transition_out(modal.$$.fragment, local);
     			current = false;
     		},
 
@@ -2744,9 +3195,11 @@ var app = (function () {
     			destroy_component(link6, );
 
     			if (detaching) {
-    				detach(t15);
-    				detach(div4);
+    				detach(t16);
+    				detach(div2);
     			}
+
+    			destroy_component(modal, );
 
     			run_all(dispose);
     		}
@@ -2763,7 +3216,7 @@ var app = (function () {
       var instances = M.Modal.init(elems);
     }
 
-    function instance$4($$self, $$props, $$invalidate) {
+    function instance$5($$self, $$props, $$invalidate) {
     	
 
       let cart_sum = 0;
@@ -2782,15 +3235,15 @@ var app = (function () {
     class Navbar extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$5, safe_not_equal, []);
+    		init(this, options, instance$5, create_fragment$7, safe_not_equal, []);
     	}
     }
 
     /* src/components/CheckoutItem.svelte generated by Svelte v3.6.4 */
 
-    const file$4 = "src/components/CheckoutItem.svelte";
+    const file$6 = "src/components/CheckoutItem.svelte";
 
-    function create_fragment$6(ctx) {
+    function create_fragment$8(ctx) {
     	var div2, img_1, img_1_src_value, t0, div1, h3, t1, t2, p0, t3, t4, t5, div0, button0, t7, p1, t8, t9, button1, t11, button2, object, t12, dispose;
 
     	return {
@@ -2822,30 +3275,30 @@ var app = (function () {
     			attr(img_1, "src", img_1_src_value = `img/${ctx.img}`);
     			attr(img_1, "alt", ctx.name);
     			attr(img_1, "class", "svelte-fc1ub7");
-    			add_location(img_1, file$4, 121, 2, 2019);
+    			add_location(img_1, file$6, 121, 2, 2019);
     			attr(h3, "class", "title svelte-fc1ub7");
-    			add_location(h3, file$4, 123, 4, 2092);
+    			add_location(h3, file$6, 123, 4, 2092);
     			attr(p0, "class", "price svelte-fc1ub7");
-    			add_location(p0, file$4, 124, 4, 2126);
+    			add_location(p0, file$6, 124, 4, 2126);
     			attr(button0, "class", "add svelte-fc1ub7");
-    			add_location(button0, file$4, 126, 6, 2194);
+    			add_location(button0, file$6, 126, 6, 2194);
     			attr(p1, "class", "svelte-fc1ub7");
-    			add_location(p1, file$4, 127, 6, 2261);
+    			add_location(p1, file$6, 127, 6, 2261);
     			attr(button1, "class", "subtract svelte-fc1ub7");
-    			add_location(button1, file$4, 128, 6, 2282);
+    			add_location(button1, file$6, 128, 6, 2282);
     			attr(object, "aria-label", "remove");
     			attr(object, "type", "image/svg+xml");
     			attr(object, "data", "img/svg/cancel.svg");
     			attr(object, "class", "svelte-fc1ub7");
-    			add_location(object, file$4, 130, 8, 2408);
+    			add_location(object, file$6, 130, 8, 2408);
     			attr(button2, "class", "remove svelte-fc1ub7");
-    			add_location(button2, file$4, 129, 6, 2354);
+    			add_location(button2, file$6, 129, 6, 2354);
     			attr(div0, "class", "count svelte-fc1ub7");
-    			add_location(div0, file$4, 125, 4, 2168);
+    			add_location(div0, file$6, 125, 4, 2168);
     			attr(div1, "class", "item-meta-data svelte-fc1ub7");
-    			add_location(div1, file$4, 122, 2, 2059);
+    			add_location(div1, file$6, 122, 2, 2059);
     			attr(div2, "class", "item-grid svelte-fc1ub7");
-    			add_location(div2, file$4, 120, 0, 1993);
+    			add_location(div2, file$6, 120, 0, 1993);
 
     			dispose = [
     				listen(button0, "click", ctx.countButtonHandler),
@@ -2902,7 +3355,7 @@ var app = (function () {
     	};
     }
 
-    function instance$5($$self, $$props, $$invalidate) {
+    function instance$6($$self, $$props, $$invalidate) {
     	let { item } = $$props;
       let { name, price, img, count } = item;
 
@@ -2945,7 +3398,7 @@ var app = (function () {
     class CheckoutItem extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$5, create_fragment$6, safe_not_equal, ["item"]);
+    		init(this, options, instance$6, create_fragment$8, safe_not_equal, ["item"]);
 
     		const { ctx } = this.$$;
     		const props = options.props || {};
@@ -2966,7 +3419,7 @@ var app = (function () {
     /* src/pages/Checkout.svelte generated by Svelte v3.6.4 */
     const { Object: Object_1 } = globals;
 
-    const file$5 = "src/pages/Checkout.svelte";
+    const file$7 = "src/pages/Checkout.svelte";
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = Object_1.create(ctx);
@@ -2996,7 +3449,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Checkout";
     			attr(button, "class", "checkout svelte-1fa4i6t");
-    			add_location(button, file$5, 74, 4, 1565);
+    			add_location(button, file$7, 74, 4, 1565);
     			dispose = listen(button, "click", ctx.startCheckout);
     		},
 
@@ -3051,7 +3504,7 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Your cart is empty";
     			attr(p, "class", "empty-message svelte-1fa4i6t");
-    			add_location(p, file$5, 69, 4, 1419);
+    			add_location(p, file$7, 69, 4, 1419);
     		},
 
     		m: function mount(target, anchor) {
@@ -3124,7 +3577,7 @@ var app = (function () {
     	};
     }
 
-    function create_fragment$7(ctx) {
+    function create_fragment$9(ctx) {
     	var div, h1, t_1, current_block_type_index, if_block, current;
 
     	var if_block_creators = [
@@ -3149,9 +3602,9 @@ var app = (function () {
     			h1.textContent = "My Cart";
     			t_1 = space();
     			if_block.c();
-    			add_location(h1, file$5, 67, 2, 1367);
+    			add_location(h1, file$7, 67, 2, 1367);
     			attr(div, "class", "container");
-    			add_location(div, file$5, 66, 0, 1341);
+    			add_location(div, file$7, 66, 0, 1341);
     		},
 
     		l: function claim(nodes) {
@@ -3209,7 +3662,7 @@ var app = (function () {
     	};
     }
 
-    function instance$6($$self, $$props, $$invalidate) {
+    function instance$7($$self, $$props, $$invalidate) {
     	
 
       let cartItems = [];
@@ -3243,15 +3696,15 @@ var app = (function () {
     class Checkout extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$6, create_fragment$7, safe_not_equal, []);
+    		init(this, options, instance$7, create_fragment$9, safe_not_equal, []);
     	}
     }
 
     /* src/pages/Home.svelte generated by Svelte v3.6.4 */
 
-    const file$6 = "src/pages/Home.svelte";
+    const file$8 = "src/pages/Home.svelte";
 
-    function create_fragment$8(ctx) {
+    function create_fragment$a(ctx) {
     	var t0, div2, div0, h4, t2, p, t4, div1, a, current;
 
     	var cardwrapper = new CardWrapper({ $$inline: true });
@@ -3271,18 +3724,18 @@ var app = (function () {
     			div1 = element("div");
     			a = element("a");
     			a.textContent = "Agree";
-    			add_location(h4, file$6, 15, 4, 318);
-    			add_location(p, file$6, 16, 4, 344);
+    			add_location(h4, file$8, 15, 4, 318);
+    			add_location(p, file$8, 16, 4, 344);
     			attr(div0, "class", "modal-content");
-    			add_location(div0, file$6, 14, 2, 286);
+    			add_location(div0, file$8, 14, 2, 286);
     			attr(a, "href", "#!");
     			attr(a, "class", "modal-close waves-effect waves-green btn-flat");
-    			add_location(a, file$6, 19, 4, 409);
+    			add_location(a, file$8, 19, 4, 409);
     			attr(div1, "class", "modal-footer");
-    			add_location(div1, file$6, 18, 2, 378);
+    			add_location(div1, file$8, 18, 2, 378);
     			attr(div2, "id", "modal1");
     			attr(div2, "class", "modal");
-    			add_location(div2, file$6, 13, 0, 252);
+    			add_location(div2, file$8, 13, 0, 252);
     		},
 
     		l: function claim(nodes) {
@@ -3331,22 +3784,33 @@ var app = (function () {
     class Home extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, null, create_fragment$8, safe_not_equal, []);
+    		init(this, options, null, create_fragment$a, safe_not_equal, []);
     	}
     }
 
     /* src/pages/About.svelte generated by Svelte v3.6.4 */
 
-    const file$7 = "src/pages/About.svelte";
+    const file$9 = "src/pages/About.svelte";
 
-    function create_fragment$9(ctx) {
-    	var h1;
+    function create_fragment$b(ctx) {
+    	var div, h1, h1_intro, t1, p0, t3, p1;
 
     	return {
     		c: function create() {
+    			div = element("div");
     			h1 = element("h1");
-    			h1.textContent = "About";
-    			add_location(h1, file$7, 0, 0, 0);
+    			h1.textContent = "Privacy you forget you even had.";
+    			t1 = space();
+    			p0 = element("p");
+    			p0.textContent = "Privacy NOW aims to empower the average user to operate privately online if\n    they so choose.";
+    			t3 = space();
+    			p1 = element("p");
+    			p1.textContent = "Our philosophy is that a locked backdoor, even if only for use of the state,\n    is still a backdoor and can be utilized by bad actors. To that effect, we\n    only sell certain thinkpads in which the intel ME backdoor system has been\n    neutured, Graphene OS supported phones, and Purism laptops with hardware\n    kill switches.";
+    			add_location(h1, file$9, 5, 2, 95);
+    			add_location(p0, file$9, 8, 2, 185);
+    			add_location(p1, file$9, 12, 2, 298);
+    			attr(div, "class", "container");
+    			add_location(div, file$9, 4, 0, 69);
     		},
 
     		l: function claim(nodes) {
@@ -3354,16 +3818,30 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, h1, anchor);
+    			insert(target, div, anchor);
+    			append(div, h1);
+    			append(div, t1);
+    			append(div, p0);
+    			append(div, t3);
+    			append(div, p1);
     		},
 
     		p: noop,
-    		i: noop,
+
+    		i: function intro(local) {
+    			if (!h1_intro) {
+    				add_render_callback(() => {
+    					h1_intro = create_in_transition(h1, fly, { fly: 200, duration: 2000 });
+    					h1_intro.start();
+    				});
+    			}
+    		},
+
     		o: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(h1);
+    				detach(div);
     			}
     		}
     	};
@@ -3372,7 +3850,7 @@ var app = (function () {
     class About extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, null, create_fragment$9, safe_not_equal, []);
+    		init(this, options, null, create_fragment$b, safe_not_equal, []);
     	}
     }
 
@@ -3483,7 +3961,7 @@ var app = (function () {
     	};
     }
 
-    function create_fragment$a(ctx) {
+    function create_fragment$c(ctx) {
     	var current;
 
     	var router = new Router({
@@ -3532,7 +4010,7 @@ var app = (function () {
     	};
     }
 
-    function instance$7($$self) {
+    function instance$8($$self) {
     	
 
       M.AutoInit();
@@ -3543,7 +4021,7 @@ var app = (function () {
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$7, create_fragment$a, safe_not_equal, []);
+    		init(this, options, instance$8, create_fragment$c, safe_not_equal, []);
     	}
     }
 
