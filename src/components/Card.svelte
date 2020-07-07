@@ -70,9 +70,7 @@
         Add
       </button>
       {#if inCart > 0}
-        <span>
-          <em>({inCart} in cart)</em>
-        </span>
+        <span class="badge">({inCart} in cart)</span>
       {/if}
     </div>
   </div>
