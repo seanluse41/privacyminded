@@ -78,7 +78,15 @@
         </ol>
       </div>
     </div>
-
+    <div id="wear" class="section scrollspy">
+      <h4>Privacy for YOU.</h4>
+      <p>
+        As the line between digital and real becomes less clear, true privacy
+        consciousness must also include that your identity, location, and items can be
+        digitized and profiled at any time. Our line of security conscious bags
+        and apparel will help keep your identity safe, while looking great.
+      </p>
+    </div>
     <div class="col hide-on-small-only m3 l2">
       <ul class="section table-of-contents">
         <li>
