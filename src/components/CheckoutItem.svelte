@@ -25,80 +25,32 @@
     display: flex;
   }
 
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .button-wrapper button {
+    margin: 3%;
+  }
+
+  .meta-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+  }
+
+  .count-wrapper {
+    font-size: 2.5em;
+    margin: 5% 5% 10% 5%;
+    line-height: 100%;
+  }
+
   img {
     width: 25%;
     height: 200px;
     object-fit: cover;
     margin: 10px 20px 10px 0;
-  }
-
-  .item-meta-data {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .item-meta-data h3 {
-    margin-top: 0;
-  }
-
-  .item-meta-data p {
-    margin: 0.2em 0;
-    font-size: 0.8em;
-  }
-
-  .count {
-    display: flex;
-    margin-top: 10px;
-  }
-
-  .count > * {
-    display: block;
-    margin: 0;
-    font-size: 0.8em;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .count button.add {
-    padding: 0.2em 0.4em;
-    border-radius: 5px 0 0 5px;
-    margin-right: 0;
-    border: 0.5px solid #7d7d7d;
-  }
-
-  .count p {
-    border: 0.5px solid #7d7d7d;
-    margin: 0;
-    padding: 0.2em 0.4em;
-    background: #fefefe;
-    border-left: none;
-    border-right: none;
-  }
-
-  .count button.subtract {
-    border: 0.5px solid #7d7d7d;
-    padding: 0.2em 0.4em;
-    border-radius: 0 5px 5px 0;
-  }
-
-  .count button.remove {
-    display: flex;
-    align-content: center;
-    font-size: 0.6em;
-    background-color: #c91616;
-    color: white;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin-left: 10px;
-  }
-
-  .count button.remove object {
-    width: 20px;
-    height: 20px;
-  }
-
-  button > *:active,
-  button > *:focus {
-    outline: none;
   }
 
   @media screen and (max-width: 1048px) {
@@ -120,19 +72,30 @@
 
 <div class="item-grid">
   <img src={`img/${img}`} alt={name} />
-  <div class="item-meta-data">
-    <h3 class="title">{name}</h3>
-    <p class="price">Price: ৳ {price}</p>
-    <div class="count">
-      <button class="add" on:click={countButtonHandler}>+</button>
-      <p>{count}</p>
-      <button class="subtract" on:click={countButtonHandler}>-</button>
-      <button class="remove" on:click={removeItem}>
-        <object
-          aria-label="remove"
-          type="image/svg+xml"
-          data="img/svg/cancel.svg" />
-        Remove
+  <div class="meta-wrapper">
+    <h4>{name}</h4>
+    <span>{price}　￥</span>
+  </div>
+  <div class="button-wrapper">
+    <div class="valign-wrapper">
+
+      <button
+        class="add waves-effect waves-light btn-small red darken-2"
+        on:click={countButtonHandler}>
+        <i class="material-icons">add</i>
+      </button>
+      <div class="count-wrapper">
+        <span>{count}</span>
+      </div>
+      <button
+        class="waves-effect waves-light btn-small red darken-2 remove"
+        on:click={countButtonHandler}>
+        <i class="material-icons">remove</i>
+      </button>
+      <button
+        class="waves-effect waves-light btn-small red darken-2"
+        on:click={removeItem}>
+        <i class="material-icons">cancel</i>
       </button>
     </div>
   </div>

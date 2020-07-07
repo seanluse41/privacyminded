@@ -6,7 +6,9 @@
     var elems = document.querySelectorAll(".scrollspy");
     var instances = M.ScrollSpy.init(elems);
   }
-  onMount = () => scrollSpy();
+  onMount(async () => {
+    scrollSpy();
+  });
 </script>
 
 <div class="container">
@@ -77,21 +79,18 @@
       </div>
     </div>
 
-    <div id="wear" class="section scrollspy">
-      <p>Content</p>
+    <div class="col hide-on-small-only m3 l2">
+      <ul class="section table-of-contents">
+        <li>
+          <a href="#introduction">Introduction</a>
+        </li>
+        <li>
+          <a href="#tech">Digital Privacy</a>
+        </li>
+        <li>
+          <a href="#wear">Wearable Privacy</a>
+        </li>
+      </ul>
     </div>
-  </div>
-  <div class="col hide-on-small-only m3 l2">
-    <ul class="section table-of-contents">
-      <li>
-        <a href="#introduction">Introduction</a>
-      </li>
-      <li>
-        <a href="#tech">Digital Privacy</a>
-      </li>
-      <li>
-        <a href="#wear">Wearable Privacy</a>
-      </li>
-    </ul>
   </div>
 </div>

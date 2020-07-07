@@ -12,12 +12,16 @@
   function testCategory() {
     console.log(category);
   }
+
+  // var filteredList = items.filter(function(filter) {
+  //   return filter.category == category;
+  // });
 </script>
 
 <style>
   .grid {
     width: 70vw;
-    margin: 10vh auto;
+    margin: 5vh auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
@@ -49,10 +53,28 @@
   }
 </style>
 
-<section class="card-wrapper grid">
-  {#each items as item}
-    <Card {item} />
-  {/each}
-</section>
-
-<button on:click={testCategory}>test</button>
+{#if category == 'all'}
+  <section class="card-wrapper grid">
+    {#each items as item}
+      <Card {item} />
+    {/each}
+  </section>
+{:else if category == 'tech'}
+  <section class="card-wrapper grid">
+    {#each filteredList as item}
+      <Card {item} />
+    {/each}
+  </section>
+{:else if category == 'wear'}
+  <section class="card-wrapper grid">
+    {#each filteredList as item}
+      <Card {item} />
+    {/each}
+  </section>
+{:else if category == 'services'}
+  <section class="card-wrapper grid">
+    {#each filteredList as item}
+      <Card {item} />
+    {/each}
+  </section>
+{/if}

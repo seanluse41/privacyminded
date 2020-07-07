@@ -32,15 +32,6 @@
   .empty-message {
     margin: 10px 0;
   }
-
-  button.checkout {
-    align-self: flex-start;
-    padding: 5px 20px;
-    margin: 20px 0;
-    background: #20447d;
-    color: white;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
 </style>
 
 <div class="container">
@@ -51,6 +42,11 @@
     {#each cartItems as item (item.name)}
       <CheckoutItem {item} />
     {/each}
-    <button class="checkout" on:click={startCheckout}>Checkout</button>
+    <button
+      class="waves-effect waves-light btn-large red darken-2"
+      on:click={startCheckout}>
+      <i class="material-icons right">lock_outline</i>
+      Checkout
+    </button>
   {/if}
 </div>
