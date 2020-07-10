@@ -23,6 +23,9 @@
 <style>
   .item-grid {
     display: flex;
+    background-color: lightgrey;
+    margin: 2%;
+    padding: 2%;
   }
 
   .button-wrapper {
@@ -32,6 +35,8 @@
 
   .button-wrapper button {
     margin: 3%;
+    display: flex;
+    justify-content: center;
   }
 
   .meta-wrapper {
@@ -70,33 +75,33 @@
   }
 </style>
 
-<div class="item-grid">
+<div class="item-grid hoverable">
   <img src={`img/${img}`} alt={name} />
   <div class="meta-wrapper">
     <h4>{name}</h4>
     <span>{price}　￥</span>
-  </div>
-  <div class="button-wrapper">
-    <div class="valign-wrapper">
+    <div class="button-wrapper">
+      <div class="valign-wrapper">
 
-      <button
-        class="add waves-effect waves-light btn-small red darken-2"
-        on:click={countButtonHandler}>
-        <i class="material-icons">add</i>
-      </button>
-      <div class="count-wrapper">
-        <span>{count}</span>
+        <button
+          class="add waves-effect waves-light btn-small red darken-2"
+          on:click={countButtonHandler}>
+          <i class="material-icons">add</i>
+        </button>
+        <div class="count-wrapper">
+          <span>{count}</span>
+        </div>
+        <button
+          class="waves-effect waves-light btn-small red darken-2 remove"
+          on:click={countButtonHandler}>
+          <i class="material-icons center">remove</i>
+        </button>
+        <button
+          class="waves-effect waves-light btn-small red darken-2"
+          on:click={removeItem}>
+          <i class="material-icons center">cancel</i>
+        </button>
       </div>
-      <button
-        class="waves-effect waves-light btn-small red darken-2 remove"
-        on:click={countButtonHandler}>
-        <i class="material-icons">remove</i>
-      </button>
-      <button
-        class="waves-effect waves-light btn-small red darken-2"
-        on:click={removeItem}>
-        <i class="material-icons">cancel</i>
-      </button>
     </div>
   </div>
 </div>

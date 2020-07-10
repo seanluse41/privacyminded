@@ -3756,14 +3756,14 @@ var app = (function () {
     const file$6 = "src/components/CheckoutItem.svelte";
 
     function create_fragment$8(ctx) {
-    	var div4, img_1, img_1_src_value, t0, div0, h4, t1, t2, span0, t3, t4, t5, div3, div2, button0, i0, t7, div1, span1, t8, t9, button1, i1, t11, button2, i2, dispose;
+    	var div4, img_1, img_1_src_value, t0, div3, h4, t1, t2, span0, t3, t4, t5, div2, div1, button0, i0, t7, div0, span1, t8, t9, button1, i1, t11, button2, i2, dispose;
 
     	return {
     		c: function create() {
     			div4 = element("div");
     			img_1 = element("img");
     			t0 = space();
-    			div0 = element("div");
+    			div3 = element("div");
     			h4 = element("h4");
     			t1 = text(ctx.name);
     			t2 = space();
@@ -3771,13 +3771,13 @@ var app = (function () {
     			t3 = text(ctx.price);
     			t4 = text("　￥");
     			t5 = space();
-    			div3 = element("div");
     			div2 = element("div");
+    			div1 = element("div");
     			button0 = element("button");
     			i0 = element("i");
     			i0.textContent = "add";
     			t7 = space();
-    			div1 = element("div");
+    			div0 = element("div");
     			span1 = element("span");
     			t8 = text(ctx.count);
     			t9 = space();
@@ -3790,33 +3790,33 @@ var app = (function () {
     			i2.textContent = "cancel";
     			attr(img_1, "src", img_1_src_value = `img/${ctx.img}`);
     			attr(img_1, "alt", ctx.name);
-    			attr(img_1, "class", "svelte-1orx6hm");
-    			add_location(img_1, file$6, 73, 2, 1146);
-    			add_location(h4, file$6, 75, 4, 1217);
-    			add_location(span0, file$6, 76, 4, 1237);
-    			attr(div0, "class", "meta-wrapper svelte-1orx6hm");
-    			add_location(div0, file$6, 74, 2, 1186);
+    			attr(img_1, "class", "svelte-jg4sa5");
+    			add_location(img_1, file$6, 78, 2, 1270);
+    			add_location(h4, file$6, 80, 4, 1341);
+    			add_location(span0, file$6, 81, 4, 1361);
     			attr(i0, "class", "material-icons");
-    			add_location(i0, file$6, 84, 8, 1463);
-    			attr(button0, "class", "add waves-effect waves-light btn-small red darken-2 svelte-1orx6hm");
-    			add_location(button0, file$6, 81, 6, 1340);
-    			add_location(span1, file$6, 87, 8, 1555);
-    			attr(div1, "class", "count-wrapper svelte-1orx6hm");
-    			add_location(div1, file$6, 86, 6, 1519);
-    			attr(i1, "class", "material-icons");
-    			add_location(i1, file$6, 92, 8, 1721);
-    			attr(button1, "class", "waves-effect waves-light btn-small red darken-2 remove svelte-1orx6hm");
-    			add_location(button1, file$6, 89, 6, 1595);
-    			attr(i2, "class", "material-icons");
-    			add_location(i2, file$6, 97, 8, 1891);
-    			attr(button2, "class", "waves-effect waves-light btn-small red darken-2 svelte-1orx6hm");
-    			add_location(button2, file$6, 94, 6, 1780);
-    			attr(div2, "class", "valign-wrapper");
-    			add_location(div2, file$6, 79, 4, 1304);
-    			attr(div3, "class", "button-wrapper svelte-1orx6hm");
-    			add_location(div3, file$6, 78, 2, 1271);
-    			attr(div4, "class", "item-grid svelte-1orx6hm");
-    			add_location(div4, file$6, 72, 0, 1120);
+    			add_location(i0, file$6, 88, 10, 1590);
+    			attr(button0, "class", "add waves-effect waves-light btn-small red darken-2 svelte-jg4sa5");
+    			add_location(button0, file$6, 85, 8, 1461);
+    			add_location(span1, file$6, 91, 10, 1688);
+    			attr(div0, "class", "count-wrapper svelte-jg4sa5");
+    			add_location(div0, file$6, 90, 8, 1650);
+    			attr(i1, "class", "material-icons center");
+    			add_location(i1, file$6, 96, 10, 1864);
+    			attr(button1, "class", "waves-effect waves-light btn-small red darken-2 remove svelte-jg4sa5");
+    			add_location(button1, file$6, 93, 8, 1732);
+    			attr(i2, "class", "material-icons center");
+    			add_location(i2, file$6, 101, 10, 2051);
+    			attr(button2, "class", "waves-effect waves-light btn-small red darken-2 svelte-jg4sa5");
+    			add_location(button2, file$6, 98, 8, 1934);
+    			attr(div1, "class", "valign-wrapper");
+    			add_location(div1, file$6, 83, 6, 1423);
+    			attr(div2, "class", "button-wrapper svelte-jg4sa5");
+    			add_location(div2, file$6, 82, 4, 1388);
+    			attr(div3, "class", "meta-wrapper svelte-jg4sa5");
+    			add_location(div3, file$6, 79, 2, 1310);
+    			attr(div4, "class", "item-grid hoverable svelte-jg4sa5");
+    			add_location(div4, file$6, 77, 0, 1234);
 
     			dispose = [
     				listen(button0, "click", ctx.countButtonHandler),
@@ -3833,27 +3833,27 @@ var app = (function () {
     			insert(target, div4, anchor);
     			append(div4, img_1);
     			append(div4, t0);
-    			append(div4, div0);
-    			append(div0, h4);
+    			append(div4, div3);
+    			append(div3, h4);
     			append(h4, t1);
-    			append(div0, t2);
-    			append(div0, span0);
+    			append(div3, t2);
+    			append(div3, span0);
     			append(span0, t3);
     			append(span0, t4);
-    			append(div4, t5);
-    			append(div4, div3);
+    			append(div3, t5);
     			append(div3, div2);
-    			append(div2, button0);
-    			append(button0, i0);
-    			append(div2, t7);
     			append(div2, div1);
-    			append(div1, span1);
+    			append(div1, button0);
+    			append(button0, i0);
+    			append(div1, t7);
+    			append(div1, div0);
+    			append(div0, span1);
     			append(span1, t8);
-    			append(div2, t9);
-    			append(div2, button1);
+    			append(div1, t9);
+    			append(div1, button1);
     			append(button1, i1);
-    			append(div2, t11);
-    			append(div2, button2);
+    			append(div1, t11);
+    			append(div1, button2);
     			append(button2, i2);
     		},
 
@@ -4315,15 +4315,15 @@ var app = (function () {
     const file$9 = "src/pages/About.svelte";
 
     function create_fragment$b(ctx) {
-    	var div5, h1, h1_intro, t1, div4, div2, div0, p0, t3, p1, t5, div1, p2, t6, a0, t8, p3, t10, ol, li0, t11, a1, t13, t14, li1, t15, a2, t17, a3, t19, t20, div3, ul, li2, a4, t22, li3, a5, t24, li4, a6;
+    	var div6, h1, h1_intro, t1, div5, div2, div0, p0, t3, p1, t5, div1, p2, t6, a0, t8, p3, t10, ol, li0, t11, a1, t13, t14, li1, t15, a2, t17, a3, t19, t20, div3, h4, t22, p4, t24, div4, ul, li2, a4, t26, li3, a5, t28, li4, a6;
 
     	return {
     		c: function create() {
-    			div5 = element("div");
+    			div6 = element("div");
     			h1 = element("h1");
     			h1.textContent = "Privacy you forget you even had.";
     			t1 = space();
-    			div4 = element("div");
+    			div5 = element("div");
     			div2 = element("div");
     			div0 = element("div");
     			p0 = element("p");
@@ -4358,15 +4358,22 @@ var app = (function () {
     			t19 = text("\n            Purism is a trusted retailer advocating for privacy and security in\n            the computing space. Designed from the hardware on up to respect you\n            and your digital life, Purism is an excellent choice for FOSS\n            enthusiasts.");
     			t20 = space();
     			div3 = element("div");
+    			h4 = element("h4");
+    			h4.textContent = "Privacy for YOU.";
+    			t22 = space();
+    			p4 = element("p");
+    			p4.textContent = "As the line between digital and real becomes less clear, true privacy\n        consciousness must also include that your identity, location, and items can be\n        digitized and profiled at any time. Our line of security conscious bags\n        and apparel will help keep your identity safe, while looking great.";
+    			t24 = space();
+    			div4 = element("div");
     			ul = element("ul");
     			li2 = element("li");
     			a4 = element("a");
     			a4.textContent = "Introduction";
-    			t22 = space();
+    			t26 = space();
     			li3 = element("li");
     			a5 = element("a");
     			a5.textContent = "Digital Privacy";
-    			t24 = space();
+    			t28 = space();
     			li4 = element("li");
     			a6 = element("a");
     			a6.textContent = "Wearable Privacy";
@@ -4394,23 +4401,28 @@ var app = (function () {
     			add_location(div1, file$9, 33, 6, 1053);
     			attr(div2, "class", "col s12 m9 l10");
     			add_location(div2, file$9, 18, 4, 422);
+    			add_location(h4, file$9, 81, 6, 3502);
+    			add_location(p4, file$9, 82, 6, 3534);
+    			attr(div3, "id", "wear");
+    			attr(div3, "class", "section scrollspy");
+    			add_location(div3, file$9, 80, 4, 3454);
     			attr(a4, "href", "#introduction");
-    			add_location(a4, file$9, 84, 10, 3566);
-    			add_location(li2, file$9, 83, 8, 3551);
+    			add_location(a4, file$9, 92, 10, 3996);
+    			add_location(li2, file$9, 91, 8, 3981);
     			attr(a5, "href", "#tech");
-    			add_location(a5, file$9, 87, 10, 3644);
-    			add_location(li3, file$9, 86, 8, 3629);
+    			add_location(a5, file$9, 95, 10, 4074);
+    			add_location(li3, file$9, 94, 8, 4059);
     			attr(a6, "href", "#wear");
-    			add_location(a6, file$9, 90, 10, 3717);
-    			add_location(li4, file$9, 89, 8, 3702);
+    			add_location(a6, file$9, 98, 10, 4147);
+    			add_location(li4, file$9, 97, 8, 4132);
     			attr(ul, "class", "section table-of-contents");
-    			add_location(ul, file$9, 82, 6, 3504);
-    			attr(div3, "class", "col hide-on-small-only m3 l2");
-    			add_location(div3, file$9, 81, 4, 3455);
-    			attr(div4, "class", "row");
-    			add_location(div4, file$9, 17, 2, 400);
-    			attr(div5, "class", "container");
-    			add_location(div5, file$9, 13, 0, 284);
+    			add_location(ul, file$9, 90, 6, 3934);
+    			attr(div4, "class", "col hide-on-small-only m3 l2");
+    			add_location(div4, file$9, 89, 4, 3885);
+    			attr(div5, "class", "row");
+    			add_location(div5, file$9, 17, 2, 400);
+    			attr(div6, "class", "container");
+    			add_location(div6, file$9, 13, 0, 284);
     		},
 
     		l: function claim(nodes) {
@@ -4418,11 +4430,11 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, div5, anchor);
-    			append(div5, h1);
-    			append(div5, t1);
-    			append(div5, div4);
-    			append(div4, div2);
+    			insert(target, div6, anchor);
+    			append(div6, h1);
+    			append(div6, t1);
+    			append(div6, div5);
+    			append(div5, div2);
     			append(div2, div0);
     			append(div0, p0);
     			append(div0, t3);
@@ -4447,15 +4459,20 @@ var app = (function () {
     			append(li1, t17);
     			append(li1, a3);
     			append(li1, t19);
-    			append(div4, t20);
-    			append(div4, div3);
-    			append(div3, ul);
+    			append(div5, t20);
+    			append(div5, div3);
+    			append(div3, h4);
+    			append(div3, t22);
+    			append(div3, p4);
+    			append(div5, t24);
+    			append(div5, div4);
+    			append(div4, ul);
     			append(ul, li2);
     			append(li2, a4);
-    			append(ul, t22);
+    			append(ul, t26);
     			append(ul, li3);
     			append(li3, a5);
-    			append(ul, t24);
+    			append(ul, t28);
     			append(ul, li4);
     			append(li4, a6);
     		},
@@ -4475,7 +4492,7 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(div5);
+    				detach(div6);
     			}
     		}
     	};
