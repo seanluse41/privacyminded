@@ -6,8 +6,15 @@
     var elems = document.querySelectorAll(".scrollspy");
     var instances = M.ScrollSpy.init(elems);
   }
+
+  function pushPin() {
+    var elems = document.querySelectorAll(".pushpin");
+    var instances = M.Pushpin.init(elems);
+  }
+
   onMount(async () => {
     scrollSpy();
+    pushPin();
   });
 </script>
 
@@ -78,17 +85,8 @@
         </ol>
       </div>
     </div>
-    <div id="wear" class="section scrollspy">
-      <h4>Privacy for YOU.</h4>
-      <p>
-        As the line between digital and real becomes less clear, true privacy
-        consciousness must also include that your identity, location, and items can be
-        digitized and profiled at any time. Our line of security conscious bags
-        and apparel will help keep your identity safe, while looking great.
-      </p>
-    </div>
     <div class="col hide-on-small-only m3 l2">
-      <ul class="section table-of-contents">
+      <ul class="section table-of-contents pushpin" style="top:100px;">
         <li>
           <a href="#introduction">Introduction</a>
         </li>
@@ -99,6 +97,22 @@
           <a href="#wear">Wearable Privacy</a>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m9 l10">
+
+      <div id="wear" class="section scrollspy">
+        <h4>Privacy for YOU.</h4>
+        <p>
+          As the line between digital and real becomes less clear, true privacy
+          consciousness must also include that your identity, location, and
+          items can be digitized and profiled at any time. Our line of security
+          conscious bags and apparel will help keep your identity safe, while
+          looking great.
+        </p>
+      </div>
     </div>
   </div>
 </div>

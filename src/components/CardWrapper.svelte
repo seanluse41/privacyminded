@@ -53,7 +53,14 @@
   }
 </style>
 
-{#if category == 'all'}
+  <section class="card-wrapper grid">
+    {#each items as item}
+      <Card {item} />
+    {/each}
+  </section>
+
+
+<!-- {#if category == 'all'}
   <section class="card-wrapper grid">
     {#each items as item}
       <Card {item} />
@@ -77,4 +84,5 @@
       <Card {item} />
     {/each}
   </section>
-{/if}
+{/if} -->
+<button on:click={testCategory}>test</button>

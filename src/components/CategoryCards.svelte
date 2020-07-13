@@ -6,10 +6,6 @@
   function changeCategory(selection) {
     currentCategory.update(n => selection);
   }
-
-  // var filteredList = items.filter(function(filter) {
-  //   return filter.category == category;
-  // });
 </script>
 
 <style>

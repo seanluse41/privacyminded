@@ -3,12 +3,13 @@
   export let item;
   let { name, price, img, count } = item;
 
-  const countButtonHandler = e => {
-    if (e.target.classList.contains("add")) {
-      count++;
-    } else if (count >= 1) {
-      count--;
-    }
+  const addCount = () => {
+    count++;
+    cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
+  };
+
+    const removeCount = () => {
+    count--;
     cart.update(n => ({ ...n, [name]: { ...n[name], count } }));
   };
 
@@ -24,7 +25,10 @@
   .item-grid {
     display: flex;
     background-color: lightgrey;
-    margin: 2%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    margin-right: 8%;
+    margin-left: 8%;
     padding: 2%;
   }
 
@@ -82,20 +86,23 @@
     <span>{price}　￥</span>
     <div class="button-wrapper">
       <div class="valign-wrapper">
-
-        <button
-          class="add waves-effect waves-light btn-small red darken-2"
-          on:click={countButtonHandler}>
-          <i class="material-icons">add</i>
-        </button>
+        <div class="add">
+          <button
+            class="waves-effect waves-light btn-small red darken-2"
+            on:click={addCount}>
+            <i class="material-icons">add</i>
+          </button>
+        </div>
         <div class="count-wrapper">
           <span>{count}</span>
         </div>
-        <button
-          class="waves-effect waves-light btn-small red darken-2 remove"
-          on:click={countButtonHandler}>
-          <i class="material-icons center">remove</i>
-        </button>
+        <div class="remove">
+          <button
+            class="remove waves-effect waves-light btn-small red darken-2"
+            on:click={removeCount}>
+            <i class="material-icons center">remove</i>
+          </button>
+        </div>
         <button
           class="waves-effect waves-light btn-small red darken-2"
           on:click={removeItem}>
