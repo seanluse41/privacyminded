@@ -9,7 +9,8 @@
 
   function pushPin() {
     var elems = document.querySelectorAll(".pushpin");
-    var instances = M.Pushpin.init(elems);
+    let options = { offset: 200 };
+    var instances = M.Pushpin.init(elems, options);
   }
 
   onMount(async () => {
@@ -86,7 +87,7 @@
       </div>
     </div>
     <div class="col hide-on-small-only m3 l2">
-      <ul class="section table-of-contents pushpin" style="top:100px;">
+      <ul class="section table-of-contents pushpin">
         <li>
           <a href="#introduction">Introduction</a>
         </li>

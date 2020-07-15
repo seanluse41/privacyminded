@@ -2064,8 +2064,8 @@ var app = (function () {
     			t0 = text("(");
     			t1 = text(ctx.inCart);
     			t2 = text(" in cart)");
-    			attr(span, "class", "badge svelte-7t6399");
-    			add_location(span, file$1, 72, 8, 1538);
+    			attr(span, "class", "badge svelte-1o7n5q6");
+    			add_location(span, file$1, 72, 8, 1540);
     		},
 
     		m: function mount(target, anchor) {
@@ -2117,25 +2117,25 @@ var app = (function () {
     			if (if_block) if_block.c();
     			attr(img_1, "src", ctx.img);
     			attr(img_1, "alt", ctx.name);
-    			attr(img_1, "class", "svelte-7t6399");
-    			add_location(img_1, file$1, 59, 4, 1124);
+    			attr(img_1, "class", "svelte-1o7n5q6");
+    			add_location(img_1, file$1, 59, 4, 1126);
     			attr(div0, "class", "card-image");
-    			add_location(div0, file$1, 58, 2, 1095);
-    			attr(h3, "class", "title svelte-7t6399");
-    			add_location(h3, file$1, 62, 4, 1220);
-    			attr(p, "class", "price svelte-7t6399");
-    			add_location(p, file$1, 63, 4, 1254);
+    			add_location(div0, file$1, 58, 2, 1097);
+    			attr(h3, "class", "title svelte-1o7n5q6");
+    			add_location(h3, file$1, 62, 4, 1222);
+    			attr(p, "class", "price svelte-1o7n5q6");
+    			add_location(p, file$1, 63, 4, 1256);
     			attr(i, "class", "material-icons right");
-    			add_location(i, file$1, 68, 8, 1425);
-    			attr(button, "class", "waves-effect waves-light red darken-2 btn");
-    			add_location(button, file$1, 65, 6, 1321);
-    			attr(div1, "class", "button-group svelte-7t6399");
-    			add_location(div1, file$1, 64, 4, 1288);
+    			add_location(i, file$1, 68, 8, 1427);
+    			attr(button, "class", "waves-effect waves-light red darken-4 btn");
+    			add_location(button, file$1, 65, 6, 1323);
+    			attr(div1, "class", "button-group svelte-1o7n5q6");
+    			add_location(div1, file$1, 64, 4, 1290);
     			attr(div2, "class", "card-content");
     			set_style(div2, "padding-top", "0px");
-    			add_location(div2, file$1, 61, 2, 1164);
+    			add_location(div2, file$1, 61, 2, 1166);
     			attr(div3, "class", "card hoverable");
-    			add_location(div3, file$1, 57, 0, 1028);
+    			add_location(div3, file$1, 57, 0, 1030);
     			dispose = listen(button, "click", ctx.addToCart);
     		},
 
@@ -2372,9 +2372,9 @@ var app = (function () {
     			t = space();
     			button = element("button");
     			button.textContent = "test";
-    			attr(section, "class", "card-wrapper grid svelte-1oq5kit");
-    			add_location(section, file$2, 55, 2, 992);
-    			add_location(button, file$2, 87, 0, 1701);
+    			attr(section, "class", "card-wrapper grid svelte-7qelhp");
+    			add_location(section, file$2, 55, 2, 990);
+    			add_location(button, file$2, 87, 0, 1699);
     			dispose = listen(button, "click", ctx.testCategory);
     		},
 
@@ -3070,7 +3070,7 @@ var app = (function () {
     			add_location(ul0, file$5, 40, 6, 936);
     			attr(div0, "class", "container");
     			add_location(div0, file$5, 36, 4, 824);
-    			attr(div1, "class", "nav-wrapper red darken-2");
+    			attr(div1, "class", "nav-wrapper red darken-4");
     			add_location(div1, file$5, 28, 2, 619);
     			add_location(nav, file$5, 27, 0, 611);
     			add_location(li4, file$5, 68, 2, 1605);
@@ -3773,21 +3773,32 @@ var app = (function () {
     const file$8 = "src/pages/Home.svelte";
 
     function create_fragment$a(ctx) {
-    	var div, h4, t0, t1, t2, current;
+    	var div1, div0, img, t0, div2, h2, t1, t2, t3, current;
 
     	var cardwrapper = new CardWrapper({ $$inline: true });
 
     	return {
     		c: function create() {
-    			div = element("div");
-    			h4 = element("h4");
-    			t0 = text("Viewing: ");
-    			t1 = text(ctx.category);
-    			t2 = space();
+    			div1 = element("div");
+    			div0 = element("div");
+    			img = element("img");
+    			t0 = space();
+    			div2 = element("div");
+    			h2 = element("h2");
+    			t1 = text("Viewing: ");
+    			t2 = text(ctx.category);
+    			t3 = space();
     			cardwrapper.$$.fragment.c();
-    			add_location(h4, file$8, 11, 2, 269);
-    			attr(div, "class", "container");
-    			add_location(div, file$8, 10, 0, 243);
+    			attr(img, "src", "img/parallax.jpg");
+    			add_location(img, file$8, 22, 4, 527);
+    			attr(div0, "class", "parallax");
+    			add_location(div0, file$8, 21, 2, 500);
+    			attr(div1, "class", "parallax-container");
+    			add_location(div1, file$8, 20, 0, 465);
+    			attr(h2, "class", "header");
+    			add_location(h2, file$8, 26, 2, 600);
+    			attr(div2, "class", "container");
+    			add_location(div2, file$8, 25, 0, 574);
     		},
 
     		l: function claim(nodes) {
@@ -3795,18 +3806,22 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, div, anchor);
-    			append(div, h4);
-    			append(h4, t0);
-    			append(h4, t1);
-    			insert(target, t2, anchor);
+    			insert(target, div1, anchor);
+    			append(div1, div0);
+    			append(div0, img);
+    			insert(target, t0, anchor);
+    			insert(target, div2, anchor);
+    			append(div2, h2);
+    			append(h2, t1);
+    			append(h2, t2);
+    			insert(target, t3, anchor);
     			mount_component(cardwrapper, target, anchor);
     			current = true;
     		},
 
     		p: function update(changed, ctx) {
     			if (!current || changed.category) {
-    				set_data(t1, ctx.category);
+    				set_data(t2, ctx.category);
     			}
     		},
 
@@ -3824,13 +3839,20 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(div);
-    				detach(t2);
+    				detach(div1);
+    				detach(t0);
+    				detach(div2);
+    				detach(t3);
     			}
 
     			destroy_component(cardwrapper, detaching);
     		}
     	};
+    }
+
+    function parallaxStart() {
+      var elems = document.querySelectorAll(".parallax");
+      var instances = M.Parallax.init(elems);
     }
 
     function instance$9($$self, $$props, $$invalidate) {
@@ -3839,6 +3861,10 @@ var app = (function () {
       let category;
       const unsubscribe = currentCategory.subscribe(value => {
         $$invalidate('category', category = value);
+      });
+
+      onMount(async () => {
+        parallaxStart();
       });
 
     	return { category };
@@ -3920,57 +3946,56 @@ var app = (function () {
     			t28 = space();
     			p4 = element("p");
     			p4.textContent = "As the line between digital and real becomes less clear, true privacy\n          consciousness must also include that your identity, location, and\n          items can be digitized and profiled at any time. Our line of security\n          conscious bags and apparel will help keep your identity safe, while\n          looking great.";
-    			add_location(h1, file$9, 21, 2, 452);
-    			add_location(p0, file$9, 27, 8, 657);
-    			add_location(p1, file$9, 31, 8, 794);
+    			add_location(h1, file$9, 22, 2, 496);
+    			add_location(p0, file$9, 28, 8, 701);
+    			add_location(p1, file$9, 32, 8, 838);
     			attr(div0, "id", "introduction");
     			attr(div0, "class", "section scrollspy");
-    			add_location(div0, file$9, 26, 6, 599);
+    			add_location(div0, file$9, 27, 6, 643);
     			attr(a0, "href", "https://itnext.io/the-computer-in-your-computer-the-intel-management-engine-cd8d5aaf6c55");
-    			add_location(a0, file$9, 47, 10, 1606);
-    			add_location(p2, file$9, 41, 8, 1245);
-    			add_location(p3, file$9, 52, 8, 1772);
+    			add_location(a0, file$9, 48, 10, 1650);
+    			add_location(p2, file$9, 42, 8, 1289);
+    			add_location(p3, file$9, 53, 8, 1816);
     			attr(a1, "href", "https://github.com/corna/me_cleaner");
-    			add_location(a1, file$9, 63, 12, 2278);
-    			add_location(li0, file$9, 60, 10, 2161);
+    			add_location(a1, file$9, 64, 12, 2322);
+    			add_location(li0, file$9, 61, 10, 2205);
     			attr(a2, "href", "https://puri.sm/");
-    			add_location(a2, file$9, 75, 12, 3020);
+    			add_location(a2, file$9, 76, 12, 3064);
     			attr(a3, "href", "https://puri.sm/learn/intel-me/");
-    			add_location(a3, file$9, 78, 12, 3226);
-    			add_location(li1, file$9, 73, 10, 2958);
-    			add_location(ol, file$9, 59, 8, 2146);
+    			add_location(a3, file$9, 79, 12, 3270);
+    			add_location(li1, file$9, 74, 10, 3002);
+    			add_location(ol, file$9, 60, 8, 2190);
     			attr(div1, "id", "tech");
     			attr(div1, "class", "section scrollspy");
-    			add_location(div1, file$9, 40, 6, 1195);
+    			add_location(div1, file$9, 41, 6, 1239);
     			attr(div2, "class", "col s12 m9 l10");
-    			add_location(div2, file$9, 25, 4, 564);
+    			add_location(div2, file$9, 26, 4, 608);
     			attr(a4, "href", "#introduction");
-    			add_location(a4, file$9, 90, 10, 3734);
-    			add_location(li2, file$9, 89, 8, 3719);
+    			add_location(a4, file$9, 91, 10, 3759);
+    			add_location(li2, file$9, 90, 8, 3744);
     			attr(a5, "href", "#tech");
-    			add_location(a5, file$9, 93, 10, 3812);
-    			add_location(li3, file$9, 92, 8, 3797);
+    			add_location(a5, file$9, 94, 10, 3837);
+    			add_location(li3, file$9, 93, 8, 3822);
     			attr(a6, "href", "#wear");
-    			add_location(a6, file$9, 96, 10, 3885);
-    			add_location(li4, file$9, 95, 8, 3870);
+    			add_location(a6, file$9, 97, 10, 3910);
+    			add_location(li4, file$9, 96, 8, 3895);
     			attr(ul, "class", "section table-of-contents pushpin");
-    			set_style(ul, "top", "200px");
-    			add_location(ul, file$9, 88, 6, 3645);
+    			add_location(ul, file$9, 89, 6, 3689);
     			attr(div3, "class", "col hide-on-small-only m3 l2");
-    			add_location(div3, file$9, 87, 4, 3596);
+    			add_location(div3, file$9, 88, 4, 3640);
     			attr(div4, "class", "row");
-    			add_location(div4, file$9, 24, 2, 542);
-    			add_location(h4, file$9, 106, 8, 4079);
-    			add_location(p4, file$9, 107, 8, 4113);
+    			add_location(div4, file$9, 25, 2, 586);
+    			add_location(h4, file$9, 107, 8, 4104);
+    			add_location(p4, file$9, 108, 8, 4138);
     			attr(div5, "id", "wear");
     			attr(div5, "class", "section scrollspy");
-    			add_location(div5, file$9, 105, 6, 4029);
+    			add_location(div5, file$9, 106, 6, 4054);
     			attr(div6, "class", "col s12 m9 l10");
-    			add_location(div6, file$9, 103, 4, 3993);
+    			add_location(div6, file$9, 104, 4, 4018);
     			attr(div7, "class", "row");
-    			add_location(div7, file$9, 102, 2, 3971);
+    			add_location(div7, file$9, 103, 2, 3996);
     			attr(div8, "class", "container");
-    			add_location(div8, file$9, 20, 0, 426);
+    			add_location(div8, file$9, 21, 0, 470);
     		},
 
     		l: function claim(nodes) {
@@ -4055,7 +4080,8 @@ var app = (function () {
 
     function pushPin() {
       var elems = document.querySelectorAll(".pushpin");
-      var instances = M.Pushpin.init(elems);
+      let options = { offset: 200 };
+      var instances = M.Pushpin.init(elems, options);
     }
 
     function instance$a($$self) {

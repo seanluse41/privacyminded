@@ -26,7 +26,7 @@
 </script>
 
 <nav>
-  <div class="nav-wrapper red darken-2">
+  <div class="nav-wrapper red darken-4">
     <a
       href="#"
       data-target="mobile-demo"

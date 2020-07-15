@@ -24,7 +24,7 @@
     margin: 5vh auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    grid-gap: 3%;
     justify-items: stretch;
   }
 
@@ -36,7 +36,7 @@
 
   @media screen and (max-width: 1400px) {
     .grid {
-      width: 90vw;
+      width: 80vw;
     }
   }
 

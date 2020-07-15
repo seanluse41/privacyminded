@@ -26,7 +26,7 @@
   }
 
   .title {
-    font-size: 2em;
+    font-size: 3.6vh;
     display: flex;
     flex-direction: row-reverse;
     margin-top: 2%;
@@ -65,7 +65,7 @@
     <div class="button-group">
       <button
         on:click={addToCart}
-        class="waves-effect waves-light red darken-2 btn">
+        class="waves-effect waves-light red darken-4 btn">
         <i class="material-icons right">add_shopping_cart</i>
         Add
       </button>
