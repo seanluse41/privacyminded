@@ -2054,7 +2054,7 @@ var app = (function () {
 
     const file$1 = "src/components/Card.svelte";
 
-    // (72:6) {#if inCart > 0}
+    // (73:6) {#if inCart > 0}
     function create_if_block$1(ctx) {
     	var span, t0, t1, t2;
 
@@ -2064,8 +2064,8 @@ var app = (function () {
     			t0 = text("(");
     			t1 = text(ctx.inCart);
     			t2 = text(" in cart)");
-    			attr(span, "class", "badge svelte-1o7n5q6");
-    			add_location(span, file$1, 72, 8, 1540);
+    			attr(span, "class", "badge svelte-1fntyht");
+    			add_location(span, file$1, 73, 8, 1589);
     		},
 
     		m: function mount(target, anchor) {
@@ -2117,22 +2117,24 @@ var app = (function () {
     			if (if_block) if_block.c();
     			attr(img_1, "src", ctx.img);
     			attr(img_1, "alt", ctx.name);
-    			attr(img_1, "class", "svelte-1o7n5q6");
+    			attr(img_1, "class", "svelte-1fntyht");
     			add_location(img_1, file$1, 59, 4, 1126);
     			attr(div0, "class", "card-image");
     			add_location(div0, file$1, 58, 2, 1097);
-    			attr(h3, "class", "title svelte-1o7n5q6");
-    			add_location(h3, file$1, 62, 4, 1222);
-    			attr(p, "class", "price svelte-1o7n5q6");
-    			add_location(p, file$1, 63, 4, 1256);
+    			attr(h3, "class", "title svelte-1fntyht");
+    			add_location(h3, file$1, 62, 4, 1242);
+    			attr(p, "class", "price svelte-1fntyht");
+    			add_location(p, file$1, 63, 4, 1276);
     			attr(i, "class", "material-icons right");
-    			add_location(i, file$1, 68, 8, 1427);
-    			attr(button, "class", "waves-effect waves-light red darken-4 btn");
-    			add_location(button, file$1, 65, 6, 1323);
-    			attr(div1, "class", "button-group svelte-1o7n5q6");
-    			add_location(div1, file$1, 64, 4, 1290);
+    			add_location(i, file$1, 69, 8, 1476);
+    			attr(button, "class", "waves-effect waves-light btn");
+    			set_style(button, "background-color", "#e60012");
+    			add_location(button, file$1, 65, 6, 1343);
+    			attr(div1, "class", "button-group svelte-1fntyht");
+    			add_location(div1, file$1, 64, 4, 1310);
     			attr(div2, "class", "card-content");
     			set_style(div2, "padding-top", "0px");
+    			set_style(div2, "padding-bottom", "10px");
     			add_location(div2, file$1, 61, 2, 1166);
     			attr(div3, "class", "card hoverable");
     			add_location(div3, file$1, 57, 0, 1030);
@@ -2297,57 +2299,288 @@ var app = (function () {
 
     const file$2 = "src/components/CardWrapper.svelte";
 
+    function get_each_context_3(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.item = list[i];
+    	return child_ctx;
+    }
+
+    function get_each_context_2(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.item = list[i];
+    	return child_ctx;
+    }
+
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = Object.create(ctx);
+    	child_ctx.item = list[i];
+    	return child_ctx;
+    }
+
     function get_each_context(ctx, list, i) {
     	const child_ctx = Object.create(ctx);
     	child_ctx.item = list[i];
     	return child_ctx;
     }
 
-    // (57:4) {#each items as item}
-    function create_each_block(ctx) {
-    	var current;
+    // (75:33) 
+    function create_if_block_3(ctx) {
+    	var section, current;
 
-    	var card = new Card({
-    		props: { item: ctx.item },
-    		$$inline: true
+    	var each_value_3 = filteredItems;
+
+    	var each_blocks = [];
+
+    	for (var i = 0; i < each_value_3.length; i += 1) {
+    		each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+    	}
+
+    	const out = i => transition_out(each_blocks[i], 1, () => {
+    		each_blocks[i] = null;
     	});
 
     	return {
     		c: function create() {
-    			card.$$.fragment.c();
+    			section = element("section");
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
+    			add_location(section, file$2, 75, 2, 1508);
     		},
 
     		m: function mount(target, anchor) {
-    			mount_component(card, target, anchor);
+    			insert(target, section, anchor);
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(section, null);
+    			}
+
     			current = true;
     		},
 
     		p: function update(changed, ctx) {
-    			var card_changes = {};
-    			if (changed.items) card_changes.item = ctx.item;
-    			card.$set(card_changes);
+    			if (changed.filteredItems) {
+    				each_value_3 = filteredItems;
+
+    				for (var i = 0; i < each_value_3.length; i += 1) {
+    					const child_ctx = get_each_context_3(ctx, each_value_3, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    						transition_in(each_blocks[i], 1);
+    					} else {
+    						each_blocks[i] = create_each_block_3(child_ctx);
+    						each_blocks[i].c();
+    						transition_in(each_blocks[i], 1);
+    						each_blocks[i].m(section, null);
+    					}
+    				}
+
+    				group_outros();
+    				for (i = each_value_3.length; i < each_blocks.length; i += 1) out(i);
+    				check_outros();
+    			}
     		},
 
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(card.$$.fragment, local);
+    			for (var i = 0; i < each_value_3.length; i += 1) transition_in(each_blocks[i]);
 
     			current = true;
     		},
 
     		o: function outro(local) {
-    			transition_out(card.$$.fragment, local);
+    			each_blocks = each_blocks.filter(Boolean);
+    			for (let i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
     			current = false;
     		},
 
     		d: function destroy(detaching) {
-    			destroy_component(card, detaching);
+    			if (detaching) {
+    				detach(section);
+    			}
+
+    			destroy_each(each_blocks, detaching);
     		}
     	};
     }
 
-    function create_fragment$4(ctx) {
-    	var section, t, button, current, dispose;
+    // (69:29) 
+    function create_if_block_2(ctx) {
+    	var section, current;
+
+    	var each_value_2 = filteredItems;
+
+    	var each_blocks = [];
+
+    	for (var i = 0; i < each_value_2.length; i += 1) {
+    		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+    	}
+
+    	const out = i => transition_out(each_blocks[i], 1, () => {
+    		each_blocks[i] = null;
+    	});
+
+    	return {
+    		c: function create() {
+    			section = element("section");
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
+    			add_location(section, file$2, 69, 2, 1355);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, section, anchor);
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(section, null);
+    			}
+
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.filteredItems) {
+    				each_value_2 = filteredItems;
+
+    				for (var i = 0; i < each_value_2.length; i += 1) {
+    					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    						transition_in(each_blocks[i], 1);
+    					} else {
+    						each_blocks[i] = create_each_block_2(child_ctx);
+    						each_blocks[i].c();
+    						transition_in(each_blocks[i], 1);
+    						each_blocks[i].m(section, null);
+    					}
+    				}
+
+    				group_outros();
+    				for (i = each_value_2.length; i < each_blocks.length; i += 1) out(i);
+    				check_outros();
+    			}
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			for (var i = 0; i < each_value_2.length; i += 1) transition_in(each_blocks[i]);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			each_blocks = each_blocks.filter(Boolean);
+    			for (let i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(section);
+    			}
+
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+    }
+
+    // (63:29) 
+    function create_if_block_1$1(ctx) {
+    	var section, current;
+
+    	var each_value_1 = filteredItems;
+
+    	var each_blocks = [];
+
+    	for (var i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	const out = i => transition_out(each_blocks[i], 1, () => {
+    		each_blocks[i] = null;
+    	});
+
+    	return {
+    		c: function create() {
+    			section = element("section");
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
+    			add_location(section, file$2, 63, 2, 1206);
+    		},
+
+    		m: function mount(target, anchor) {
+    			insert(target, section, anchor);
+
+    			for (var i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(section, null);
+    			}
+
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			if (changed.filteredItems) {
+    				each_value_1 = filteredItems;
+
+    				for (var i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(changed, child_ctx);
+    						transition_in(each_blocks[i], 1);
+    					} else {
+    						each_blocks[i] = create_each_block_1(child_ctx);
+    						each_blocks[i].c();
+    						transition_in(each_blocks[i], 1);
+    						each_blocks[i].m(section, null);
+    					}
+    				}
+
+    				group_outros();
+    				for (i = each_value_1.length; i < each_blocks.length; i += 1) out(i);
+    				check_outros();
+    			}
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			for (var i = 0; i < each_value_1.length; i += 1) transition_in(each_blocks[i]);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			each_blocks = each_blocks.filter(Boolean);
+    			for (let i = 0; i < each_blocks.length; i += 1) transition_out(each_blocks[i]);
+
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (detaching) {
+    				detach(section);
+    			}
+
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+    }
+
+    // (57:0) {#if category == 'all'}
+    function create_if_block$2(ctx) {
+    	var section, current;
 
     	var each_value = items;
 
@@ -2368,18 +2601,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-
-    			t = space();
-    			button = element("button");
-    			button.textContent = "test";
-    			attr(section, "class", "card-wrapper grid svelte-7qelhp");
-    			add_location(section, file$2, 55, 2, 990);
-    			add_location(button, file$2, 87, 0, 1699);
-    			dispose = listen(button, "click", ctx.testCategory);
-    		},
-
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
+    			add_location(section, file$2, 57, 2, 1065);
     		},
 
     		m: function mount(target, anchor) {
@@ -2389,8 +2612,6 @@ var app = (function () {
     				each_blocks[i].m(section, null);
     			}
 
-    			insert(target, t, anchor);
-    			insert(target, button, anchor);
     			current = true;
     		},
 
@@ -2438,6 +2659,268 @@ var app = (function () {
     			}
 
     			destroy_each(each_blocks, detaching);
+    		}
+    	};
+    }
+
+    // (77:4) {#each filteredItems as item}
+    function create_each_block_3(ctx) {
+    	var current;
+
+    	var card = new Card({
+    		props: { item: ctx.item },
+    		$$inline: true
+    	});
+
+    	return {
+    		c: function create() {
+    			card.$$.fragment.c();
+    		},
+
+    		m: function mount(target, anchor) {
+    			mount_component(card, target, anchor);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var card_changes = {};
+    			if (changed.filteredItems) card_changes.item = ctx.item;
+    			card.$set(card_changes);
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(card.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(card.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			destroy_component(card, detaching);
+    		}
+    	};
+    }
+
+    // (71:4) {#each filteredItems as item}
+    function create_each_block_2(ctx) {
+    	var current;
+
+    	var card = new Card({
+    		props: { item: ctx.item },
+    		$$inline: true
+    	});
+
+    	return {
+    		c: function create() {
+    			card.$$.fragment.c();
+    		},
+
+    		m: function mount(target, anchor) {
+    			mount_component(card, target, anchor);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var card_changes = {};
+    			if (changed.filteredItems) card_changes.item = ctx.item;
+    			card.$set(card_changes);
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(card.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(card.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			destroy_component(card, detaching);
+    		}
+    	};
+    }
+
+    // (65:4) {#each filteredItems as item}
+    function create_each_block_1(ctx) {
+    	var current;
+
+    	var card = new Card({
+    		props: { item: ctx.item },
+    		$$inline: true
+    	});
+
+    	return {
+    		c: function create() {
+    			card.$$.fragment.c();
+    		},
+
+    		m: function mount(target, anchor) {
+    			mount_component(card, target, anchor);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var card_changes = {};
+    			if (changed.filteredItems) card_changes.item = ctx.item;
+    			card.$set(card_changes);
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(card.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(card.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			destroy_component(card, detaching);
+    		}
+    	};
+    }
+
+    // (59:4) {#each items as item}
+    function create_each_block(ctx) {
+    	var current;
+
+    	var card = new Card({
+    		props: { item: ctx.item },
+    		$$inline: true
+    	});
+
+    	return {
+    		c: function create() {
+    			card.$$.fragment.c();
+    		},
+
+    		m: function mount(target, anchor) {
+    			mount_component(card, target, anchor);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var card_changes = {};
+    			if (changed.items) card_changes.item = ctx.item;
+    			card.$set(card_changes);
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(card.$$.fragment, local);
+
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(card.$$.fragment, local);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			destroy_component(card, detaching);
+    		}
+    	};
+    }
+
+    function create_fragment$4(ctx) {
+    	var current_block_type_index, if_block, t, button, current, dispose;
+
+    	var if_block_creators = [
+    		create_if_block$2,
+    		create_if_block_1$1,
+    		create_if_block_2,
+    		create_if_block_3
+    	];
+
+    	var if_blocks = [];
+
+    	function select_block_type(ctx) {
+    		if (ctx.category == 'all') return 0;
+    		if (ctx.category == 'tech') return 1;
+    		if (ctx.category == 'wear') return 2;
+    		if (ctx.category == 'services') return 3;
+    		return -1;
+    	}
+
+    	if (~(current_block_type_index = select_block_type(ctx))) {
+    		if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+    	}
+
+    	return {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			t = space();
+    			button = element("button");
+    			button.textContent = "test";
+    			add_location(button, file$2, 81, 0, 1631);
+    			dispose = listen(button, "click", ctx.testCategory);
+    		},
+
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+
+    		m: function mount(target, anchor) {
+    			if (~current_block_type_index) if_blocks[current_block_type_index].m(target, anchor);
+    			insert(target, t, anchor);
+    			insert(target, button, anchor);
+    			current = true;
+    		},
+
+    		p: function update(changed, ctx) {
+    			var previous_block_index = current_block_type_index;
+    			current_block_type_index = select_block_type(ctx);
+    			if (current_block_type_index === previous_block_index) {
+    				if (~current_block_type_index) if_blocks[current_block_type_index].p(changed, ctx);
+    			} else {
+    				if (if_block) {
+    					group_outros();
+    					transition_out(if_blocks[previous_block_index], 1, () => {
+    						if_blocks[previous_block_index] = null;
+    					});
+    					check_outros();
+    				}
+
+    				if (~current_block_type_index) {
+    					if_block = if_blocks[current_block_type_index];
+    					if (!if_block) {
+    						if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+    						if_block.c();
+    					}
+    					transition_in(if_block, 1);
+    					if_block.m(t.parentNode, t);
+    				} else {
+    					if_block = null;
+    				}
+    			}
+    		},
+
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(if_block);
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(if_block);
+    			current = false;
+    		},
+
+    		d: function destroy(detaching) {
+    			if (~current_block_type_index) if_blocks[current_block_type_index].d(detaching);
 
     			if (detaching) {
     				detach(t);
@@ -2455,18 +2938,19 @@ var app = (function () {
       let category;
 
       const unsubscribe = currentCategory.subscribe(value => {
-        category = value;
+        $$invalidate('category', category = value);
       });
 
       function testCategory() {
         console.log(category);
+        var filteredList = items.filter(function(filter) {
+          return filter.category == category;
+        });
+        console.log(filteredList);
+        return filteredList;
       }
 
-      // var filteredList = items.filter(function(filter) {
-      //   return filter.category == category;
-      // });
-
-    	return { testCategory };
+    	return { category, testCategory };
     }
 
     class CardWrapper extends SvelteComponentDev {
@@ -2520,55 +3004,55 @@ var app = (function () {
     			div10 = element("div");
     			h44 = element("h4");
     			h44.textContent = "ABOUT";
-    			add_location(h40, file$3, 20, 0, 391);
+    			add_location(h40, file$3, 23, 0, 404);
     			attr(img0, "src", "img/librem14.png");
     			attr(img0, "alt", "TECH");
-    			add_location(img0, file$3, 26, 6, 569);
-    			attr(div0, "class", "card-image");
-    			add_location(div0, file$3, 25, 4, 538);
-    			add_location(h41, file$3, 29, 6, 693);
-    			attr(div1, "class", "card-content center-align");
+    			add_location(img0, file$3, 29, 6, 582);
+    			attr(div0, "class", "card-image svelte-1vxk94d");
+    			add_location(div0, file$3, 28, 4, 551);
+    			add_location(h41, file$3, 32, 6, 706);
+    			attr(div1, "class", "card-content center-align svelte-1vxk94d");
     			set_style(div1, "padding", "0px");
-    			add_location(div1, file$3, 28, 4, 626);
-    			attr(div2, "class", "card hoverable modal-close");
-    			add_location(div2, file$3, 22, 2, 445);
+    			add_location(div1, file$3, 31, 4, 639);
+    			attr(div2, "class", "card hoverable modal-close svelte-1vxk94d");
+    			add_location(div2, file$3, 25, 2, 458);
     			attr(img1, "src", "img/apparel.jpeg");
     			attr(img1, "alt", "WEAR");
     			set_style(img1, "max-height", "150px");
-    			add_location(img1, file$3, 36, 6, 853);
-    			attr(div3, "class", "card-image");
-    			add_location(div3, file$3, 35, 4, 822);
-    			add_location(h42, file$3, 39, 6, 1003);
-    			attr(div4, "class", "card-content center-align");
+    			add_location(img1, file$3, 39, 6, 866);
+    			attr(div3, "class", "card-image svelte-1vxk94d");
+    			add_location(div3, file$3, 38, 4, 835);
+    			add_location(h42, file$3, 42, 6, 1016);
+    			attr(div4, "class", "card-content center-align svelte-1vxk94d");
     			set_style(div4, "padding", "0px");
-    			add_location(div4, file$3, 38, 4, 936);
-    			attr(div5, "class", "card hoverable modal-close");
-    			add_location(div5, file$3, 32, 2, 729);
+    			add_location(div4, file$3, 41, 4, 949);
+    			attr(div5, "class", "card hoverable modal-close svelte-1vxk94d");
+    			add_location(div5, file$3, 35, 2, 742);
     			attr(img2, "src", "img/librem14.png");
     			attr(img2, "alt", "SERVICES");
-    			add_location(img2, file$3, 46, 6, 1167);
-    			attr(div6, "class", "card-image");
-    			add_location(div6, file$3, 45, 4, 1136);
-    			add_location(h43, file$3, 49, 6, 1295);
-    			attr(div7, "class", "card-content center-align");
+    			add_location(img2, file$3, 49, 6, 1180);
+    			attr(div6, "class", "card-image svelte-1vxk94d");
+    			add_location(div6, file$3, 48, 4, 1149);
+    			add_location(h43, file$3, 52, 6, 1308);
+    			attr(div7, "class", "card-content center-align svelte-1vxk94d");
     			set_style(div7, "padding", "0px");
-    			add_location(div7, file$3, 48, 4, 1228);
-    			attr(div8, "class", "card hoverable modal-close");
-    			add_location(div8, file$3, 42, 2, 1039);
+    			add_location(div7, file$3, 51, 4, 1241);
+    			attr(div8, "class", "card hoverable modal-close svelte-1vxk94d");
+    			add_location(div8, file$3, 45, 2, 1052);
     			attr(img3, "src", "img/lockicon.png");
     			attr(img3, "alt", "ABOUT");
     			set_style(img3, "max-height", "150px");
-    			add_location(img3, file$3, 54, 6, 1411);
-    			attr(div9, "class", "card-image");
-    			add_location(div9, file$3, 53, 4, 1380);
-    			add_location(h44, file$3, 57, 6, 1562);
-    			attr(div10, "class", "card-content center-align");
+    			add_location(img3, file$3, 57, 6, 1424);
+    			attr(div9, "class", "card-image svelte-1vxk94d");
+    			add_location(div9, file$3, 56, 4, 1393);
+    			add_location(h44, file$3, 60, 6, 1575);
+    			attr(div10, "class", "card-content center-align svelte-1vxk94d");
     			set_style(div10, "padding", "0px");
-    			add_location(div10, file$3, 56, 4, 1495);
-    			attr(div11, "class", "card hoverable modal-close");
-    			add_location(div11, file$3, 52, 2, 1335);
-    			attr(div12, "class", "category-wrapper svelte-1ru2drc");
-    			add_location(div12, file$3, 21, 0, 412);
+    			add_location(div10, file$3, 59, 4, 1508);
+    			attr(div11, "class", "card hoverable modal-close svelte-1vxk94d");
+    			add_location(div11, file$3, 55, 2, 1348);
+    			attr(div12, "class", "category-wrapper svelte-1vxk94d");
+    			add_location(div12, file$3, 24, 0, 425);
 
     			dispose = [
     				listen(div2, "click", ctx.click_handler),
@@ -2679,16 +3163,16 @@ var app = (function () {
     			div1 = element("div");
     			a = element("a");
     			a.textContent = "Close";
-    			attr(div0, "class", "modal-content svelte-61qvv4");
-    			add_location(div0, file$4, 15, 2, 223);
+    			attr(div0, "class", "modal-content svelte-1lja90m");
+    			add_location(div0, file$4, 16, 2, 244);
     			attr(a, "href", "#!");
-    			attr(a, "class", "modal-close waves-effect waves-green btn-flat svelte-61qvv4");
-    			add_location(a, file$4, 20, 4, 314);
-    			attr(div1, "class", "modal-footer svelte-61qvv4");
-    			add_location(div1, file$4, 19, 2, 283);
+    			attr(a, "class", "modal-close waves-effect waves-green btn-flat svelte-1lja90m");
+    			add_location(a, file$4, 21, 4, 335);
+    			attr(div1, "class", "modal-footer svelte-1lja90m");
+    			add_location(div1, file$4, 20, 2, 304);
     			attr(div2, "id", "modal1");
-    			attr(div2, "class", "modal svelte-61qvv4");
-    			add_location(div2, file$4, 14, 0, 189);
+    			attr(div2, "class", "modal svelte-1lja90m");
+    			add_location(div2, file$4, 15, 0, 210);
     		},
 
     		l: function claim(nodes) {
@@ -2749,7 +3233,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "SECUME!";
     			attr(span, "class", "brand-logo");
-    			add_location(span, file$5, 38, 8, 876);
+    			add_location(span, file$5, 38, 8, 897);
     		},
 
     		m: function mount(target, anchor) {
@@ -2773,7 +3257,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "home";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 43, 12, 1039);
+    			add_location(i, file$5, 43, 12, 1060);
     		},
 
     		m: function mount(target, anchor) {
@@ -2797,7 +3281,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "info";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 53, 12, 1324);
+    			add_location(i, file$5, 53, 12, 1345);
     		},
 
     		m: function mount(target, anchor) {
@@ -2821,7 +3305,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "shopping_cart";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 58, 12, 1448);
+    			add_location(i, file$5, 58, 12, 1469);
     		},
 
     		m: function mount(target, anchor) {
@@ -2847,9 +3331,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "home";
-    			add_location(span, file$5, 70, 6, 1634);
+    			add_location(span, file$5, 70, 6, 1655);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 71, 6, 1658);
+    			add_location(i, file$5, 71, 6, 1679);
     		},
 
     		m: function mount(target, anchor) {
@@ -2879,9 +3363,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "info";
-    			add_location(span, file$5, 83, 6, 1912);
+    			add_location(span, file$5, 83, 6, 1933);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 84, 6, 1937);
+    			add_location(i, file$5, 84, 6, 1958);
     		},
 
     		m: function mount(target, anchor) {
@@ -2911,9 +3395,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "shopping_cart";
-    			add_location(span, file$5, 89, 6, 2031);
+    			add_location(span, file$5, 89, 6, 2052);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 90, 6, 2055);
+    			add_location(i, file$5, 90, 6, 2076);
     		},
 
     		m: function mount(target, anchor) {
@@ -3051,46 +3535,47 @@ var app = (function () {
     			div2 = element("div");
     			modal.$$.fragment.c();
     			attr(i0, "class", "material-icons");
-    			add_location(i0, file$5, 34, 6, 776);
+    			add_location(i0, file$5, 34, 6, 797);
     			attr(a0, "href", "#");
     			a0.dataset.target = "mobile-demo";
     			attr(a0, "class", "sidenav-trigger");
-    			add_location(a0, file$5, 29, 4, 662);
-    			add_location(li0, file$5, 41, 8, 998);
+    			add_location(a0, file$5, 29, 4, 683);
+    			add_location(li0, file$5, 41, 8, 1019);
     			attr(i1, "class", "material-icons");
-    			add_location(i1, file$5, 48, 12, 1206);
+    			add_location(i1, file$5, 48, 12, 1227);
     			attr(a1, "class", "modal-trigger");
     			attr(a1, "href", "#modal1");
-    			add_location(a1, file$5, 47, 10, 1129);
-    			add_location(li1, file$5, 46, 8, 1114);
-    			add_location(li2, file$5, 51, 8, 1278);
-    			add_location(li3, file$5, 56, 8, 1399);
+    			add_location(a1, file$5, 47, 10, 1150);
+    			add_location(li1, file$5, 46, 8, 1135);
+    			add_location(li2, file$5, 51, 8, 1299);
+    			add_location(li3, file$5, 56, 8, 1420);
     			attr(ul0, "id", "nav-mobile");
     			attr(ul0, "class", "right hide-on-small-only");
-    			add_location(ul0, file$5, 40, 6, 936);
+    			add_location(ul0, file$5, 40, 6, 957);
     			attr(div0, "class", "container");
-    			add_location(div0, file$5, 36, 4, 824);
-    			attr(div1, "class", "nav-wrapper red darken-4");
+    			add_location(div0, file$5, 36, 4, 845);
+    			attr(div1, "class", "nav-wrapper");
+    			set_style(div1, "background-color", "#3c3c3b");
     			add_location(div1, file$5, 28, 2, 619);
     			add_location(nav, file$5, 27, 0, 611);
-    			add_location(li4, file$5, 68, 2, 1605);
+    			add_location(li4, file$5, 68, 2, 1626);
     			attr(i2, "class", "material-icons");
-    			add_location(i2, file$5, 77, 6, 1796);
-    			add_location(span, file$5, 78, 6, 1837);
+    			add_location(i2, file$5, 77, 6, 1817);
+    			add_location(span, file$5, 78, 6, 1858);
     			attr(a2, "class", "modal-trigger");
     			attr(a2, "href", "#modal1");
-    			add_location(a2, file$5, 76, 4, 1725);
-    			add_location(li5, file$5, 75, 2, 1716);
-    			add_location(li6, file$5, 81, 2, 1878);
-    			add_location(li7, file$5, 87, 2, 1994);
+    			add_location(a2, file$5, 76, 4, 1746);
+    			add_location(li5, file$5, 75, 2, 1737);
+    			add_location(li6, file$5, 81, 2, 1899);
+    			add_location(li7, file$5, 87, 2, 2015);
     			attr(a3, "href", "http://www.seanbase.com");
-    			add_location(a3, file$5, 95, 4, 2131);
-    			add_location(li8, file$5, 94, 2, 2122);
+    			add_location(a3, file$5, 95, 4, 2152);
+    			add_location(li8, file$5, 94, 2, 2143);
     			attr(ul1, "class", "sidenav");
     			attr(ul1, "id", "mobile-demo");
-    			add_location(ul1, file$5, 67, 0, 1565);
+    			add_location(ul1, file$5, 67, 0, 1586);
     			attr(div2, "class", "modal1");
-    			add_location(div2, file$5, 99, 0, 2201);
+    			add_location(div2, file$5, 99, 0, 2222);
 
     			dispose = [
     				listen(a0, "click", mobileNav),
@@ -3564,7 +4049,7 @@ var app = (function () {
     }
 
     // (39:2) {#if cartItems.length === 0}
-    function create_if_block$2(ctx) {
+    function create_if_block$3(ctx) {
     	var p;
 
     	return {
@@ -3649,7 +4134,7 @@ var app = (function () {
     	var div, h1, t_1, current_block_type_index, if_block, current;
 
     	var if_block_creators = [
-    		create_if_block$2,
+    		create_if_block$3,
     		create_else_block$1
     	];
 
@@ -3773,7 +4258,7 @@ var app = (function () {
     const file$8 = "src/pages/Home.svelte";
 
     function create_fragment$a(ctx) {
-    	var div1, div0, img, t0, div2, h2, t1, t2, t3, current;
+    	var div1, div0, img, t0, div2, h3, t1, t2, t3, current;
 
     	var cardwrapper = new CardWrapper({ $$inline: true });
 
@@ -3784,7 +4269,7 @@ var app = (function () {
     			img = element("img");
     			t0 = space();
     			div2 = element("div");
-    			h2 = element("h2");
+    			h3 = element("h3");
     			t1 = text("Viewing: ");
     			t2 = text(ctx.category);
     			t3 = space();
@@ -3795,8 +4280,8 @@ var app = (function () {
     			add_location(div0, file$8, 21, 2, 500);
     			attr(div1, "class", "parallax-container");
     			add_location(div1, file$8, 20, 0, 465);
-    			attr(h2, "class", "header");
-    			add_location(h2, file$8, 26, 2, 600);
+    			attr(h3, "class", "header center-align");
+    			add_location(h3, file$8, 26, 2, 600);
     			attr(div2, "class", "container");
     			add_location(div2, file$8, 25, 0, 574);
     		},
@@ -3811,9 +4296,9 @@ var app = (function () {
     			append(div0, img);
     			insert(target, t0, anchor);
     			insert(target, div2, anchor);
-    			append(div2, h2);
-    			append(h2, t1);
-    			append(h2, t2);
+    			append(div2, h3);
+    			append(h3, t1);
+    			append(h3, t2);
     			insert(target, t3, anchor);
     			mount_component(cardwrapper, target, anchor);
     			current = true;

@@ -5,8 +5,9 @@
 <style>
   .modal {
     position: fixed;
-    top: 50%;
-    max-height: 80%;
+    top: 30%;
+    max-height: 90%;
+    min-height: 70%;
   }
 
 </style>

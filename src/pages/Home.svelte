@@ -24,6 +24,6 @@
   </div>
 </div>
 <div class="container">
-  <h2 class="header">Viewing: {category}</h2>
+  <h3 class="header center-align">Viewing: {category}</h3>
 </div>
 <CardWrapper />

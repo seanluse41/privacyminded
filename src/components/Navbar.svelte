@@ -26,7 +26,7 @@
 </script>
 
 <nav>
-  <div class="nav-wrapper red darken-4">
+  <div class="nav-wrapper" style="background-color:#3c3c3b;">
     <a
       href="#"
       data-target="mobile-demo"

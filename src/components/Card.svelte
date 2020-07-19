@@ -26,7 +26,7 @@
   }
 
   .title {
-    font-size: 3.6vh;
+    font-size: 3.3vh;
     display: flex;
     flex-direction: row-reverse;
     margin-top: 2%;
@@ -59,13 +59,14 @@
   <div class="card-image">
     <img src={img} alt={name} />
   </div>
-  <div class="card-content" style="padding-top:0px;">
+  <div class="card-content" style="padding-top:0px;padding-bottom:10px;">
     <h3 class="title">{name}</h3>
     <p class="price">{price}￥</p>
     <div class="button-group">
       <button
         on:click={addToCart}
-        class="waves-effect waves-light red darken-4 btn">
+        class="waves-effect waves-light btn"
+        style="background-color:#e60012;">
         <i class="material-icons right">add_shopping_cart</i>
         Add
       </button>

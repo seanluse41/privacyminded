@@ -13,8 +13,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 10px 10px;
     grid-template-areas: ". ." ". .";
+  }
+
+  .card {
+    margin: 25px;
   }
 </style>
 
