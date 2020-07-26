@@ -2270,16 +2270,24 @@ var app = (function () {
     		name: 'Thinkpad X220 i3',
     		price: '30000',
     		img: 'lenoX220.jpg',
-    		sku: 'price_1GquBKJ5Fk3rD5oaqDTOlxOV',
+    		sku: 'price_1H94aDJ5Fk3rD5oarHUvEju1',
+    		category: 'tech'
+    	},
+    	{
+    		name: 'Thinkpad X220 i5',
+    		price: '35000',
+    		img: 'lenoX220.jpg',
+    		sku: 'price_1H94cZJ5Fk3rD5oaUkomX8bH',
     		category: 'tech'
     	},
     	{
     		name: 'Thinkpad X230 i5',
-    		price: '35000',
+    		price: '40000',
     		img: 'lenoX230.jpg',
-    		sku: 'price_1H0gk1J5Fk3rD5oa1N2wCXGg',
+    		sku: 'price_1H94bPJ5Fk3rD5oaoj8bI4Rk',
     		category: 'tech'
     	},
+
     ];
 
     var parts = [
@@ -2287,7 +2295,14 @@ var app = (function () {
             name: 'Thinkpad USB C充電端末',
             price: '2500',
             img: 'usb-c.jpg',
-            sku: 'sku_HK3pP3oL6bi9Uf',
+            sku: 'price_1H94dZJ5Fk3rD5oayXNyUmtd',
+            category: 'parts',
+        },
+        {
+            name: 'ZMI 65W USB C Charger with Cable',
+            price: '4000',
+            img: 'zmi-65w.jpg',
+            sku: 'price_1H94lqJ5Fk3rD5oaj1LwUEIO',
             category: 'parts',
         },
     ];
@@ -2297,7 +2312,7 @@ var app = (function () {
             name: 'Privacy Tote',
             price: '20000',
             img: 'tote.jpg',
-            sku: 'sku_HK3pP3oL6bi9Uf',
+            sku: 'price_1H94rWJ5Fk3rD5oa4urBzqrq',
             category: 'wear'
         },
     ];
@@ -2387,8 +2402,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
-    			add_location(section, file$2, 82, 2, 1641);
+    			attr(section, "class", "card-wrapper grid svelte-1rwjnpv");
+    			add_location(section, file$2, 82, 2, 1643);
     		},
 
     		m: function mount(target, anchor) {
@@ -2472,8 +2487,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
-    			add_location(section, file$2, 76, 2, 1496);
+    			attr(section, "class", "card-wrapper grid svelte-1rwjnpv");
+    			add_location(section, file$2, 76, 2, 1498);
     		},
 
     		m: function mount(target, anchor) {
@@ -2575,8 +2590,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
-    			add_location(section, file$2, 67, 2, 1291);
+    			attr(section, "class", "card-wrapper grid svelte-1rwjnpv");
+    			add_location(section, file$2, 67, 2, 1293);
     		},
 
     		m: function mount(target, anchor) {
@@ -2749,8 +2764,8 @@ var app = (function () {
     			for (var i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
-    			attr(section, "class", "card-wrapper grid svelte-fuh2pa");
-    			add_location(section, file$2, 52, 2, 963);
+    			attr(section, "class", "card-wrapper grid svelte-1rwjnpv");
+    			add_location(section, file$2, 52, 2, 965);
     		},
 
     		m: function mount(target, anchor) {

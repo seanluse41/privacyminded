@@ -17,10 +17,10 @@
 <style>
   .grid {
     width: 70vw;
-    margin-left: 3%;
+    margin: 10vh auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2%;
+    grid-gap: 5%;
     justify-items: stretch;
   }
 
