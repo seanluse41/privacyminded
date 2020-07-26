@@ -3647,7 +3647,7 @@ var app = (function () {
 
     const file$5 = "src/components/Navbar.svelte";
 
-    // (38:6) <Link to="/">
+    // (43:6) <Link to="/">
     function create_default_slot_6(ctx) {
     	var span;
 
@@ -3656,7 +3656,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Privacy Pasokon";
     			attr(span, "class", "brand-logo");
-    			add_location(span, file$5, 38, 8, 897);
+    			add_location(span, file$5, 43, 8, 1042);
     		},
 
     		m: function mount(target, anchor) {
@@ -3671,31 +3671,39 @@ var app = (function () {
     	};
     }
 
-    // (43:10) <Link to="/">
+    // (48:10) <Link to="/">
     function create_default_slot_5(ctx) {
-    	var i;
+    	var a, i, dispose;
 
     	return {
     		c: function create() {
+    			a = element("a");
     			i = element("i");
     			i.textContent = "home";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 43, 12, 1068);
+    			add_location(i, file$5, 49, 14, 1270);
+    			add_location(a, file$5, 48, 12, 1213);
+    			dispose = listen(a, "click", ctx.click_handler);
     		},
 
     		m: function mount(target, anchor) {
-    			insert(target, i, anchor);
+    			insert(target, a, anchor);
+    			append(a, i);
     		},
+
+    		p: noop,
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach(i);
+    				detach(a);
     			}
+
+    			dispose();
     		}
     	};
     }
 
-    // (53:10) <Link to="/about">
+    // (60:10) <Link to="/about">
     function create_default_slot_4(ctx) {
     	var i;
 
@@ -3704,7 +3712,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "info";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 53, 12, 1353);
+    			add_location(i, file$5, 60, 12, 1572);
     		},
 
     		m: function mount(target, anchor) {
@@ -3719,7 +3727,7 @@ var app = (function () {
     	};
     }
 
-    // (58:10) <Link to="/checkout">
+    // (65:10) <Link to="/checkout">
     function create_default_slot_3(ctx) {
     	var i;
 
@@ -3728,7 +3736,7 @@ var app = (function () {
     			i = element("i");
     			i.textContent = "shopping_cart";
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 58, 12, 1477);
+    			add_location(i, file$5, 65, 12, 1696);
     		},
 
     		m: function mount(target, anchor) {
@@ -3743,7 +3751,7 @@ var app = (function () {
     	};
     }
 
-    // (70:4) <Link to="/">
+    // (77:4) <Link to="/">
     function create_default_slot_2(ctx) {
     	var span, t_1, i;
 
@@ -3754,9 +3762,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "home";
-    			add_location(span, file$5, 70, 6, 1663);
+    			add_location(span, file$5, 77, 6, 1882);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 71, 6, 1687);
+    			add_location(i, file$5, 78, 6, 1906);
     		},
 
     		m: function mount(target, anchor) {
@@ -3775,7 +3783,7 @@ var app = (function () {
     	};
     }
 
-    // (83:4) <Link to="/about">
+    // (90:4) <Link to="/about">
     function create_default_slot_1(ctx) {
     	var span, t_1, i;
 
@@ -3786,9 +3794,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "info";
-    			add_location(span, file$5, 83, 6, 1941);
+    			add_location(span, file$5, 90, 6, 2160);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 84, 6, 1966);
+    			add_location(i, file$5, 91, 6, 2185);
     		},
 
     		m: function mount(target, anchor) {
@@ -3807,7 +3815,7 @@ var app = (function () {
     	};
     }
 
-    // (89:4) <Link to="/checkout">
+    // (96:4) <Link to="/checkout">
     function create_default_slot(ctx) {
     	var span, t_1, i;
 
@@ -3818,9 +3826,9 @@ var app = (function () {
     			t_1 = space();
     			i = element("i");
     			i.textContent = "shopping_cart";
-    			add_location(span, file$5, 89, 6, 2060);
+    			add_location(span, file$5, 96, 6, 2279);
     			attr(i, "class", "material-icons");
-    			add_location(i, file$5, 90, 6, 2084);
+    			add_location(i, file$5, 97, 6, 2303);
     		},
 
     		m: function mount(target, anchor) {
@@ -3958,47 +3966,47 @@ var app = (function () {
     			div2 = element("div");
     			modal.$$.fragment.c();
     			attr(i0, "class", "material-icons");
-    			add_location(i0, file$5, 34, 6, 797);
+    			add_location(i0, file$5, 39, 6, 942);
     			attr(a0, "href", "#");
     			a0.dataset.target = "mobile-demo";
     			attr(a0, "class", "sidenav-trigger");
-    			add_location(a0, file$5, 29, 4, 683);
-    			add_location(li0, file$5, 41, 8, 1027);
+    			add_location(a0, file$5, 34, 4, 828);
+    			add_location(li0, file$5, 46, 8, 1172);
     			attr(i1, "class", "material-icons");
-    			add_location(i1, file$5, 48, 12, 1235);
+    			add_location(i1, file$5, 55, 12, 1454);
     			attr(a1, "class", "modal-trigger");
     			attr(a1, "href", "#modal1");
-    			add_location(a1, file$5, 47, 10, 1158);
-    			add_location(li1, file$5, 46, 8, 1143);
-    			add_location(li2, file$5, 51, 8, 1307);
-    			add_location(li3, file$5, 56, 8, 1428);
+    			add_location(a1, file$5, 54, 10, 1377);
+    			add_location(li1, file$5, 53, 8, 1362);
+    			add_location(li2, file$5, 58, 8, 1526);
+    			add_location(li3, file$5, 63, 8, 1647);
     			attr(ul0, "id", "nav-mobile");
     			attr(ul0, "class", "right hide-on-small-only");
-    			add_location(ul0, file$5, 40, 6, 965);
+    			add_location(ul0, file$5, 45, 6, 1110);
     			attr(div0, "class", "container");
-    			add_location(div0, file$5, 36, 4, 845);
+    			add_location(div0, file$5, 41, 4, 990);
     			attr(div1, "class", "nav-wrapper");
     			set_style(div1, "background-color", "#3c3c3b");
-    			add_location(div1, file$5, 28, 2, 619);
-    			add_location(nav, file$5, 27, 0, 611);
-    			add_location(li4, file$5, 68, 2, 1634);
+    			add_location(div1, file$5, 33, 2, 764);
+    			add_location(nav, file$5, 32, 0, 756);
+    			add_location(li4, file$5, 75, 2, 1853);
     			attr(i2, "class", "material-icons");
-    			add_location(i2, file$5, 77, 6, 1825);
-    			add_location(span, file$5, 78, 6, 1866);
+    			add_location(i2, file$5, 84, 6, 2044);
+    			add_location(span, file$5, 85, 6, 2085);
     			attr(a2, "class", "modal-trigger");
     			attr(a2, "href", "#modal1");
-    			add_location(a2, file$5, 76, 4, 1754);
-    			add_location(li5, file$5, 75, 2, 1745);
-    			add_location(li6, file$5, 81, 2, 1907);
-    			add_location(li7, file$5, 87, 2, 2023);
+    			add_location(a2, file$5, 83, 4, 1973);
+    			add_location(li5, file$5, 82, 2, 1964);
+    			add_location(li6, file$5, 88, 2, 2126);
+    			add_location(li7, file$5, 94, 2, 2242);
     			attr(a3, "href", "http://www.seanbase.com");
-    			add_location(a3, file$5, 95, 4, 2160);
-    			add_location(li8, file$5, 94, 2, 2151);
+    			add_location(a3, file$5, 102, 4, 2379);
+    			add_location(li8, file$5, 101, 2, 2370);
     			attr(ul1, "class", "sidenav");
     			attr(ul1, "id", "mobile-demo");
-    			add_location(ul1, file$5, 67, 0, 1594);
+    			add_location(ul1, file$5, 74, 0, 1813);
     			attr(div2, "class", "modal1");
-    			add_location(div2, file$5, 99, 0, 2230);
+    			add_location(div2, file$5, 106, 0, 2449);
 
     			dispose = [
     				listen(a0, "click", mobileNav),
@@ -4167,6 +4175,10 @@ var app = (function () {
       var instances = M.Modal.init(elems);
     }
 
+    function changeCategory$1(selection) {
+      currentCategory.update(n => selection);
+    }
+
     function instance$6($$self, $$props, $$invalidate) {
     	
 
@@ -4180,7 +4192,11 @@ var app = (function () {
         });
       });
 
-    	return {};
+    	function click_handler() {
+    		return changeCategory$1('all');
+    	}
+
+    	return { click_handler };
     }
 
     class Navbar extends SvelteComponentDev {

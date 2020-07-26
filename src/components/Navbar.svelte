@@ -1,6 +1,7 @@
 <script>
   import { cart } from "../stores/stores.js";
   import { Link } from "svelte-routing";
+  import { currentCategory } from "../stores/stores.js";
 
   import Modal from "./Modal.svelte";
 
@@ -23,6 +24,10 @@
     var elems = document.querySelectorAll(".modal");
     var instances = M.Modal.init(elems);
   }
+
+  function changeCategory(selection) {
+    currentCategory.update(n => selection);
+  }
 </script>
 
 <nav>
@@ -41,7 +46,9 @@
       <ul id="nav-mobile" class="right hide-on-small-only">
         <li>
           <Link to="/">
-            <i class="material-icons">home</i>
+            <a on:click={() => changeCategory('all')}>
+              <i class="material-icons">home</i>
+            </a>
           </Link>
         </li>
         <li>
