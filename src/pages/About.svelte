@@ -9,7 +9,7 @@
 
   function pushPin() {
     var elems = document.querySelectorAll(".pushpin");
-    let options = { offset: 200 };
+    let options = { offset: 180 };
     var instances = M.Pushpin.init(elems, options);
   }
 
@@ -27,7 +27,7 @@
     <div class="col s12 m9 l10">
       <div id="introduction" class="section scrollspy">
         <p>
-          Privacy NOW aims to empower the average user to operate privately
+          Privacy Pasokon aims to empower the average user to operate privately
           online if they so choose.
         </p>
         <p>
@@ -40,6 +40,7 @@
       </div>
 
       <div id="tech" class="section scrollspy">
+        <h4>Privacy you use.</h4>
         <p>
           The Intel Management Engine (Intel ME) is, in short, a small computer
           within your computer, which you as the user have no control over. It
@@ -55,7 +56,7 @@
           Intel ME, despite providing no benefits to the user, is installed on
           all modern intel processesors, and provides a backdoor to your
           property for, at best legal government authorities, and at worst,
-          malicious actors seeking to use those backdoors. Privacy NOW's
+          malicious actors seeking to use those backdoors. Privacy Pasokon's
           approach to this problem is two-fold:
         </p>
         <ol>
@@ -68,9 +69,9 @@
             experience. Add to this the x220 and x230's ease of repair
             (cheapness and availability of parts) and you can see that "newer"
             does not always equal "better". Our thinkpads are upgraded with 16gb
-            of ram, 256gb SSD, and an option 1080p display. The firmware is
-            edited to allow 3rd party batteries, USB C charging, overclocked
-            RAM. See our speed comparison video here.
+            of ram, 256gb SSD, and an optional 1080p display. The firmware is
+            edited to allow 3rd party batteries, USB C charging, and support
+            overclocked RAM. See our speed comparison video here.
           </li>
           <li>
             Act as a point of resale for the
@@ -105,13 +106,34 @@
     <div class="col s12 m9 l10">
 
       <div id="wear" class="section scrollspy">
-        <h4>Privacy for YOU.</h4>
+        <h4>Privacy you live in.</h4>
         <p>
-          As the line between digital and real becomes less clear, true privacy
-          consciousness must also include that your identity, location, and
-          items can be digitized and profiled at any time. Our line of security
-          conscious bags and apparel will help keep your identity safe, while
-          looking great.
+          As the line between our digital repuation and our real selves becomes
+          less clear, true privacy consciousness must also include that your
+          identity, location, and items can be digitized and profiled at any
+          time. Our line of security conscious bags and apparel will help keep
+          your identity safe, while looking great.
+        </p>
+        <p>
+          Our stance regarding personal privacy wear is clear: with ever
+          increasing surveillance by government and third parties, your actions
+          today may condemn you tomorrow. Imagine a protest you participated in
+          resulting in being added to a database. That database may not be used
+          against you today, but with ever changing laws and political
+          landscapes, that information may affect you later.
+        </p>
+        <p>
+          Privacy Pasokon supplies facial recognition blocking glasses (both
+          visible light and IR!), faraday cage backpacks and totes, and
+          breathable, fashionable face masks.
+        </p>
+        <p>
+          In addition, we sell personal recording devices, both audio and video.
+          These devices are wear and go, with long battery life and automatic
+          cloud uploading. We believe that in any dispute, being able to present
+          physical recorded evidence of innocence is paramount. With automatic
+          cloud upload (you can designate when, where, and how often!), your
+          data is safe even if you camera is taken while recording.
         </p>
       </div>
     </div>

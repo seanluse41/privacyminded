@@ -4,6 +4,7 @@
   import { fly } from "svelte/transition";
 
   export let item;
+
   let { img, name, price } = item;
   img = `img/${img}`;
 

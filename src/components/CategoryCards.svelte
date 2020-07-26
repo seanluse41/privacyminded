@@ -1,6 +1,4 @@
 <script>
-  import items from "../items.js";
-
   import { currentCategory } from "../stores/stores.js";
 
   function changeCategory(selection) {

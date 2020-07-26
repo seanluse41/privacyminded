@@ -1,6 +1,10 @@
 <script>
   import Card from "./Card.svelte";
-  import items from "../items.js";
+  import computers from "../computers.js";
+  import parts from "../parts.js";
+  import wears from "../wear.js";
+  import services from "../services.js";
+
   import { currentCategory } from "../stores/stores.js";
 
   let category;
@@ -8,15 +12,6 @@
   const unsubscribe = currentCategory.subscribe(value => {
     category = value;
   });
-
-  function testCategory() {
-    console.log(category);
-    var filteredList = items.filter(function(filter) {
-      return filter.category == category;
-    });
-    console.log(filteredList);
-    return filteredList;
-  }
 </script>
 
 <style>
@@ -56,27 +51,38 @@
 
 {#if category == 'all'}
   <section class="card-wrapper grid">
-    {#each items as item}
+    {#each computers as item}
+      <Card {item} />
+    {/each}
+    {#each parts as item}
+      <Card {item} />
+    {/each}
+    {#each wears as item}
+      <Card {item} />
+    {/each}
+    {#each services as item}
       <Card {item} />
     {/each}
   </section>
 {:else if category == 'tech'}
   <section class="card-wrapper grid">
-    {#each filteredItems as item}
+    {#each computers as item}
+      <Card {item} />
+    {/each}
+    {#each parts as item}
       <Card {item} />
     {/each}
   </section>
 {:else if category == 'wear'}
   <section class="card-wrapper grid">
-    {#each filteredItems as item}
+    {#each wears as item}
       <Card {item} />
     {/each}
   </section>
 {:else if category == 'services'}
   <section class="card-wrapper grid">
-    {#each filteredItems as item}
+    {#each services as item}
       <Card {item} />
     {/each}
   </section>
 {/if}
-<button on:click={testCategory}>test</button>

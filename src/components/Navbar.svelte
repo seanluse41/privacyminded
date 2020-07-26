@@ -36,7 +36,7 @@
     </a>
     <div class="container">
       <Link to="/">
-        <span class="brand-logo">SECUME!</span>
+        <span class="brand-logo">Privacy Pasokon</span>
       </Link>
       <ul id="nav-mobile" class="right hide-on-small-only">
         <li>
