@@ -45,10 +45,8 @@
       </Link>
       <ul id="nav-mobile" class="right hide-on-small-only">
         <li>
-          <Link to="/">
-            <a on:click={() => changeCategory('all')}>
-              <i class="material-icons">home</i>
-            </a>
+          <Link to="/" on:click={() => changeCategory('all')}>
+            <i class="material-icons">home</i>
           </Link>
         </li>
         <li>
@@ -74,12 +72,12 @@
 
 <ul class="sidenav" id="mobile-demo">
   <li>
-    <Link to="/">
+    <Link to="/" on:click={() => changeCategory('all')}>
       <span>Home</span>
       <i class="material-icons">home</i>
+
     </Link>
   </li>
-
   <li>
     <a class="modal-trigger" href="#modal1" on:click={modalTrigger}>
       <i class="material-icons">apps</i>
